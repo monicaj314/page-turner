@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { toggleBooks } from '../../actions'
+import { toggleBooks, addBook } from '../../actions'
 import BestSellersList from '../../components/BestSellersList'
 
 const mapStateToProps = (state) => {
@@ -13,6 +13,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onToggleClick: () => {
       dispatch(toggleBooks())
+    },
+    onButtonClick: () => {
+      dispatch(addBook())
     }
   }
 }

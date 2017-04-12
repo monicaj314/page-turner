@@ -11,7 +11,7 @@ export function addBook(){
   return {
     type: ADD_BOOK,
     book: {
-      name: 'Rework',
+      title: 'Rework',
       author: 'David Heinemeier Hansson'
     }
   }

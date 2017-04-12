@@ -12,6 +12,7 @@ const initialState = {
     author: 'Sam Harris'
   },
   {
+    // eslint-disable-next-line 
     title: 'JavaScript: The Good Parts',
     author: 'Douglas Crockford'
   },
