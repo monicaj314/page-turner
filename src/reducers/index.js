@@ -20,7 +20,7 @@ function toggleBooksReducer(state=initialState.showBooks, action){
 
 function bestSellersReducer(state = {
   isFetching: initialState.isFetching,
-  category: initialState.didInvalidate,
+  category: initialState.category,
   bestSellers: initialState.bestSellers,
   lastModified: initialState.lastModified
 }, action) {
@@ -28,6 +28,7 @@ function bestSellersReducer(state = {
     case REQUEST_NYT_BESTSELLERS:
       return Object.assign({}, state, {
         isFetching: true,
+        category: action.category
       })
     case RECEIVE_NYT_BESTSELLERS:
       return Object.assign({}, state, {

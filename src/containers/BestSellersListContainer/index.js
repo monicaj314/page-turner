@@ -1,12 +1,13 @@
 import { connect } from 'react-redux'
-import { toggleBooks, requestBestSellers } from '../../actions'
+import { toggleBooks, fetchBestSellers } from '../../actions'
 import BestSellersList from '../../components/BestSellersList'
 
 const mapStateToProps = (state) => {
   return {
     showBooks: state.toggleDisplay,
     isFetching: state.loadState.isFetching,
-    bestSellers: state.loadState.bestSellers
+    bestSellers: state.loadState.bestSellers,
+    category: state.loadState.category
   }
 }
 
@@ -16,7 +17,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(toggleBooks())
     },
     onButtonClick: () => {
-      dispatch(requestBestSellers('Science'))
+      dispatch(fetchBestSellers())
+    },
+    onDropdownChange: (category) => {
+      dispatch(fetchBestSellers(category))
     }
   }
 }

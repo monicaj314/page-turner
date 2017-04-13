@@ -20,7 +20,9 @@ export function receiveBestSellers(category, json){
   var bestSellers = json.results.map(result => {
     return {
       title: result.book_details[0].title,
-      author: result.book_details[0].author
+      author: result.book_details[0].author,
+      rank: result.rank,
+      category: result.display_name
     }
   })
 
@@ -32,11 +34,11 @@ export function receiveBestSellers(category, json){
   }
 }
 
-export function fetchBestSellers(category = 'Science'){
+export function fetchBestSellers(category){
   return function(dispatch){
 
     //Update State to let UI know that we've going to start fetching.
-    //dispatch(requestBestSellers(category))
+    dispatch(requestBestSellers(category))
 
     let apiKey = 'c0b2ce3bdb324451871bcd8ccfe7c0eb'
     let url = `https://api.nytimes.com/svc/books/v3/lists.json?api-key=${apiKey}&list=${category}`
