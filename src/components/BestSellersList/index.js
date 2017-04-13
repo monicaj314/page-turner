@@ -1,8 +1,12 @@
 import React from 'react'
 import Book from '../Book'
 import Toggle from 'material-ui/Toggle'
-import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow} from 'material-ui/Table';
+import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+
 import RaisedButton from 'material-ui/RaisedButton';
+import CircularProgress from 'material-ui/CircularProgress';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
 
 
 const styles = {
@@ -25,21 +29,38 @@ const styles = {
   }
 };
 
-const BestSellerList = ({ books, onToggleClick, showBooks, onButtonClick }) => {
+// <TableRow key={i}>
+//   <TableRowColumn>{book.title}</TableRowColumn>
+//   <TableRowColumn>{book.author}</TableRowColumn>
+// </TableRow>)
+
+const BestSellerList = ({ bestSellers, onToggleClick, showBooks, onButtonClick, isFetching }) => {
   var booksTableBody = null;
 
   if (showBooks){
-    booksTableBody  = (
-          <TableBody showRowHover={true}>
-            {
-              books.map((book, i) =>
-              <Book
-                key={i}
-                title={book.title}
-                author={book.author} />)
-            }
-          </TableBody>
-    )
+    if (isFetching){
+      booksTableBody =
+      <TableBody showRowHover={false} displayRowCheckbox={false}>
+        <TableRow>
+          <TableRowColumn colSpan="2" style={{textAlign: 'center'}}>
+            <CircularProgress style={{marginTop:'150px'}} />
+          </TableRowColumn>
+        </TableRow>
+      </TableBody>
+    } else {
+      booksTableBody  = (
+            <TableBody showRowHover={true} displayRowCheckbox={false}>
+              {
+                bestSellers.map((book, i) => (
+                  <Book
+                    key={i}
+                    title={book.title}
+                    author={book.author}
+                    />
+                ))
+              }
+            </TableBody>)
+    }
   } else {
     booksTableBody = null
   }
@@ -60,12 +81,7 @@ const BestSellerList = ({ books, onToggleClick, showBooks, onButtonClick }) => {
           style={styles.buttonStyle}
           onClick={() => onButtonClick()}
           />
-
       </div>
-
-
-
-
 
       <Table selectable={false} style={styles.booksTable}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>

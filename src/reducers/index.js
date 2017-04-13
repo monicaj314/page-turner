@@ -1,36 +1,13 @@
-import { ADD_BOOK, TOGGLE_BOOKS } from '../actions'
 import { combineReducers } from 'redux'
+import { TOGGLE_BOOKS, REQUEST_NYT_BESTSELLERS, RECEIVE_NYT_BESTSELLERS } from '../actions'
 
 const initialState = {
+  isFetching: false,
+  category: 'Combined Print and E-Book Fiction',
   showBooks: true,
-  books: [{
-    title: 'Thinking, Fast and Slow',
-    author: 'Daniel Kahneman'
-  },
-  {
-    title: 'Losing Faith',
-    author: 'Sam Harris'
-  },
-  {
-    // eslint-disable-next-line 
-    title: 'JavaScript: The Good Parts',
-    author: 'Douglas Crockford'
-  },
-  {
-    title: 'Death by Black Hole',
-    author: 'Neil DeGrasse Tyson'
-  },
-  {
-    title: 'Clean Code',
-    author: 'Robert C. Martin'
-  },
-  {
-    title: 'Understanding ECMAScript 6',
-    author: 'Nicolas C. Zakas'
-  },
-  ]
+  bestSellers: [],
+  lastModified: null
 }
-
 
 function toggleBooksReducer(state=initialState.showBooks, action){
   switch (action.type){
@@ -41,26 +18,33 @@ function toggleBooksReducer(state=initialState.showBooks, action){
   }
 }
 
-
-function addBooksReducer(state=initialState.books, action){
+function bestSellersReducer(state = {
+  isFetching: initialState.isFetching,
+  category: initialState.didInvalidate,
+  bestSellers: initialState.bestSellers,
+  lastModified: initialState.lastModified
+}, action) {
   switch (action.type) {
-    case ADD_BOOK:
-      return [...state, action.book]
+    case REQUEST_NYT_BESTSELLERS:
+      return Object.assign({}, state, {
+        isFetching: true,
+      })
+    case RECEIVE_NYT_BESTSELLERS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        category: action.category,
+        bestSellers: action.bestSellers,
+        lastModified: action.lastModified
+      })
     default:
       return state
   }
 }
 
-// function App(state = {}, action){
-//   return {
-//     showBooks: toggleBooksReducer(state, action),
-//     books: addBooksReducer(state.books, action)
-//   }
-// }
 
-const ReduxApp = combineReducers({
+const rootReducer = combineReducers({
   toggleDisplay: toggleBooksReducer,
-  books: addBooksReducer
+  loadState: bestSellersReducer
 })
 
-export default ReduxApp
+export default rootReducer

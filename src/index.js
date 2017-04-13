@@ -1,13 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+import { createLogger } from 'redux-logger'
+import thunkMiddleware from 'redux-thunk'
 import App from './containers/App.js'
-import ReduxApp from './reducers'
-import './index.css';
+import rootReducer from './reducers'
+import './index.css'
+import { fetchBestSellers, requestBestSellers } from './actions'
 
+const loggerMiddleware = createLogger()
 
-let store = createStore(ReduxApp);
+let store = createStore(
+  rootReducer,
+  applyMiddleware(
+    thunkMiddleware,
+    loggerMiddleware
+  )
+);
+
+store.dispatch(requestBestSellers())
+
+store.dispatch(fetchBestSellers('Science')).then(() =>
+  console.log(store.getState())
+)
 
 ReactDOM.render(
 <Provider store={store}>
