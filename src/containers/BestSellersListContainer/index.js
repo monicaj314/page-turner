@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { toggleBooks, fetchBestSellers } from '../../actions'
+import { toggleBooks, fetchAndAggregateBestSellers } from '../../actions'
 import BestSellersList from '../../components/BestSellersList'
 
 const mapStateToProps = (state) => {
@@ -11,16 +11,17 @@ const mapStateToProps = (state) => {
   }
 }
 
+
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onToggleClick: () => {
       dispatch(toggleBooks())
     },
     onButtonClick: () => {
-      dispatch(fetchBestSellers())
+      dispatch(fetchAndAggregateBestSellers())
     },
     onDropdownChange: (category) => {
-      dispatch(fetchBestSellers(category))
+      dispatch(fetchAndAggregateBestSellers(category))
     }
   }
 }

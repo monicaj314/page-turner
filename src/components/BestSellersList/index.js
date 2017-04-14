@@ -1,12 +1,12 @@
 import React from 'react'
 import Book from '../Book'
-import Toggle from 'material-ui/Toggle'
+//import Toggle from 'material-ui/Toggle'
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
-import RaisedButton from 'material-ui/RaisedButton';
+//import RaisedButton from 'material-ui/RaisedButton';
 import CircularProgress from 'material-ui/CircularProgress';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
@@ -32,12 +32,6 @@ const styles = {
   }
 };
 
-// <TableRow key={i}>
-//   <TableRowColumn>{book.title}</TableRowColumn>
-//   <TableRowColumn>{book.author}</TableRowColumn>
-// </TableRow>)
-
-
 class BestSellerList extends React.Component {
   constructor(props) {
     super(props);
@@ -55,7 +49,7 @@ class BestSellerList extends React.Component {
       { key:5, name: 'Hardcover Nonfiction' },
     ]
     var result = categories.filter(category => {
-      return category.key == key;
+      return category.key === key;
     });
 
     return result;
@@ -91,6 +85,8 @@ class BestSellerList extends React.Component {
                       author={book.author}
                       rank={book.rank}
                       category={book.category}
+                      image={book.image}
+                      description={book.description}
                       />
                   ))
                 }
@@ -131,6 +127,7 @@ class BestSellerList extends React.Component {
             <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
               <TableRow>
                 <TableHeaderColumn style={{width:'50px'}}>Rank</TableHeaderColumn>
+                <TableHeaderColumn>Image</TableHeaderColumn>
                 <TableHeaderColumn>Book Title</TableHeaderColumn>
                 <TableHeaderColumn>Author</TableHeaderColumn>
                 <TableHeaderColumn>Category</TableHeaderColumn>
@@ -142,77 +139,5 @@ class BestSellerList extends React.Component {
     )
   }
 }
-
-
-
-
-// const BestSellerList = ({ bestSellers, onToggleClick, showBooks, onButtonClick, isFetching, category }) => {
-//   var booksTableBody = null;
-//
-//   if (showBooks){
-//     if (isFetching){
-//       booksTableBody =
-//       <TableBody showRowHover={false} displayRowCheckbox={false}>
-//         <TableRow>
-//           <TableRowColumn colSpan="2" style={{textAlign: 'center'}}>
-//             <CircularProgress style={{marginTop:'150px'}} />
-//           </TableRowColumn>
-//         </TableRow>
-//       </TableBody>
-//     } else {
-//       booksTableBody  = (
-//             <TableBody showRowHover={true} displayRowCheckbox={false}>
-//               {
-//                 bestSellers.map((book, i) => (
-//                   <Book
-//                     key={i}
-//                     title={book.title}
-//                     author={book.author}
-//                     />
-//                 ))
-//               }
-//             </TableBody>)
-//     }
-//   } else {
-//     booksTableBody = null
-//   }
-//
-//   return (
-//   <div>
-//       <div style={styles.controlsDiv}>
-//         <Toggle
-//           style={styles.toggleStyle}
-//           label="Show Books"
-//           labelPosition="right"
-//           defaultToggled={true}
-//           onToggle={() => onToggleClick()}
-//         />
-//         <DropDownMenu value={1} onChange={() => { alert('changed!') }}>
-//           <MenuItem value={1} primaryText="Science" />
-//           <MenuItem value={2} primaryText="Combined Print and E-Book Fiction" />
-//           <MenuItem value={3} primaryText="Combined Print and E-Book Nonfiction" />
-//           <MenuItem value={3} primaryText="Hardcover Fiction" />
-//           <MenuItem value={3} primaryText="Hardcover Nonfiction" />
-//         </DropDownMenu>
-//         <RaisedButton
-//           label="Add Book"
-//           primary={true}
-//           style={styles.buttonStyle}
-//           onClick={() => onButtonClick()}
-//           />
-//       </div>
-//
-//       <Table selectable={false} style={styles.booksTable}>
-//           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-//             <TableRow>
-//               <TableHeaderColumn>Book Title</TableHeaderColumn>
-//               <TableHeaderColumn>Author</TableHeaderColumn>
-//             </TableRow>
-//           </TableHeader>
-//           {booksTableBody}
-//       </Table>
-//   </div>
-//   )
-// }
 
 export default BestSellerList

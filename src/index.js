@@ -7,7 +7,7 @@ import thunkMiddleware from 'redux-thunk'
 import App from './containers/App.js'
 import rootReducer from './reducers'
 import './index.css'
-import { fetchBestSellers } from './actions'
+import { fetchAndAggregateBestSellers } from './actions'
 
 const loggerMiddleware = createLogger()
 
@@ -19,7 +19,7 @@ let store = createStore(
   )
 );
 
-store.dispatch(fetchBestSellers('Science')).then(() =>
+store.dispatch(fetchAndAggregateBestSellers('Science')).then(() =>
   console.log(store.getState())
 )
 

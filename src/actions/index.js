@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch'
+import keys from '../utilities/apiKeys.json';
 
 export const TOGGLE_BOOKS = 'TOGGLE_BOOKS'
 export function toggleBooks() {
@@ -6,6 +7,7 @@ export function toggleBooks() {
     type: TOGGLE_BOOKS
   }
 }
+
 
 export const REQUEST_NYT_BESTSELLERS = 'REQUEST_NYT_BESTSELLERS'
 export function requestBestSellers(category){
@@ -16,13 +18,15 @@ export function requestBestSellers(category){
 }
 
 export const RECEIVE_NYT_BESTSELLERS = 'RECEIVE_NYT_BESTSELLERS'
-export function receiveBestSellers(category, json){
-  var bestSellers = json.results.map(result => {
+export function receiveBestSellers(category, results){
+  var bestSellers = results.map(result => {
     return {
       title: result.book_details[0].title,
       author: result.book_details[0].author,
       rank: result.rank,
-      category: result.display_name
+      category: result.display_name,
+      image: result.image,
+      description: result.book_details[0].description,
     }
   })
 
@@ -30,25 +34,50 @@ export function receiveBestSellers(category, json){
     type: RECEIVE_NYT_BESTSELLERS,
     category,
     bestSellers: bestSellers,
-    date: json.last_modified
+    date: results.last_modified
   }
 }
 
-export function fetchBestSellers(category){
-  return function(dispatch){
+export function fetchAndAggregateBestSellers(category){
 
-    //Update State to let UI know that we've going to start fetching.
+  return function(dispatch) {
+    //Update UI w/ fetching
     dispatch(requestBestSellers(category))
 
-    let apiKey = 'c0b2ce3bdb324451871bcd8ccfe7c0eb'
-    let url = `https://api.nytimes.com/svc/books/v3/lists.json?api-key=${apiKey}&list=${category}`
+    //Fetch NYT best sellers
+    return fetchNytBestSellers(category, dispatch)
+      .then(nytResults => fetchAllGoogleData(nytResults.results))
+      .then(aggregatedResults => dispatch(receiveBestSellers(category, aggregatedResults)))
+    }
+}
+
+function fetchAllGoogleData(nytBooks){
+  //var testBooks = nytBooks.slice(0,4)
+
+  var googlePromises = nytBooks.map(nytBook => fetchGoogleBookData(nytBook))
+  return Promise.all(googlePromises)
+}
+
+function fetchNytBestSellers(category){
+    let url = `https://api.nytimes.com/svc/books/v3/lists.json?api-key=${keys.nyt_key}&list=${category}`
     return fetch(url)
       .then(response => response.json())
-      .then(json =>
+}
 
-        // We can dispatch many times!
-        // Here, we update the app state with the results of the API call.
-        dispatch(receiveBestSellers(category, json))
-      )
+function fetchGoogleBookData(nytBook){
+  const url = `https://www.googleapis.com/books/v1/volumes?q=isbn:${nytBook.book_details[0].primary_isbn10}`
+  return fetch(url)
+    .then(response => response.json())
+    .then(googleJson => mergeBookData(nytBook, googleJson))
+}
+
+//nastyness.  Will fix
+function mergeBookData(nytBook, googleJson){
+  if (googleJson.items && googleJson.items[0]){
+      nytBook.image = googleJson.items[0].volumeInfo.imageLinks.thumbnail
+      nytBook.publishedDate = googleJson.items[0].volumeInfo.publishedDate
+  }else{
+      nytBook.image = 'http://i2.kym-cdn.com/photos/images/original/000/295/544/a63.png'
   }
+  return nytBook
 }
