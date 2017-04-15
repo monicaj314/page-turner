@@ -1,40 +1,48 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './Header.css';
-import AppBar from 'material-ui/AppBar';
-import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import IconMenu from 'material-ui/IconMenu';
+import IconButton from 'material-ui/IconButton';
+import ActionAccount from 'material-ui/svg-icons/action/account-circle';
+import MenuItem from 'material-ui/MenuItem';
 
+const styles = {
+  mediumIcon: {
+    width: 45,
+    height: 45,
+    color: 'white',
+  },
+  medium: {
+    padding: '0px',
+  },
+};
 
-class Header extends Component {
-  render() {
-    return (
-      <div className="header-wrapper">
-        <div className="header">
-          <img src={logo} className="header-logo" alt="logo" />
-          <h2>Welcome to page-turner</h2>
-        </div>
-      </div>
-    );
+class MainToolBar1 extends Component {
+  constructor(){
+    super()
+  }
+
+  render(){
+    return (<Toolbar style={{backgroundColor: '#0D47A1'}}>
+      <ToolbarGroup firstChild={true}>
+        <img src={logo} className="header-logo" alt="logo" />
+        <p className="header-intro">Page Turner</p>
+      </ToolbarGroup>
+      <ToolbarGroup>
+        <IconMenu iconButtonElement={
+            <IconButton touch={true} style={styles.medium} iconStyle={styles.mediumIcon}>
+              <ActionAccount />
+            </IconButton>
+          }
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'left',}}
+        >
+          <MenuItem primaryText="Sign In" />
+        </IconMenu>
+      </ToolbarGroup>
+    </Toolbar>)
   }
 }
 
-const MainAppBar = () => {
-  return (
-    <AppBar
-      iconElementLeft={<InnerAppBar />}
-      title="page-turner.io"
-      style={{backgroundColor: '#0D47A1'}}
-      />
-)};
 
-const InnerAppBar = () => (
-  <div>
-    <img src={logo} className="header-logo" alt="logo" />
-  </div>
-)
-
-
-
-export default MainAppBar;
+export default MainToolBar1;
