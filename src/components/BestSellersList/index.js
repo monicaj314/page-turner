@@ -1,6 +1,5 @@
 import React from 'react'
 import Book from '../Book'
-//import Toggle from 'material-ui/Toggle'
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
 import DropDownMenu from 'material-ui/DropDownMenu';
@@ -62,51 +61,40 @@ class BestSellerList extends React.Component {
   }
 
   render() {
+    console.log(this.props.bestSellers)
     var booksTableBody = null;
 
-    if (this.props.showBooks){
-      if (this.props.isFetching){
-        booksTableBody =
-        <TableBody showRowHover={false} displayRowCheckbox={false}>
-          <TableRow>
-            <TableRowColumn colSpan="2" style={{textAlign: 'center'}}>
-              <CircularProgress style={{marginTop:'150px'}} />
-            </TableRowColumn>
-          </TableRow>
-        </TableBody>
-      } else {
-        booksTableBody  = (
-              <TableBody showRowHover={true} displayRowCheckbox={false}>
-                {
-                  this.props.bestSellers.map((book, i) => (
-                    <Book
-                      key={i}
-                      title={book.title}
-                      author={book.author}
-                      rank={book.rank}
-                      category={book.category}
-                      image={book.image}
-                      description={book.description}
-                      />
-                  ))
-                }
-              </TableBody>)
-      }
+    if (this.props.isFetching){
+      booksTableBody =
+      <TableBody showRowHover={false} displayRowCheckbox={false}>
+        <TableRow>
+          <TableRowColumn colSpan="2" style={{textAlign: 'center'}}>
+            <CircularProgress style={{marginTop:'150px'}} />
+          </TableRowColumn>
+        </TableRow>
+      </TableBody>
     } else {
-      booksTableBody = null
+      booksTableBody  = (
+            <TableBody showRowHover={true} displayRowCheckbox={false}>
+              {
+                this.props.bestSellers.map((book, i) => (
+                  <Book
+                    key={i}
+                    title={book.title}
+                    author={book.author}
+                    rank={book.rank}
+                    category={book.category}
+                    image={book.image}
+                    description={book.description}
+                    />
+                ))
+              }
+            </TableBody>)
     }
 
     return (
     <div>
         <div style={styles.controlsDiv}>
-          {// <Toggle
-          //   style={styles.toggleStyle}
-          //   label="Show Books"
-          //   labelPosition="right"
-          //   defaultToggled={true}
-          //   onToggle={() => this.props.onToggleClick()}
-          // />
-        }
         <DropDownMenu value={this.state.dropDownValue} onChange={this.handleChange}>
           <MenuItem value={1} primaryText="Science" />
           <MenuItem value={2} primaryText="Combined Print and E-Book Fiction" />

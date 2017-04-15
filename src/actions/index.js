@@ -1,14 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import keys from '../utilities/apiKeys.json';
 
-export const TOGGLE_BOOKS = 'TOGGLE_BOOKS'
-export function toggleBooks() {
-  return {
-    type: TOGGLE_BOOKS
-  }
-}
-
-
 export const REQUEST_NYT_BESTSELLERS = 'REQUEST_NYT_BESTSELLERS'
 export function requestBestSellers(category){
   return {
@@ -38,7 +30,7 @@ export function receiveBestSellers(category, results){
   }
 }
 
-export function fetchAndAggregateBestSellers(category){
+export function fetchAndMergeBestSellers(category){
 
   return function(dispatch) {
     //Update UI w/ fetching
@@ -46,16 +38,9 @@ export function fetchAndAggregateBestSellers(category){
 
     //Fetch NYT best sellers
     return fetchNytBestSellers(category, dispatch)
-      .then(nytResults => fetchAllGoogleData(nytResults.results))
+      .then(nytResults => fetchAndMergeGoogleList(nytResults.results))
       .then(aggregatedResults => dispatch(receiveBestSellers(category, aggregatedResults)))
     }
-}
-
-function fetchAllGoogleData(nytBooks){
-  //var testBooks = nytBooks.slice(0,4)
-
-  var googlePromises = nytBooks.map(nytBook => fetchGoogleBookData(nytBook))
-  return Promise.all(googlePromises)
 }
 
 function fetchNytBestSellers(category){
@@ -64,7 +49,14 @@ function fetchNytBestSellers(category){
       .then(response => response.json())
 }
 
-function fetchGoogleBookData(nytBook){
+function fetchAndMergeGoogleList(nytBooks){
+  var nytBooksTest = nytBooks.slice(0,2)
+
+  var googlePromises = nytBooksTest.map(nytBook => fetchAndMergeGoogleBook(nytBook))
+  return Promise.all(googlePromises)
+}
+
+function fetchAndMergeGoogleBook(nytBook){
   const url = `https://www.googleapis.com/books/v1/volumes?q=isbn:${nytBook.book_details[0].primary_isbn10}`
   return fetch(url)
     .then(response => response.json())
