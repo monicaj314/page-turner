@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './Header.css';
+import AppBar from 'material-ui/AppBar';
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
 
 class Header extends Component {
   render() {
@@ -15,5 +20,21 @@ class Header extends Component {
   }
 }
 
+const MainAppBar = () => {
+  return (
+    <AppBar
+      iconElementLeft={<InnerAppBar />}
+      title="page-turner.io"
+      style={{backgroundColor: '#0D47A1'}}
+      />
+)};
 
-export default Header;
+const InnerAppBar = () => (
+  <div>
+    <img src={logo} className="header-logo" alt="logo" />
+  </div>
+)
+
+
+
+export default MainAppBar;

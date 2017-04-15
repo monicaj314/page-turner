@@ -4,6 +4,9 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import { createLogger } from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
+import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import App from './containers/App.js'
 import rootReducer from './reducers'
 import './index.css'
@@ -23,7 +26,9 @@ store.dispatch(fetchAndMergeBestSellers('Science'))
 
 ReactDOM.render(
 <Provider store={store}>
-  <App />
+  <MuiThemeProvider muiTheme={getMuiTheme(darkBaseTheme)}>
+    <App />
+  </MuiThemeProvider>
 </Provider>,
   document.getElementById('root')
 );
