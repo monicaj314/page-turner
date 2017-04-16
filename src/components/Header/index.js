@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './Header.css';
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import ActionAccount from 'material-ui/svg-icons/action/account-circle';
@@ -16,18 +16,26 @@ const styles = {
   medium: {
     padding: '0px',
   },
+  toolBar: {
+    backgroundColor: '#0D47A1',
+    marginBottom:'20px'
+  },
+  toolBarTitle: {
+    fontSize: 'large',
+    color: 'white'
+  }
 };
 
-class MainToolBar1 extends Component {
+class MainToolBar extends Component {
   constructor(){
     super()
   }
 
   render(){
-    return (<Toolbar style={{backgroundColor: '#0D47A1'}}>
+    return (<Toolbar style={styles.toolBar}>
       <ToolbarGroup firstChild={true}>
         <img src={logo} className="header-logo" alt="logo" />
-        <p className="header-intro">Page Turner</p>
+        <ToolbarTitle style={styles.toolBarTitle} text="Page Turner" />
       </ToolbarGroup>
       <ToolbarGroup>
         <IconMenu iconButtonElement={
@@ -45,4 +53,4 @@ class MainToolBar1 extends Component {
 }
 
 
-export default MainToolBar1;
+export default MainToolBar;

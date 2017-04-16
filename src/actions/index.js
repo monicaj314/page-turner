@@ -69,7 +69,7 @@ function mergeBookData(nytBook, googleJson){
       nytBook.image = googleJson.items[0].volumeInfo.imageLinks.thumbnail
       nytBook.publishedDate = googleJson.items[0].volumeInfo.publishedDate
   }else{
-      nytBook.image = 'http://i2.kym-cdn.com/photos/images/original/000/295/544/a63.png'
+      nytBook.image = 'http://www.i2clipart.com/cliparts/f/9/4/d/clipart-sad-face-outline-128x128-f94d.png'
   }
   return nytBook
 }
