@@ -27,9 +27,6 @@ const styles = {
 };
 
 class MainToolBar extends Component {
-  constructor(){
-    super()
-  }
 
   render(){
     return (<Toolbar style={styles.toolBar}>

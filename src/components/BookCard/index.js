@@ -1,15 +1,22 @@
 import React from 'react'
-import FlatButton from 'material-ui/FlatButton';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import MenuItem from 'material-ui/MenuItem';
+//import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
+import OpenIcon from 'material-ui/svg-icons/navigation/expand-more';
+import CloseIcon from 'material-ui/svg-icons/navigation/expand-less';
+
+//import DropDownMenu from 'material-ui/DropDownMenu';
+//import MenuItem from 'material-ui/MenuItem';
+import Tokenizer from 'sentence-tokenizer'
 
 const styles = {
-  container: {
+  card: {
     display: 'flex',
     margin: '0px 20px',
     //border: '1px solid blue',
     borderBottom: '1px solid rgb(224,224,224)',
-    padding: '10px'
+    padding: '10px',
+    //maxHeight: '200px',
+
   },
   rank:{
     padding:'0px 15px',
@@ -23,6 +30,10 @@ const styles = {
   bookImage:{
     width: 'auto',
     height:'100%',
+  },
+  bookDetails:{
+    //border: '1px solid red',
+    maxWidth: 550
   },
   title:{
     fontSize:'20px',
@@ -38,39 +49,88 @@ const styles = {
     display:'block',
     //border: '1px solid blue',
     padding: '2px 0px',
-    marginBottom:'40px'
+    marginBottom:'20px'
 
   },
   description:{
-    fontSize:'14px',
-    display:'block'
+    fontSize:'12px',
+    display:'block',
+    color:'#333',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
     //border: '1px solid blue',
   },
 }
 
+const ShortDescription = ({desc, handleExpanding}) => {
+  return (
+    <div>
+      {desc.map((sentence, key)=>{
+        return <span key={key}>{sentence}&nbsp;</span>
+      })}
+      &nbsp;&nbsp;<a href="#" onClick={handleExpanding}>Read more...</a>
+    </div>
+  )
+}
+
 class BookCard extends React.Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
+    var tokenizer = new Tokenizer('Desc')
+    tokenizer.setEntry(props.description)
+    const allSentences = tokenizer.getSentences()
+    let shortDescription = (allSentences.length) > 3 ? allSentences.slice(0,3) : allSentences
+    this.state = {
+      expanded: false,
+      fullDescription: allSentences,
+      shortDescription: shortDescription,
+    }
   }
+
+  handleExpanding = (event) => {
+    event.preventDefault();
+    const newExpandedState = !this.state.expanded
+    this.setState({
+      expanded: newExpandedState
+    })
+  }
+
   render(){
+
+
+
     return (
-      <div style={styles.container}>
-        <div style={styles.rank}>{this.props.rank}</div>
+      <div style={styles.card}>
+        <div style={styles.rank}>
+          {this.props.rank}
+        </div>
         <div style={styles.bookImageDiv}>
           <img src={this.props.image} style={styles.bookImage} alt={this.props.title} />
         </div>
-
-        <div>
+        <div style={styles.bookDetails}>
           <span style={styles.title}>{this.props.title}</span>
-          <span style={styles.author}>{this.props.author}</span>
-          <span style={styles.description}>{this.props.description}</span>
+          <span style={styles.author}>by {this.props.author}</span>
+          <span style={styles.description}>
+            {!this.state.expanded
+              ? <ShortDescription desc={this.state.shortDescription} handleExpanding={this.handleExpanding}/>
+              :this.state.fullDescription.map((item, key) => {
+              if ((key+1) % 3 === 0){
+                return(<span key={key}>{item}<br/><br/></span>)
+              } else {
+                return <span key={key}>{item}&nbsp;</span>
+              }
+            })}
+          </span>
         </div>
         <div>
-          <p>test</p>
+          <IconButton tooltip="Read more!">
+            {this.state.expanded
+              ? <CloseIcon onClick={this.handleExpanding}/>
+              : <OpenIcon onClick={this.handleExpanding}/>}
+          </IconButton>
         </div>
-      </ div>
-    )
+      </div>)
+    }
   }
-}
 
 export default BookCard

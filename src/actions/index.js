@@ -18,7 +18,7 @@ export function receiveBestSellers(category, results){
       rank: result.rank,
       category: result.display_name,
       image: result.image,
-      description: result.book_details[0].description,
+      description: result.description,
     }
   })
 
@@ -68,6 +68,7 @@ function mergeBookData(nytBook, googleJson){
   if (googleJson.items && googleJson.items[0]){
       nytBook.image = googleJson.items[0].volumeInfo.imageLinks.thumbnail
       nytBook.publishedDate = googleJson.items[0].volumeInfo.publishedDate
+      nytBook.description= googleJson.items[0].volumeInfo.description
   }else{
       nytBook.image = 'http://www.i2clipart.com/cliparts/f/9/4/d/clipart-sad-face-outline-128x128-f94d.png'
   }
