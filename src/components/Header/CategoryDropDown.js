@@ -14,16 +14,21 @@ const styles={
 
 }
 
-const CategoryDropDown = ({category}) => (
-  <span>
-    <FlatButton
-      style={styles.button}
-      label={category}
-      labelPosition="before"
-      primary={false}
-      icon={<DropDownIcon style={styles.icon}/>}
-    />
-  </span>
-)
+const CategoryDropDown = ({category, onClick}) => {
+  return (
+    <span>
+      <FlatButton
+        onTouchTap={onClick}
+        style={styles.button}
+        label={category}
+        labelPosition="before"
+        primary={false}
+        icon={<DropDownIcon style={styles.icon}/>}
+      />
+    </span>
+  )
+}
+
+
 
 export default CategoryDropDown

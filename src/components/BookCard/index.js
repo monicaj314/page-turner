@@ -19,9 +19,13 @@ const styles = {
     //maxHeight: '200px',
 
   },
-  rank:{
+  rankDiv:{
     padding:'0px 15px',
     //border: '1px solid blue',
+  },
+  rankText:{
+    color: '#444',
+    fontSize:'x-large'
   },
   bookImageDiv: {
     marginRight:'20px',
@@ -105,8 +109,8 @@ class BookCard extends React.Component {
 
     return (
       <div style={styles.card}>
-        <div style={styles.rank}>
-          {this.props.rank}
+        <div style={styles.rankDiv}>
+          <span style={styles.rankText}>{this.props.rank}</span>
         </div>
         <div style={styles.bookImageDiv}>
           <img src={this.props.image} style={styles.bookImage} alt={this.props.title} />
