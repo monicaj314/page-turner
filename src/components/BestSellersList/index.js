@@ -3,6 +3,15 @@ import BookCard from '../BookCard'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
+const styles = {
+  listWrapper:{
+    display:'flex',
+    flexDirection:'column',
+    alignItems:'flex-start',
+    marginLeft:'150px'
+  },
+}
+
 
 class BestSellerList extends React.Component {
   constructor(props) {
@@ -41,7 +50,7 @@ class BestSellerList extends React.Component {
         <BookCard key={i} {...book} />)
         )
 
-      return <div>{cards}</div>
+      return <div style={styles.listWrapper}>{cards}</div>
     }
   }
 }

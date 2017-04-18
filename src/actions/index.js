@@ -50,7 +50,7 @@ function fetchNytBestSellers(category){
 }
 
 function fetchAndMergeGoogleList(nytBooks){
-  var nytBooksTest = nytBooks.slice(0,2)
+  var nytBooksTest = nytBooks.slice(0,3)
 
   var googlePromises = nytBooksTest.map(nytBook => fetchAndMergeGoogleBook(nytBook))
   return Promise.all(googlePromises)

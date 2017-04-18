@@ -3,6 +3,7 @@ import React from 'react'
 import IconButton from 'material-ui/IconButton';
 import OpenIcon from 'material-ui/svg-icons/navigation/expand-more';
 import CloseIcon from 'material-ui/svg-icons/navigation/expand-less';
+import ActionStar from 'material-ui/svg-icons/toggle/star';
 
 //import DropDownMenu from 'material-ui/DropDownMenu';
 //import MenuItem from 'material-ui/MenuItem';
@@ -59,6 +60,9 @@ const styles = {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     //border: '1px solid blue',
+  },
+  small: {
+    width: 15,
   },
 }
 
@@ -121,6 +125,13 @@ class BookCard extends React.Component {
               }
             })}
           </span>
+        </div>
+        <div>
+            <ActionStar style={styles.small}/>
+            <ActionStar style={styles.small}/>
+            <ActionStar style={styles.small}/>
+            <ActionStar style={styles.small}/>
+            <ActionStar style={styles.small}/>
         </div>
         <div>
           <IconButton tooltip="Read more!">
