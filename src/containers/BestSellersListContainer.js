@@ -1,26 +1,15 @@
 import { connect } from 'react-redux'
-import { fetchAndMergeBestSellers } from '../actions'
 import BestSellersList from '../components/BestSellersList'
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({bestSellersState}) => {
   return {
-    isFetching: state.loadState.isFetching,
-    bestSellers: state.loadState.bestSellers,
-  }
-}
-
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    onDropdownChange: (category) => {
-      dispatch(fetchAndMergeBestSellers(category))
-    }
+    isFetching: bestSellersState.isFetching,
+    bestSellers: bestSellersState.bestSellers,
   }
 }
 
 const BestSellersListContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(BestSellersList)
 
 export default BestSellersListContainer

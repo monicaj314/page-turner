@@ -16,9 +16,8 @@ export function receiveBestSellers(category, results){
       title: result.book_details[0].title,
       author: result.book_details[0].author,
       rank: result.rank,
-      category: result.display_name,
       image: result.image,
-      description: result.description,
+      description: result.description ? result.description : result.book_details[0].description,
     }
   })
 
@@ -27,6 +26,14 @@ export function receiveBestSellers(category, results){
     category,
     bestSellers: bestSellers,
     date: results.last_modified
+  }
+}
+
+export const UPDATE_CATEGORY = 'UPDATE_CATEGORY'
+export function updateCategory(categoryIndex){
+  return {
+    type: UPDATE_CATEGORY,
+    categoryIndex
   }
 }
 

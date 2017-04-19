@@ -4,7 +4,7 @@ import Header from '../components/Header'
 
 const mapStateToProps = (state) => {
   return {
-    category: state.loadState.category
+    selectedCategoryIndex: state.selectedCategoryIndex
   }
 }
 
