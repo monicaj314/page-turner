@@ -4,14 +4,8 @@ import './Header.css';
 import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
-import FlatButton from 'material-ui/FlatButton';
 import ActionAccount from 'material-ui/svg-icons/action/account-circle';
-import DropDownIcon from 'material-ui/svg-icons/navigation/arrow-drop-down';
 import MenuItem from 'material-ui/MenuItem';
-import CategoryDropDown from './CategoryDropDown'
-import Subheader from 'material-ui/Subheader';
-import Divider from 'material-ui/Divider';
-import SecondaryToolBar from './SecondaryToolBar'
 
 
 const styles = {
@@ -33,13 +27,9 @@ const styles = {
 };
 
 class MainToolBar extends Component {
-  constructor(props){
-    super(props)
-  }
 
   render(){
     return (
-      <div>
         <Toolbar style={styles.mainToolBar}>
           <ToolbarGroup firstChild={true}>
             <img src={logo} className="header-logo" alt="logo" />
@@ -57,11 +47,8 @@ class MainToolBar extends Component {
             </IconMenu>
           </ToolbarGroup>
         </Toolbar>
-        <SecondaryToolBar category="History"/>
-      </div>
     )
   }
 }
-
 
 export default MainToolBar;

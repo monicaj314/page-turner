@@ -3,10 +3,9 @@ import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
 import IconMenu from 'material-ui/IconMenu';
 import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
-import FlatButton from 'material-ui/FlatButton';
-
-import DropDownIcon from 'material-ui/svg-icons/navigation/arrow-drop-down';
 import CategoryDropDown from './CategoryDropDown'
+import Subheader from 'material-ui/Subheader';
+import Divider from 'material-ui/Divider';
 
 const styles = {
   secondaryToolBar:{
@@ -18,7 +17,6 @@ const styles = {
     fontSize:'medium',
     fontWeight:'bold',
     color:'#444',
-
     //border:'1px solid black',
     width:'150px'
   },
@@ -36,15 +34,20 @@ class SecondaryToolBar extends React.Component{
   constructor(props){
     super(props)
     this.state = {
-      openMenu: false
+      openMenu: false,
+      value:1
     }
   }
 
+  handleChange = (event, value) => {
+    console.log('Change!@!1!!!', value)
+  }
+
   handleOnRequestChange = (value) => {
-    console.log('requestchange',value)
     this.setState({
       openMenu: value,
     });
+    //this.props.onUpdateCategory(this.state.category)
   }
 
   handleOpenMenu = () => {
@@ -61,17 +64,23 @@ class SecondaryToolBar extends React.Component{
       </ToolbarGroup>
       <ToolbarGroup>
         <IconMenu
+          value={this.state.value}
+          desktop={true}
+          onChange={this.handleChange}
           iconButtonElement={<IconButton style={{width:0, padding:0, height:35}}></IconButton>}
           open={this.state.openMenu}
           onRequestChange={this.handleOnRequestChange}
           anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
           >
-          <MenuItem value="1" primaryText="Windows App" />
-          <MenuItem value="2" primaryText="Mac App" />
-          <MenuItem value="3" primaryText="Android App" />
-          <MenuItem value="4" primaryText="iOS App" />
+          <Subheader>The New York Times</Subheader>
+          <MenuItem value={1} primaryText="Combined Print and E-Book Fiction" />
+          <MenuItem value={2} primaryText="Combined Print and E-Book Nonfiction" />
+          <MenuItem value={3} primaryText="Hardcover Fiction" />
+          <MenuItem value={4} primaryText="Hardcover Nonfiction" />
+          <Divider />
+          <Subheader>Amazon</Subheader>
         </IconMenu>
-        <CategoryDropDown category={this.props.category} onClick={this.handleOpenMenu}/>
+        <CategoryDropDown category={this.props.category} onClick={this.handleOpenMenu} />
       </ToolbarGroup>
     </Toolbar>
     )

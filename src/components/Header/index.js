@@ -1,3 +1,3 @@
-import PrimaryToolBar from './PrimaryToolBar'
+import Header from './Header'
 
-export default PrimaryToolBar
+export default Header
