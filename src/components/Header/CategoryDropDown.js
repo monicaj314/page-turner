@@ -11,10 +11,22 @@ const styles={
   button:{
     border:'1px solid #dcdcdc',
     borderRadius: '2px',
-    backgroundColor: '#f5f5f5'
+    backgroundColor: '#f5f5f5',
+    height:'27px',
+    lineHeight:'27px',
   },
   icon:{
     marginRight:3,
+  },
+  labelText:{
+    textTransform: 'none',
+    fontSize:'12px',
+    fontWeight:'bold',
+    color: '#444'
+  },
+  menuText:{
+    fontSize:'13px',
+    color: '#444'
   }
 }
 
@@ -48,6 +60,7 @@ class CategoryDropDown extends React.Component {
   }
 
   render(){
+    const label = (<span style={styles.labelText}>{this.getCategoryByIndex(this.props.selectedCategoryIndex).display_name}</span>)
     return (
       <div>
         <IconMenu
@@ -59,20 +72,20 @@ class CategoryDropDown extends React.Component {
           onRequestChange={this.handleOnRequestChange}
           anchorOrigin={{horizontal: 'left', vertical: 'bottom'}} >
           <Subheader>The New York Times</Subheader>
-          <MenuItem value="combined-print-and-e-book-fiction" primaryText="Combined Print and E-Book Fiction" />
-          <MenuItem value="combined-print-and-e-book-nonfiction" primaryText="Combined Print and E-Book Nonfiction" />
-          <MenuItem value="business-books" primaryText="Business Books" />
+          <MenuItem style={styles.menuText} value="combined-print-and-e-book-fiction" primaryText="Combined Print and E-Book Fiction" />
+          <MenuItem style={styles.menuText} value="combined-print-and-e-book-nonfiction" primaryText="Combined Print and E-Book Nonfiction" />
+          <MenuItem style={styles.menuText} value="business-books" primaryText="Business Books" />
           <Divider />
           <Subheader>Amazon</Subheader>
-          <MenuItem value={5} primaryText="Amazon Nonfiction" />
+          <MenuItem style={styles.menuText} value={5} primaryText="Amazon Nonfiction" />
           <Subheader>Goodreads</Subheader>
-          <MenuItem value={6} primaryText="Goodreads Nonfiction" />
+          <MenuItem style={styles.menuText} value={6} primaryText="Goodreads Nonfiction" />
         </IconMenu>
 
           <FlatButton
             onTouchTap={this.handleOpenMenu}
             style={styles.button}
-            label={this.getCategoryByIndex(this.props.selectedCategoryIndex).display_name}
+            label={label}
             labelPosition="before"
             primary={false}
             icon={<DropDownIcon style={styles.icon}/>}

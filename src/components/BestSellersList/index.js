@@ -11,18 +11,18 @@ const styles = {
     display:'flex',
     flexDirection:'column',
     alignItems:'flex-start',
-    marginLeft:'150px'
+    marginLeft:'140px',
+    border:'0px solid blue',
   },
 }
 
 class BestSellerList extends React.Component {
-
   render(){
     if (this.props.isFetching){
       return <BlockLoader />
     } else {
       var cards = this.props.bestSellers.map((book, i) => (
-          <BookCard key={i} {...book} />
+            <BookCard key={i} {...book} />
         ))
     }
 
@@ -31,8 +31,8 @@ class BestSellerList extends React.Component {
           transitionName="example"
           transitionAppear={true}
           transitionAppearTimeout={3000}
-          transitionEnter={true}
-          transitionLeave={true}>
+          transitionEnter={false}
+          transitionLeave={false}>
           <div style={styles.listWrapper}>
             {cards}
           </div>

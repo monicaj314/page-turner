@@ -2,15 +2,14 @@ import React from 'react'
 import IconButton from 'material-ui/IconButton';
 import OpenIcon from 'material-ui/svg-icons/navigation/expand-more';
 import CloseIcon from 'material-ui/svg-icons/navigation/expand-less';
-import ActionStar from 'material-ui/svg-icons/toggle/star';
+//import ActionStar from 'material-ui/svg-icons/toggle/star';
 import Tokenizer from 'sentence-tokenizer'
 import { LongDescription, ShortDescription } from './BookDescription'
-
 
 const styles = {
   card: {
     display: 'flex',
-    margin: '0px 20px',
+
     //border: '1px solid blue',
     borderBottom: '1px solid rgb(224,224,224)',
     padding: '10px',
@@ -39,7 +38,8 @@ const styles = {
     maxWidth: 600
   },
   title:{
-    color:'#333',
+    color:'#15c',
+    textDecoration: 'none',
     fontSize:'20px',
     fontWeight: 'bold',
     //border: '1px solid blue',
@@ -56,20 +56,21 @@ const styles = {
 
   },
   description:{
-    fontSize:'12px',
+    fontSize:'14px',
     color:'#333',
     //border: '1px solid blue',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    padding: '0px 0px 20px 0px'
   },
   bookCardClosed:{
     maxHeight:0,
-    transition: 'max-height 200ms linear',
+    transition: 'max-height 400ms ease-out',
     overflow:'hidden',
   },
   bookCardOpen:{
     maxHeight: 1000,
-    transition: 'max-height 400ms linear',
-    overflowY: 'scroll',
+    transition: 'max-height 400ms ease-in',
+    overflow:'hidden',
   },
   small: {
     width: 15,
@@ -108,7 +109,7 @@ class BookCard extends React.Component {
           <img src={this.props.image} style={styles.bookImage} alt={this.props.title} />
         </div>
         <div style={styles.bookDetails}>
-          <span style={styles.title}>{this.props.title}</span>
+          <a href="https://google.com" style={styles.title}>{this.props.title}</a>
           <span style={styles.author}>by {this.props.author}</span>
           <div style={styles.description}>
               <div onClick={this.handleExpanding}>
@@ -118,13 +119,6 @@ class BookCard extends React.Component {
                 <LongDescription fullDescription={this.state.fullDescription} onReadLinkClick={this.handleExpanding} />
               </div>
           </div>
-        </div>
-        <div>
-            <ActionStar style={styles.small}/>
-            <ActionStar style={styles.small}/>
-            <ActionStar style={styles.small}/>
-            <ActionStar style={styles.small}/>
-            <ActionStar style={styles.small}/>
         </div>
         <div>
           <IconButton tooltip={this.state.expanded ? 'Read Less!' : 'Read More!'}>

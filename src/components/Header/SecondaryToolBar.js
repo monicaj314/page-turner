@@ -4,29 +4,35 @@ import CategoryDropDownContainer from '../../containers/CategoryDropDownContaine
 
 
 const styles = {
-  secondaryToolBar:{
+  toolBar:{
     backgroundColor: '#FFF',
     borderBottom:'1px solid rgb(224,224,224)',
-    justifyContent:'flex-start'
+    justifyContent: 'flex-start',
+    //height: 40
   },
-  secondaryToolBarTitle:{
-    fontSize:'medium',
+  toolBarTitle:{
+    fontSize:'large',
     fontWeight:'bold',
     color:'#444',
     //border:'1px solid black',
-    width:'150px'
+    width:'176px',
   },
+  titleText:{
+    //border:'1px solid red',
+    paddingLeft:'20px'
+  }
 };
 
 class SecondaryToolBar extends React.Component{
+
   render(){
+    var test = (<span style={styles.titleText}>Best Sellers</span>)
     return (
-    <Toolbar style={styles.secondaryToolBar}>
-      <ToolbarGroup>
-        <ToolbarTitle style={styles.secondaryToolBarTitle} text="Best Sellers" />
+    <Toolbar style={styles.toolBar}>
+      <ToolbarGroup firstChild={true}>
+        <ToolbarTitle style={styles.toolBarTitle} text={test} />
       </ToolbarGroup>
       <ToolbarGroup>
-
         <CategoryDropDownContainer />
       </ToolbarGroup>
     </Toolbar>
