@@ -1,13 +1,11 @@
 import React from 'react'
-//import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import OpenIcon from 'material-ui/svg-icons/navigation/expand-more';
 import CloseIcon from 'material-ui/svg-icons/navigation/expand-less';
 import ActionStar from 'material-ui/svg-icons/toggle/star';
-
-//import DropDownMenu from 'material-ui/DropDownMenu';
-//import MenuItem from 'material-ui/MenuItem';
 import Tokenizer from 'sentence-tokenizer'
+import { LongDescription, ShortDescription } from './BookDescription'
+
 
 const styles = {
   card: {
@@ -38,15 +36,15 @@ const styles = {
   },
   bookDetails:{
     //border: '1px solid red',
-    maxWidth: 550
+    maxWidth: 600
   },
   title:{
+    color:'#333',
     fontSize:'20px',
     fontWeight: 'bold',
     //border: '1px solid blue',
     display: 'block',
     padding: '5px 0px'
-
   },
   author:{
     fontSize:'14px',
@@ -59,35 +57,32 @@ const styles = {
   },
   description:{
     fontSize:'12px',
-    display:'block',
     color:'#333',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
     //border: '1px solid blue',
+    cursor: 'pointer'
+  },
+  bookCardClosed:{
+    maxHeight:0,
+    transition: 'max-height 200ms linear',
+    overflow:'hidden',
+  },
+  bookCardOpen:{
+    maxHeight: 1000,
+    transition: 'max-height 400ms linear',
+    overflowY: 'scroll',
   },
   small: {
     width: 15,
   },
 }
-
-const ShortDescription = ({desc, handleExpanding}) => {
-  return (
-    <div>
-      {desc.map((sentence, key)=>{
-        return <span key={key}>{sentence}&nbsp;</span>
-      })}
-      &nbsp;&nbsp;<a href="#" onClick={handleExpanding}>Read more...</a>
-    </div>
-  )
-}
-
 class BookCard extends React.Component {
   constructor(props){
     super(props)
     var tokenizer = new Tokenizer('Desc')
     tokenizer.setEntry(props.description)
     const allSentences = tokenizer.getSentences()
-    let shortDescription = (allSentences.length) > 3 ? allSentences.slice(0,3) : allSentences
+    const showReadMore = allSentences.length > 3
+    let shortDescription = showReadMore ? allSentences.slice(0,3) : allSentences
     this.state = {
       expanded: false,
       fullDescription: allSentences,
@@ -104,9 +99,6 @@ class BookCard extends React.Component {
   }
 
   render(){
-
-
-
     return (
       <div style={styles.card}>
         <div style={styles.rankDiv}>
@@ -118,17 +110,14 @@ class BookCard extends React.Component {
         <div style={styles.bookDetails}>
           <span style={styles.title}>{this.props.title}</span>
           <span style={styles.author}>by {this.props.author}</span>
-          <span style={styles.description}>
-            {!this.state.expanded
-              ? <ShortDescription desc={this.state.shortDescription} handleExpanding={this.handleExpanding}/>
-              :this.state.fullDescription.map((item, key) => {
-              if ((key+1) % 3 === 0){
-                return(<span key={key}>{item}<br/><br/></span>)
-              } else {
-                return <span key={key}>{item}&nbsp;</span>
-              }
-            })}
-          </span>
+          <div style={styles.description}>
+              <div onClick={this.handleExpanding}>
+                <ShortDescription isCardOpen={this.state.expanded} fullDescription={this.state.fullDescription} onReadLinkClick={this.handleExpanding} />
+              </div>
+              <div style={this.state.expanded ? styles.bookCardOpen : styles.bookCardClosed} onClick={this.handleExpanding}>
+                <LongDescription fullDescription={this.state.fullDescription} onReadLinkClick={this.handleExpanding} />
+              </div>
+          </div>
         </div>
         <div>
             <ActionStar style={styles.small}/>
@@ -138,7 +127,7 @@ class BookCard extends React.Component {
             <ActionStar style={styles.small}/>
         </div>
         <div>
-          <IconButton tooltip="Read more!">
+          <IconButton tooltip={this.state.expanded ? 'Read Less!' : 'Read More!'}>
             {this.state.expanded
               ? <CloseIcon onClick={this.handleExpanding}/>
               : <OpenIcon onClick={this.handleExpanding}/>}
@@ -149,3 +138,14 @@ class BookCard extends React.Component {
   }
 
 export default BookCard
+
+
+// {!this.state.expanded
+//   ? <ShortDescription desc={this.state.shortDescription} handleExpanding={this.handleExpanding}/>
+//   :this.state.fullDescription.map((item, key) => {
+//   if ((key+1) % 3 === 0){
+//     return(<span key={key}>{item}<br/><br/></span>)
+//   } else {
+//     return <span key={key}>{item}&nbsp;</span>
+//   }
+// })}

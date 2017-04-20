@@ -1,0 +1,10 @@
+.example-appear {
+  padding-left: 150px;
+  opacity: 0;
+}
+
+.example-appear.example-appear-active {
+  padding-left: 0px;
+  opacity: 1;
+  transition: padding-left 400ms ease-out, opacity 400ms ease-in;
+}
