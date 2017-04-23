@@ -27,16 +27,18 @@ class BestSellerList extends React.Component {
     }
 
       return (
+<div style={styles.listWrapper}>
         <CSSTransitionGroup
           transitionName="example"
           transitionAppear={true}
           transitionAppearTimeout={3000}
           transitionEnter={false}
           transitionLeave={false}>
-          <div style={styles.listWrapper}>
+
             {cards}
+            </CSSTransitionGroup>
           </div>
-        </CSSTransitionGroup>
+
       )
   }
 }

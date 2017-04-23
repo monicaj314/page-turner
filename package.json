@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "amazon-product-api": "^0.4.3",
     "isomorphic-fetch": "^2.2.1",
     "material-ui": "^0.17.2",
     "react": "^15.4.2",

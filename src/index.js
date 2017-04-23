@@ -11,6 +11,7 @@ import App from './containers/App.js'
 import rootReducer from './reducers'
 import './index.css'
 import { fetchAndMergeBestSellers } from './actions'
+import { fetchAmazonBookInfo } from './utilities/AmazonApi';
 
 const loggerMiddleware = createLogger()
 
@@ -21,6 +22,7 @@ let store = createStore(
     loggerMiddleware
   )
 );
+//fetchAmazonBookInfo()
 
 store.dispatch(fetchAndMergeBestSellers('Science'))
 

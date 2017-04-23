@@ -76,6 +76,20 @@ const styles = {
     width: 15,
   },
 }
+
+const Description = ({desc}) => {
+  var parts = desc.split(/<p>(.*?)<\/p>/g);
+  for (var i = 1; i < parts.length; i += 2) {
+    parts[i] = <p key={i}>{parts[i]}</p>;
+  }
+  console.log(parts)
+  return (
+    <div>
+      {parts}
+    </div>
+  )
+}
+
 class BookCard extends React.Component {
   constructor(props){
     super(props)
@@ -113,10 +127,10 @@ class BookCard extends React.Component {
           <span style={styles.author}>by {this.props.author}</span>
           <div style={styles.description}>
               <div onClick={this.handleExpanding}>
-                <ShortDescription isCardOpen={this.state.expanded} fullDescription={this.state.fullDescription} onReadLinkClick={this.handleExpanding} />
+                <ShortDescription isCardOpen={this.state.expanded} fullDescription={this.props.description} onReadLinkClick={this.handleExpanding} />
               </div>
               <div style={this.state.expanded ? styles.bookCardOpen : styles.bookCardClosed} onClick={this.handleExpanding}>
-                <LongDescription fullDescription={this.state.fullDescription} onReadLinkClick={this.handleExpanding} />
+                <LongDescription fullDescription={this.props.description} onReadLinkClick={this.handleExpanding} />
               </div>
           </div>
         </div>

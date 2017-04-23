@@ -1,5 +1,14 @@
 import fetch from 'isomorphic-fetch'
 import keys from '../utilities/apiKeys.json';
+import { fetchAmazonBookInfo } from '../utilities/AmazonApi';
+
+export const UPDATE_CATEGORY = 'UPDATE_CATEGORY'
+export function updateCategory(categoryIndex){
+  return {
+    type: UPDATE_CATEGORY,
+    categoryIndex
+  }
+}
 
 export const REQUEST_NYT_BESTSELLERS = 'REQUEST_NYT_BESTSELLERS'
 export function requestBestSellers(category){
@@ -29,16 +38,7 @@ export function receiveBestSellers(category, results){
   }
 }
 
-export const UPDATE_CATEGORY = 'UPDATE_CATEGORY'
-export function updateCategory(categoryIndex){
-  return {
-    type: UPDATE_CATEGORY,
-    categoryIndex
-  }
-}
-
 export function fetchAndMergeBestSellers(category){
-
   return function(dispatch) {
     //Update UI w/ fetching
     dispatch(requestBestSellers(category))
@@ -64,18 +64,27 @@ function fetchAndMergeGoogleList(nytBooks){
 }
 
 function fetchAndMergeGoogleBook(nytBook){
-  const url = `https://www.googleapis.com/books/v1/volumes?q=isbn:${nytBook.book_details[0].primary_isbn10}`
+  //const url = `https://www.googleapis.com/books/v1/volumes?q=isbn:${nytBook.book_details[0].primary_isbn10}`
+  const url = 'https://www.googleapis.com/books/v1/volumes/lHNtjwEACAAJ'
   return fetch(url)
     .then(response => response.json())
     .then(googleJson => mergeBookData(nytBook, googleJson))
 }
 
+
+
 //nastyness.  Will fix
 function mergeBookData(nytBook, googleJson){
-  if (googleJson.items && googleJson.items[0]){
-      nytBook.image = googleJson.items[0].volumeInfo.imageLinks.thumbnail
-      nytBook.publishedDate = googleJson.items[0].volumeInfo.publishedDate
-      nytBook.description= googleJson.items[0].volumeInfo.description
+  //if (googleJson.items && googleJson.items[0]){
+  if (googleJson){
+      //nytBook.image = googleJson.items[0].volumeInfo.imageLinks.thumbnail
+      //nytBook.publishedDate = googleJson.items[0].volumeInfo.publishedDate
+      //nytBook.description= googleJson.items[0].volumeInfo.description
+
+      nytBook.image = googleJson.volumeInfo.imageLinks.thumbnail
+      nytBook.publishedDate = googleJson.volumeInfo.publishedDate
+      nytBook.description= googleJson.volumeInfo.description
+
   }else{
       nytBook.image = 'http://www.i2clipart.com/cliparts/f/9/4/d/clipart-sad-face-outline-128x128-f94d.png'
   }
