@@ -3,7 +3,6 @@ import IconButton from 'material-ui/IconButton';
 import OpenIcon from 'material-ui/svg-icons/navigation/expand-more';
 import CloseIcon from 'material-ui/svg-icons/navigation/expand-less';
 //import ActionStar from 'material-ui/svg-icons/toggle/star';
-import Tokenizer from 'sentence-tokenizer'
 import { LongDescription, ShortDescription } from './BookDescription'
 
 const styles = {
@@ -77,31 +76,11 @@ const styles = {
   },
 }
 
-const Description = ({desc}) => {
-  var parts = desc.split(/<p>(.*?)<\/p>/g);
-  for (var i = 1; i < parts.length; i += 2) {
-    parts[i] = <p key={i}>{parts[i]}</p>;
-  }
-  console.log(parts)
-  return (
-    <div>
-      {parts}
-    </div>
-  )
-}
-
 class BookCard extends React.Component {
   constructor(props){
     super(props)
-    var tokenizer = new Tokenizer('Desc')
-    tokenizer.setEntry(props.description)
-    const allSentences = tokenizer.getSentences()
-    const showReadMore = allSentences.length > 3
-    let shortDescription = showReadMore ? allSentences.slice(0,3) : allSentences
     this.state = {
       expanded: false,
-      fullDescription: allSentences,
-      shortDescription: shortDescription,
     }
   }
 
@@ -146,14 +125,3 @@ class BookCard extends React.Component {
   }
 
 export default BookCard
-
-
-// {!this.state.expanded
-//   ? <ShortDescription desc={this.state.shortDescription} handleExpanding={this.handleExpanding}/>
-//   :this.state.fullDescription.map((item, key) => {
-//   if ((key+1) % 3 === 0){
-//     return(<span key={key}>{item}<br/><br/></span>)
-//   } else {
-//     return <span key={key}>{item}&nbsp;</span>
-//   }
-// })}
