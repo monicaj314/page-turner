@@ -2,8 +2,8 @@
   "name": "page-turner",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001/",
   "dependencies": {
-    "amazon-product-api": "^0.4.3",
     "isomorphic-fetch": "^2.2.1",
     "material-ui": "^0.17.2",
     "react": "^15.4.2",
@@ -63,9 +63,9 @@
     "build-css": "node-sass src/ -o src/",
     "watch-css": "npm run build-css && node-sass src/ -o src/ --watch --recursive",
     "start-js": "node scripts/start.js",
-    "build-js": "node scripts/start.js",
+    "build-js": "node scripts/build.js",
     "start": "npm-run-all -p watch-css start-js",
-    "build": "npm run build-css && build-js",
+    "build": "npm-run-all build-css build-js",
     "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {

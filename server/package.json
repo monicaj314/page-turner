@@ -1,0 +1,13 @@
+{
+  "name": "page-turners-api",
+  "version": "1.0.0",
+  "description": "API backend for page-turners",
+  "main": "index.js",
+  "author": "Victor M Merino",
+  "license": "MIT",
+  "dependencies": {
+    "amazon-product-api": "^0.4.3",
+    "express": "^4.15.2",
+    "morgan": "^1.8.1"
+  }
+}

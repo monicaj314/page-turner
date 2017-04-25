@@ -10,9 +10,7 @@ import BestSellersListContainer from './BestSellersListContainer'
 import './App.css';
 
 
-import { fetchAndMergeBestSellers } from '../actions'
-import { fetchAmazonBookInfo } from '../utilities/AmazonApi';
-
+import { fetchAndMergeBestSellers, fetchAmazonTest } from '../actions'
 
 
 
@@ -25,9 +23,11 @@ let store = createStore(
     loggerMiddleware
   )
 );
-//fetchAmazonBookInfo()
+
+fetchAmazonTest()
 
 store.dispatch(fetchAndMergeBestSellers('Science'))
+
 
 class App extends Component {
   render() {

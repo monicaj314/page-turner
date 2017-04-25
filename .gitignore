@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/server/node_modules
 
 # testing
 /coverage
@@ -17,3 +18,4 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 src/utilities/apiKeys.json
+server/utilities/apiKeys.json

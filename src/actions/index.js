@@ -1,6 +1,5 @@
 import fetch from 'isomorphic-fetch'
 import keys from '../utilities/apiKeys.json';
-import { fetchAmazonBookInfo } from '../utilities/AmazonApi';
 
 export const UPDATE_CATEGORY = 'UPDATE_CATEGORY'
 export function updateCategory(categoryIndex){
@@ -71,6 +70,12 @@ function fetchAndMergeGoogleBook(nytBook){
     .then(googleJson => mergeBookData(nytBook, googleJson))
 }
 
+export function fetchAmazonTest(){
+  //const url = `https://www.googleapis.com/books/v1/volumes?q=isbn:${nytBook.book_details[0].primary_isbn10}`
+  const url = 'http://localhost:3000/api/amazon'
+  return fetch(url)
+    .then(response => response.json())
+}
 
 
 //nastyness.  Will fix
