@@ -4,8 +4,8 @@ import { updateCategory, fetchAndMergeBestSellers } from '../actions'
 
 const mapStateToProps = ({categoryState}) => {
   return {
-    selectedCategoryIndex: categoryState.selectedCategoryIndex,
-    categories: categoryState.categories
+    selectedCategoryIndex: categoryState.selectedCategoryId,
+    categories: categoryState.amzCategories
   }
 }
 

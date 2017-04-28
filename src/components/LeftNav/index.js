@@ -1,3 +1,3 @@
-import LeftNav from './LeftNav'
+import LeftNavContainer from './LeftNavContainer'
 
-export default LeftNav
+export default LeftNavContainer

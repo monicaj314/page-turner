@@ -17,17 +17,25 @@ class LeftNav extends React.Component {
   }
 
   render(){
-    console.log('categories', this.props.categories)
-    return (
-      <div style={styles.leftNav}>
-        <div style={styles.navBody}>
-          {this.props.categories.map((cat) => {
-            return (<p>{cat.title}</p>)
-          })}
+    if (this.props.amzIsFetchingCategories){
+      return <p>Loading...</p>
+    } else {
+      console.log('categories', this.props.amzCategories)
+      return (
+        <div style={styles.leftNav}>
+          <div style={styles.navBody}>
+            {this.props.amzCategories.map((cat) => {
+              return (<p>{cat.Name}</p>)
+            })}
+          </div>
         </div>
-      </div>
-    )
+      )
+    }
   }
+
+
+
+
 }
 
 export default LeftNav

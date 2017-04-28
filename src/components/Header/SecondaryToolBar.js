@@ -33,7 +33,7 @@ class SecondaryToolBar extends React.Component{
         <ToolbarTitle style={styles.toolBarTitle} text={test} />
       </ToolbarGroup>
       <ToolbarGroup>
-        <CategoryDropDownContainer />
+        
       </ToolbarGroup>
     </Toolbar>
     )

@@ -1,18 +1,18 @@
 import { combineReducers } from 'redux'
-import { REQUEST_NYT_BESTSELLERS, RECEIVE_NYT_BESTSELLERS, UPDATE_CATEGORY } from '../actions'
+import { REQUEST_NYT_BESTSELLERS, 
+  RECEIVE_NYT_BESTSELLERS, 
+  UPDATE_CATEGORY, 
+  REQUEST_CATEGORIES, 
+  RECEIVE_CATEGORIES } from '../actions'
 
 const init = {
   isFetchingBestSellers: false,
   selectedCategoryId: '',
   bestSellers: [],
-  amazon:{
-    categories:[],
-    isFetchingCategories:false,
-  },
-  nyt:{
-    categories:[],
-    isFetchingCategories:false,
-  },
+  amzCategories: [],
+  amzIsFetchingCategories: true,
+  nytCategories: [],
+  nytIsFetchingCategories: false,
 }
 
 function bestSellersReducer(state = {
@@ -36,8 +36,10 @@ function bestSellersReducer(state = {
 
 function categoryReducer(state = {
   selectedCategoryId: init.selectedCategoryId,
-  amazon: init.amazon,
-  nyt: init.nyt
+  amzCategories: init.amzCategories,
+  amzIsFetchingCategories: init.amzIsFetchingCategories,
+  nytCategories: init.nytCategories,
+  nytIsFetchingCategories: init.nytIsFetchingCategories,
 }, action){
   switch (action.type) {
     case UPDATE_CATEGORY:
@@ -45,9 +47,19 @@ function categoryReducer(state = {
         selectedCategoryIndex: action.categoryIndex,
       })
     case REQUEST_CATEGORIES:
-      
+      return Object.assign({}, state, {
+        amzIsFetchingCategories: true,
+        nytIsFetchingCategories: true
+      })
     case RECEIVE_CATEGORIES:
-      
+      debugger;
+      console.log('ACTION.AMZ', action.amzCategories)
+      return Object.assign({}, state, {
+        amzIsFetchingCategories: false,
+        nytIsFetchingCategories: false,
+        amzCategories: action.amzCategories,
+        //nytCategories: action.nytCategories
+      })
     default:
       return state
   }

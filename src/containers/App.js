@@ -7,9 +7,10 @@ import thunkMiddleware from 'redux-thunk'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import HeaderContainer from './HeaderContainer'
 import BestSellersListContainer from './BestSellersListContainer'
-import LeftNav from '../components/LeftNav'
+import LeftNavContainer from '../components/LeftNav'
 import './App.css';
-import { fetchAndMergeBestSellers, fetchAmazonTest } from '../actions'
+import { fetchAndMergeBestSellers, fetchCategories } from '../actions'
+//import { fetchCategories } from '../actions/CategoryActionCreators'
 
 const loggerMiddleware = createLogger()
 let store = createStore(
@@ -20,8 +21,8 @@ let store = createStore(
   )
 );
 
+store.dispatch(fetchCategories())
 store.dispatch(fetchAndMergeBestSellers('Science'))
-
 
 
 const styles = {
@@ -38,7 +39,7 @@ class App extends Component {
           <div className="App">
               <HeaderContainer />
               <div style={styles.bodyWrapper}>
-                <LeftNav />
+                <LeftNavContainer />
                 <BestSellersListContainer />
               </div>
           </div>

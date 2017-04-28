@@ -3,7 +3,7 @@ import BestSellersList from '../components/BestSellersList'
 
 const mapStateToProps = ({bestSellersState}) => {
   return {
-    isFetching: bestSellersState.isFetching,
+    isFetching: bestSellersState.isFetchingBestSellers,
     bestSellers: bestSellersState.bestSellers,
   }
 }

@@ -17,19 +17,6 @@ const styles = {
   }
 }
 
-const Description = ({desc}) => {
-  var parts = desc.split(/<p>(.*?)<\/p>/g);
-  for (var i = 1; i < parts.length; i += 2) {
-    parts[i] = <p key={i}>{parts[i]}</p>;
-  }
-  console.log(parts)
-  return (
-    <div>
-      {parts}
-    </div>
-  )
-}
-
 export const ShortDescription = ({isCardOpen, fullDescription, onReadLinkClick}) => {
   const paragraphs = fullDescription.split(/<p>(.*?)<\/p>/g)
   const firstTwoParagraphs = paragraphs.slice(0, 4)
