@@ -83,7 +83,7 @@ class BookCard extends React.Component {
   }
 
   handleExpanding = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     const newExpandedState = !this.state.expanded
     this.setState({
       expanded: newExpandedState

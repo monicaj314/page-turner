@@ -1,4 +1,5 @@
 import React from 'react'
+import CategorySource from './CategorySource'
 
 const styles = {
   leftNav:{
@@ -9,15 +10,6 @@ const styles = {
   navBody:{
     //border:'1px solid blue',
   },
-  rankSource:{
-    fontSize:'13px',
-    fontWeight:'bold',
-    padding: '0px 0px 2px 0px',
-  },
-  category:{
-    fontSize:'13px',
-    padding: '2px 0px 2px 10px',
-  }
 }
 
 class LeftNav extends React.Component {
@@ -28,18 +20,8 @@ class LeftNav extends React.Component {
       return (
         <div style={styles.leftNav}>
           <div style={styles.navBody}>
-            <div style={styles.rankSource}>Amazon</div>
-            {this.props.amzCategories.map((cat) => {
-              return (<div key={cat.Id} style={styles.category}>
-                <a href="#">{cat.Name}</a>
-                </div>)
-            })}
-            <div style={styles.rankSource}>New York Times</div>
-            {this.props.amzCategories.map((cat) => {
-              return (<div key={cat.Id} style={styles.category}>
-                <a href="#">{cat.Name}</a>
-                </div>)
-            })}
+            <CategorySource sourceName='Amazon' categories={this.props.amzCategories} />
+            <CategorySource sourceName='New York Times' categories={this.props.amzCategories} />
           </div>
         </div>
       )

@@ -60,7 +60,7 @@ export function fetchCategories(){
 }
 
 function fetchAmazonCategories(){
-  const url = 'http://localhost:3000/api/amazon-categories'
+  const url = 'http://localhost:3000/api/amazon-categories-test'
   return fetch(url)
     .then(response => response.json())
 }

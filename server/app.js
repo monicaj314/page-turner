@@ -38,6 +38,142 @@ app.get('/api/amazon-categories', (req,res) => {
   });
 })
 
+app.get('/api/amazon-categories-test', (req,res) => {
+    console.log('AMAZON TEST API CALL')
+    const cats = [
+      {
+        "Id": "1",
+        "Name": "Arts & Photography"
+      },
+      {
+        "Id": "2",
+        "Name": "Biographies & Memoirs"
+      },
+      {
+        "Id": "3",
+        "Name": "Business & Money"
+      },
+      {
+        "Id": "3248857011",
+        "Name": "Calendars"
+      },
+      {
+        "Id": "4",
+        "Name": "Children's Books"
+      },
+      {
+        "Id": "12290",
+        "Name": "Christian Books & Bibles"
+      },
+      {
+        "Id": "4366",
+        "Name": "Comics & Graphic Novels"
+      },
+      {
+        "Id": "5",
+        "Name": "Computers & Technology"
+      },
+      {
+        "Id": "6",
+        "Name": "Cookbooks, Food & Wine"
+      },
+      {
+        "Id": "48",
+        "Name": "Crafts, Hobbies & Home"
+      },
+      {
+        "Id": "8975347011",
+        "Name": "Education & Teaching"
+      },
+      {
+        "Id": "173507",
+        "Name": "Engineering & Transportation"
+      },
+      {
+        "Id": "301889",
+        "Name": "Gay & Lesbian"
+      },
+      {
+        "Id": "10",
+        "Name": "Health, Fitness & Dieting"
+      },
+      {
+        "Id": "9",
+        "Name": "History"
+      },
+      {
+        "Id": "86",
+        "Name": "Humor & Entertainment"
+      },
+      {
+        "Id": "10777",
+        "Name": "Law"
+      },
+      {
+        "Id": "17",
+        "Name": "Literature & Fiction"
+      },
+      {
+        "Id": "173514",
+        "Name": "Medical Books"
+      },
+      {
+        "Id": "18",
+        "Name": "Mystery, Thriller & Suspense"
+      },
+      {
+        "Id": "20",
+        "Name": "Parenting & Relationships"
+      },
+      {
+        "Id": "3377866011",
+        "Name": "Politics & Social Sciences"
+      },
+      {
+        "Id": "21",
+        "Name": "Reference"
+      },
+      {
+        "Id": "22",
+        "Name": "Religion & Spirituality"
+      },
+      {
+        "Id": "23",
+        "Name": "Romance"
+      },
+      {
+        "Id": "75",
+        "Name": "Science & Math"
+      },
+      {
+        "Id": "25",
+        "Name": "Science Fiction & Fantasy"
+      },
+      {
+        "Id": "4736",
+        "Name": "Self-Help"
+      },
+      {
+        "Id": "26",
+        "Name": "Sports & Outdoors"
+      },
+      {
+        "Id": "28",
+        "Name": "Teen & Young Adult"
+      },
+      {
+        "Id": "5267710011",
+        "Name": "Test Preparation"
+      },
+      {
+        "Id": "27",
+        "Name": "Travel"
+      }
+    ]
+    res.json(cats)
+})
+
+
 // app.get('*', (req, res) => {
 //   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
 // });
