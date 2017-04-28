@@ -4,14 +4,14 @@ import OpenIcon from 'material-ui/svg-icons/navigation/expand-more'
 import CloseIcon from 'material-ui/svg-icons/navigation/expand-less'
 
 const styles = {
-  sourceDiv:{
+  menuDiv:{
     display:'flex',
     alignItems:'flex-end',
     //justifyContent:'space-between',
     cursor: 'pointer',
     //backgroundColor:'#f1f1f1'
   },
-  sourceName:{
+  menuName:{
     fontSize:'13px',
     fontWeight:'bold',
     padding: '0px 0px 2px 0px',
@@ -37,7 +37,7 @@ const styles = {
   },
 }
 
-class CategorySource extends React.Component{
+class CategoryMenu extends React.Component{
   constructor(props){
     super(props)
     this.state = {
@@ -45,26 +45,22 @@ class CategorySource extends React.Component{
     }
   }
 
-  handleExpanding = (event) => {
-    event.preventDefault()
-    const newExpandedState = !this.state.expanded
-    this.setState({
-      expanded: newExpandedState
-    })
+  handleClick = () => {
+    this.props.handleExpanding(this.props.menuCode)
   }
-  
+
   render(){
     return(
       <div>
-        <div style={styles.sourceDiv} onClick={this.handleExpanding}>
-          <div style={styles.sourceName}>
-            {this.props.sourceName}
+        <div style={styles.menuDiv} onClick={this.handleClick}>
+          <div style={styles.menuName}>
+            {this.props.menuName}
           </div>
           <IconButton style={styles.iconDiv} iconStyle={styles.icon}>
-            {this.state.expanded ? <CloseIcon /> : <OpenIcon />}
+            {this.props.expanded ? <CloseIcon /> : <OpenIcon />}
           </IconButton>
         </div>
-        <div style={this.state.expanded ? styles.categoryMenuOpen : styles.categoryMenuClosed}>
+        <div style={this.props.expanded ? styles.categoryMenuOpen : styles.categoryMenuClosed}>
           {this.props.categories.map((cat) => {
             return (<div key={cat.Id} style={styles.category}>
               <a href="#">{cat.Name}</a>
@@ -76,4 +72,4 @@ class CategorySource extends React.Component{
   }
 }
 
-export default CategorySource
+export default CategoryMenu

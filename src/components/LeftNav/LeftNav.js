@@ -1,5 +1,5 @@
 import React from 'react'
-import CategorySource from './CategorySource'
+import CategoryMenu from './CategoryMenu'
 
 const styles = {
   leftNav:{
@@ -13,6 +13,19 @@ const styles = {
 }
 
 class LeftNav extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      expandedMenu:'AMZ'
+    }
+  }
+
+  handleExpanding = (menu) => {
+    this.setState({
+      expandedMenu: menu
+    })
+  }
+
   render(){
     if (this.props.amzIsFetchingCategories){
       return <p>Loading...</p>
@@ -20,8 +33,16 @@ class LeftNav extends React.Component {
       return (
         <div style={styles.leftNav}>
           <div style={styles.navBody}>
-            <CategorySource sourceName='Amazon' categories={this.props.amzCategories} />
-            <CategorySource sourceName='New York Times' categories={this.props.amzCategories} />
+            <CategoryMenu menuName='Amazon' 
+              menuCode='AMZ'
+              handleExpanding={this.handleExpanding}
+              categories={this.props.amzCategories} 
+              expanded={this.state.expandedMenu === 'AMZ'}/>
+            <CategoryMenu menuName='New York Times' 
+              menuCode='NYT'
+              handleExpanding={this.handleExpanding }
+              categories={this.props.amzCategories } 
+              expanded={this.state.expandedMenu === 'NYT'}/>
           </div>
         </div>
       )
