@@ -1,5 +1,8 @@
 import fetch from 'isomorphic-fetch'
-import keys from '../utilities/apiKeys.json';
+import keys from '../utilities/apiKeys.json'
+export CategoryActionCreators from './CategoryActionCreators'
+
+
 
 export const UPDATE_CATEGORY = 'UPDATE_CATEGORY'
 export function updateCategory(categoryIndex){

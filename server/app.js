@@ -18,22 +18,19 @@ var client = amazon.createClient({
   awsTag: keys.associate_tag
 });
 
-app.get('/api/amazon', (req, res) => {
-  console.log(req.query.category)
-
+app.get('api/amazon-categories', (req,res) => {
   client.browseNodeLookup({
     Operation: 'BrowseNodeLookup',
-    BrowseNodeId: req.query.category,
+    BrowseNodeId: 1000, //Books -> Subjects
     responseGroup: 
-    'BrowseNodeInfo,TopSellers'
+    'BrowseNodeInfo'
   }).then(function(results){
     res.json(results)
   }).catch(function(err){
     res.json(err)
-    console.log(err)
   });
-
 })
+
 
 // app.get('*', (req, res) => {
 //   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));

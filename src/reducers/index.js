@@ -464,6 +464,10 @@ function categoryReducer(state = {
       return Object.assign({}, state, {
         selectedCategoryIndex: action.categoryIndex,
       })
+    case REQUEST_CATEGORIES:
+      
+    case RECEIVE_CATEGORIES:
+      
     default:
       return state
   }
