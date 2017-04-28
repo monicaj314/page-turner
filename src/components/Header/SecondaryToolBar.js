@@ -15,7 +15,7 @@ const styles = {
     fontWeight:'bold',
     color:'#444',
     //border:'1px solid black',
-    width:'176px',
+    width:'182px',
   },
   titleText:{
     //border:'1px solid red',

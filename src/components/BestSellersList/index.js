@@ -7,12 +7,8 @@ import './BestSellersList.css'
 import BlockLoader from '../Shared/BlockLoader'
 
 const styles = {
-  listWrapper:{
-    display:'flex',
-    flexDirection:'column',
-    alignItems:'flex-start',
-    marginLeft:'140px',
-    border:'0px solid blue',
+  listWrapper:{   
+    //border:'1px solid blue',
   },
 }
 
@@ -27,18 +23,16 @@ class BestSellerList extends React.Component {
     }
 
       return (
-<div style={styles.listWrapper}>
-        <CSSTransitionGroup
-          transitionName="example"
-          transitionAppear={true}
-          transitionAppearTimeout={3000}
-          transitionEnter={false}
-          transitionLeave={false}>
-
-            {cards}
-            </CSSTransitionGroup>
-          </div>
-
+        <div style={styles.listWrapper}>
+          <CSSTransitionGroup
+            transitionName="example"
+            transitionAppear={true}
+            transitionAppearTimeout={3000}
+            transitionEnter={false}
+            transitionLeave={false}>
+              {cards}
+          </CSSTransitionGroup>
+        </div>
       )
   }
 }

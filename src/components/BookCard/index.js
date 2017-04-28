@@ -8,15 +8,13 @@ import { LongDescription, ShortDescription } from './BookDescription'
 const styles = {
   card: {
     display: 'flex',
-
     //border: '1px solid blue',
     borderBottom: '1px solid rgb(224,224,224)',
-    padding: '10px',
+    padding: '10px 0px',
     //maxHeight: '200px',
-
   },
   rankDiv:{
-    padding:'0px 15px',
+    padding:'0px 15px 0px 0px',
     //border: '1px solid blue',
   },
   rankText:{

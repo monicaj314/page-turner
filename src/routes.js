@@ -6,11 +6,11 @@ import NotFound from './components/Shared/NotFound'
 
 const Routes = (props) => (
   <Router>
-    <div>
+    <Switch>
       <Route exact path="/" component={App} />
       <Route path="/book" component={BookDetails} />
       <Route path="*" component={NotFound} />
-    </div>
+    </Switch>
   </Router>
 );
 
