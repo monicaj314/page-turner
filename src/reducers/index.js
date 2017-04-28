@@ -52,8 +52,6 @@ function categoryReducer(state = {
         nytIsFetchingCategories: true
       })
     case RECEIVE_CATEGORIES:
-      debugger;
-      console.log('ACTION.AMZ', action.amzCategories)
       return Object.assign({}, state, {
         amzIsFetchingCategories: false,
         nytIsFetchingCategories: false,
