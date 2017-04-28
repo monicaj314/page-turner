@@ -9,7 +9,6 @@ var keys = require('./utilities/apiKeys.json');
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
 
 //Serve static content
-console.log(path.resolve('..', 'public'))
 app.use(express.static(path.resolve('..', 'build')));
 
 //Amazon test
@@ -20,22 +19,24 @@ var client = amazon.createClient({
 });
 
 app.get('/api/amazon', (req, res) => {
-  client.itemSearch({
-    director: 'Quentin Tarantino',
-    actor: 'Samuel L. Jackson',
-    searchIndex: 'DVD',
-    audienceRating: 'R',
-    responseGroup: 'ItemAttributes,Images'
+  console.log(req.query.category)
+
+  client.browseNodeLookup({
+    Operation: 'BrowseNodeLookup',
+    BrowseNodeId: req.query.category,
+    responseGroup: 
+    'BrowseNodeInfo,TopSellers'
   }).then(function(results){
     res.json(results)
   }).catch(function(err){
-    console.log(err);
+    res.json(err)
+    console.log(err)
   });
 
 })
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
-});
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+// });
 
 module.exports = app
