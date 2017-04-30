@@ -28,6 +28,10 @@ class LeftNav extends React.Component {
     })
   }
 
+  getCategories(menuCode){
+    return this.props.categories.filter(cat => cat.listSourceId === menuCode)
+  }
+
   render(){
     if (this.props.isFetchingCategories){
       return <p>Loading...</p>
@@ -38,12 +42,14 @@ class LeftNav extends React.Component {
             <CategoryMenu menuName='Amazon' 
               menuCode='AMZ'
               handleExpanding={this.handleExpanding}
-              categories={this.props.amzCategories} 
+              handleCategoryChange={this.props.handleCategoryChange}
+              categories={this.getCategories('AMZ')} 
               expanded={this.state.expandedMenu === 'AMZ'}/>
             <CategoryMenu menuName='New York Times' 
               menuCode='NYT'
               handleExpanding={this.handleExpanding }
-              categories={this.props.nytCategories } 
+              handleCategoryChange={this.props.handleCategoryChange}
+              categories={this.getCategories('NYT')} 
               expanded={this.state.expandedMenu === 'NYT'}/>
           </div>
         </div>

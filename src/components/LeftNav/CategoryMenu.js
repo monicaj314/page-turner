@@ -2,6 +2,7 @@ import React from 'react'
 import IconButton from 'material-ui/IconButton'
 import OpenIcon from 'material-ui/svg-icons/navigation/expand-more'
 import CloseIcon from 'material-ui/svg-icons/navigation/expand-less'
+import CategoryMenuItem from './CategoryMenuItem'
 import './LeftNav.css';
 
 const styles = {
@@ -26,10 +27,6 @@ const styles = {
     height:20,
     width:20
   },
-  category:{
-    fontSize:'13px',
-    padding: '2px 0px 2px 10px',
-  },
   categoryMenuOpen:{
     height: 'auto',
     //transition: 'max-height 200ms linear',
@@ -50,27 +47,25 @@ class CategoryMenu extends React.Component{
     }
   }
 
-  handleClick = () => {
+  handleCategoryGroupClick = () => {
     this.props.handleExpanding(this.props.menuCode)
   }
 
   render(){
     return(
       <div>
-        <div style={styles.menuDiv} onClick={this.handleClick}>
+        <div style={styles.menuDiv} onClick={this.handleCategoryGroupClick}>
           <div style={styles.menuName}>
             {this.props.menuName}
           </div>
-          {/*<IconButton style={styles.iconDiv} iconStyle={styles.icon}>
+          <IconButton style={styles.iconDiv} iconStyle={styles.icon}>
             {this.props.expanded ? <CloseIcon /> : <OpenIcon />}
-          </IconButton>*/}
+          </IconButton>
         </div>
         <div style={this.props.expanded ? styles.categoryMenuOpen : styles.categoryMenuClosed}>
-          {this.props.categories.map((cat) => {
-            return (<div key={cat.Id} style={styles.category}>
-              <a className='category-link' href="#">{ cat.Name }</a>
-              </div>)
-          })}
+          {this.props.categories.map(function(cat){
+              return (<CategoryMenuItem key={cat.id} id={cat.id} name={cat.name} handleCategoryChange={this.props.handleCategoryChange}/>)
+          }.bind(this))}
         </div>
       </div>
     )

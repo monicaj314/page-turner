@@ -1,0 +1,512 @@
+[
+  {
+    "id": "nyt-0",
+    "listSourceId": "NYT",
+    "externalId": "combined-print-and-e-book-fiction",
+    "name": "Combined Print & E-Book Fiction"
+  },
+  {
+    "id": "nyt-1",
+    "listSourceId": "NYT",
+    "externalId": "combined-print-and-e-book-nonfiction",
+    "name": "Combined Print & E-Book Nonfiction"
+  },
+  {
+    "id": "nyt-2",
+    "listSourceId": "NYT",
+    "externalId": "hardcover-fiction",
+    "name": "Hardcover Fiction"
+  },
+  {
+    "id": "nyt-3",
+    "listSourceId": "NYT",
+    "externalId": "hardcover-nonfiction",
+    "name": "Hardcover Nonfiction"
+  },
+  {
+    "id": "nyt-4",
+    "listSourceId": "NYT",
+    "externalId": "trade-fiction-paperback",
+    "name": "Paperback Trade Fiction"
+  },
+  {
+    "id": "nyt-5",
+    "listSourceId": "NYT",
+    "externalId": "mass-market-paperback",
+    "name": "Paperback Mass-Market Fiction"
+  },
+  {
+    "id": "nyt-6",
+    "listSourceId": "NYT",
+    "externalId": "paperback-nonfiction",
+    "name": "Paperback Nonfiction"
+  },
+  {
+    "id": "nyt-7",
+    "listSourceId": "NYT",
+    "externalId": "e-book-fiction",
+    "name": "E-Book Fiction"
+  },
+  {
+    "id": "nyt-8",
+    "listSourceId": "NYT",
+    "externalId": "e-book-nonfiction",
+    "name": "E-Book Nonfiction"
+  },
+  {
+    "id": "nyt-9",
+    "listSourceId": "NYT",
+    "externalId": "hardcover-advice",
+    "name": "Hardcover Advice & Misc."
+  },
+  {
+    "id": "nyt-10",
+    "listSourceId": "NYT",
+    "externalId": "paperback-advice",
+    "name": "Paperback Advice & Misc."
+  },
+  {
+    "id": "nyt-11",
+    "listSourceId": "NYT",
+    "externalId": "advice-how-to-and-miscellaneous",
+    "name": "Advice, How-To & Miscellaneous"
+  },
+  {
+    "id": "nyt-12",
+    "listSourceId": "NYT",
+    "externalId": "chapter-books",
+    "name": "Children’s Chapter Books"
+  },
+  {
+    "id": "nyt-13",
+    "listSourceId": "NYT",
+    "externalId": "childrens-middle-grade",
+    "name": "Children’s Middle Grade"
+  },
+  {
+    "id": "nyt-14",
+    "listSourceId": "NYT",
+    "externalId": "childrens-middle-grade-e-book",
+    "name": "Children’s Middle Grade E-Book"
+  },
+  {
+    "id": "nyt-15",
+    "listSourceId": "NYT",
+    "externalId": "childrens-middle-grade-hardcover",
+    "name": "Children’s Middle Grade Hardcover"
+  },
+  {
+    "id": "nyt-16",
+    "listSourceId": "NYT",
+    "externalId": "childrens-middle-grade-paperback",
+    "name": "Children’s Middle Grade Paperback"
+  },
+  {
+    "id": "nyt-17",
+    "listSourceId": "NYT",
+    "externalId": "paperback-books",
+    "name": "Children’s Paperback Books"
+  },
+  {
+    "id": "nyt-18",
+    "listSourceId": "NYT",
+    "externalId": "picture-books",
+    "name": "Children’s Picture Books"
+  },
+  {
+    "id": "nyt-19",
+    "listSourceId": "NYT",
+    "externalId": "series-books",
+    "name": "Children’s Series"
+  },
+  {
+    "id": "nyt-20",
+    "listSourceId": "NYT",
+    "externalId": "young-adult",
+    "name": "Young Adult"
+  },
+  {
+    "id": "nyt-21",
+    "listSourceId": "NYT",
+    "externalId": "young-adult-e-book",
+    "name": "Young Adult E-Book"
+  },
+  {
+    "id": "nyt-22",
+    "listSourceId": "NYT",
+    "externalId": "young-adult-hardcover",
+    "name": "Young Adult Hardcover"
+  },
+  {
+    "id": "nyt-23",
+    "listSourceId": "NYT",
+    "externalId": "young-adult-paperback",
+    "name": "Young Adult Paperback"
+  },
+  {
+    "id": "nyt-24",
+    "listSourceId": "NYT",
+    "externalId": "hardcover-graphic-books",
+    "name": "Hardcover Graphic Books"
+  },
+  {
+    "id": "nyt-25",
+    "listSourceId": "NYT",
+    "externalId": "paperback-graphic-books",
+    "name": "Paperback Graphic Books"
+  },
+  {
+    "id": "nyt-26",
+    "listSourceId": "NYT",
+    "externalId": "manga",
+    "name": "Manga"
+  },
+  {
+    "id": "nyt-27",
+    "listSourceId": "NYT",
+    "externalId": "combined-print-fiction",
+    "name": "Combined Hardcover & Paperback Fiction"
+  },
+  {
+    "id": "nyt-28",
+    "listSourceId": "NYT",
+    "externalId": "combined-print-nonfiction",
+    "name": "Combined Hardcover & Paperback Nonfiction"
+  },
+  {
+    "id": "nyt-29",
+    "listSourceId": "NYT",
+    "externalId": "animals",
+    "name": "Animals"
+  },
+  {
+    "id": "nyt-30",
+    "listSourceId": "NYT",
+    "externalId": "business-books",
+    "name": "Business"
+  },
+  {
+    "id": "nyt-31",
+    "listSourceId": "NYT",
+    "externalId": "celebrities",
+    "name": "Celebrities"
+  },
+  {
+    "id": "nyt-32",
+    "listSourceId": "NYT",
+    "externalId": "crime-and-punishment",
+    "name": "Crime and Punishment"
+  },
+  {
+    "id": "nyt-33",
+    "listSourceId": "NYT",
+    "externalId": "culture",
+    "name": "Culture"
+  },
+  {
+    "id": "nyt-34",
+    "listSourceId": "NYT",
+    "externalId": "education",
+    "name": "Education"
+  },
+  {
+    "id": "nyt-35",
+    "listSourceId": "NYT",
+    "externalId": "espionage",
+    "name": "Espionage"
+  },
+  {
+    "id": "nyt-36",
+    "listSourceId": "NYT",
+    "externalId": "expeditions-disasters-and-adventures",
+    "name": "Expeditions"
+  },
+  {
+    "id": "nyt-37",
+    "listSourceId": "NYT",
+    "externalId": "fashion-manners-and-customs",
+    "name": "Fashion, Manners and Customs"
+  },
+  {
+    "id": "nyt-38",
+    "listSourceId": "NYT",
+    "externalId": "food-and-fitness",
+    "name": "Food and Diet"
+  },
+  {
+    "id": "nyt-39",
+    "listSourceId": "NYT",
+    "externalId": "games-and-activities",
+    "name": "Games and Activities"
+  },
+  {
+    "id": "nyt-40",
+    "listSourceId": "NYT",
+    "externalId": "hardcover-business-books",
+    "name": "Hardcover Business Books"
+  },
+  {
+    "id": "nyt-41",
+    "listSourceId": "NYT",
+    "externalId": "health",
+    "name": "Health"
+  },
+  {
+    "id": "nyt-42",
+    "listSourceId": "NYT",
+    "externalId": "humor",
+    "name": "Humor"
+  },
+  {
+    "id": "nyt-43",
+    "listSourceId": "NYT",
+    "externalId": "indigenous-americans",
+    "name": "Indigenous Americans"
+  },
+  {
+    "id": "nyt-44",
+    "listSourceId": "NYT",
+    "externalId": "relationships",
+    "name": "Love and Relationships"
+  },
+  {
+    "id": "nyt-45",
+    "listSourceId": "NYT",
+    "externalId": "paperback-business-books",
+    "name": "Paperback Business Books"
+  },
+  {
+    "id": "nyt-46",
+    "listSourceId": "NYT",
+    "externalId": "family",
+    "name": "Parenthood and Family"
+  },
+  {
+    "id": "nyt-47",
+    "listSourceId": "NYT",
+    "externalId": "hardcover-political-books",
+    "name": "Politics and American History"
+  },
+  {
+    "id": "nyt-48",
+    "listSourceId": "NYT",
+    "externalId": "race-and-civil-rights",
+    "name": "Race and Civil Rights"
+  },
+  {
+    "id": "nyt-49",
+    "listSourceId": "NYT",
+    "externalId": "religion-spirituality-and-faith",
+    "name": "Religion, Spirituality and Faith"
+  },
+  {
+    "id": "nyt-50",
+    "listSourceId": "NYT",
+    "externalId": "science",
+    "name": "Science"
+  },
+  {
+    "id": "nyt-51",
+    "listSourceId": "NYT",
+    "externalId": "sports",
+    "name": "Sports and Fitness"
+  },
+  {
+    "id": "nyt-52",
+    "listSourceId": "NYT",
+    "externalId": "travel",
+    "name": "Travel"
+  },
+  {
+    "id": "amz-1",
+    "listSourceId": "AMZ",
+    "externalId": "1",
+    "name": "Arts & Photography"
+  },
+  {
+    "id": "amz-2",
+    "listSourceId": "AMZ",
+    "externalId": "2",
+    "name": "Biographies & Memoirs"
+  },
+  {
+    "id": "amz-3",
+    "listSourceId": "AMZ",
+    "externalId": "3",
+    "name": "Business & Money"
+  },
+  {
+    "id": "amz-3248857011",
+    "listSourceId": "AMZ",
+    "externalId": "3248857011",
+    "name": "Calendars"
+  },
+  {
+    "id": "amz-4",
+    "listSourceId": "AMZ",
+    "externalId": "4",
+    "name": "Children's Books"
+  },
+  {
+    "id": "amz-12290",
+    "listSourceId": "AMZ",
+    "externalId": "12290",
+    "name": "Christian Books & Bibles"
+  },
+  {
+    "id": "amz-4366",
+    "listSourceId": "AMZ",
+    "externalId": "4366",
+    "name": "Comics & Graphic Novels"
+  },
+  {
+    "id": "amz-5",
+    "listSourceId": "AMZ",
+    "externalId": "5",
+    "name": "Computers & Technology"
+  },
+  {
+    "id": "amz-6",
+    "listSourceId": "AMZ",
+    "externalId": "6",
+    "name": "Cookbooks, Food & Wine"
+  },
+  {
+    "id": "amz-48",
+    "listSourceId": "AMZ",
+    "externalId": "48",
+    "name": "Crafts, Hobbies & Home"
+  },
+  {
+    "id": "amz-8975347011",
+    "listSourceId": "AMZ",
+    "externalId": "8975347011",
+    "name": "Education & Teaching"
+  },
+  {
+    "id": "amz-173507",
+    "listSourceId": "AMZ",
+    "externalId": "173507",
+    "name": "Engineering & Transportation"
+  },
+  {
+    "id": "amz-301889",
+    "listSourceId": "AMZ",
+    "externalId": "301889",
+    "name": "Gay & Lesbian"
+  },
+  {
+    "id": "amz-10",
+    "listSourceId": "AMZ",
+    "externalId": "10",
+    "name": "Health, Fitness & Dieting"
+  },
+  {
+    "id": "amz-9",
+    "listSourceId": "AMZ",
+    "externalId": "9",
+    "name": "History"
+  },
+  {
+    "id": "amz-86",
+    "listSourceId": "AMZ",
+    "externalId": "86",
+    "name": "Humor & Entertainment"
+  },
+  {
+    "id": "amz-10777",
+    "listSourceId": "AMZ",
+    "externalId": "10777",
+    "name": "Law"
+  },
+  {
+    "id": "amz-17",
+    "listSourceId": "AMZ",
+    "externalId": "17",
+    "name": "Literature & Fiction"
+  },
+  {
+    "id": "amz-173514",
+    "listSourceId": "AMZ",
+    "externalId": "173514",
+    "name": "Medical Books"
+  },
+  {
+    "id": "amz-18",
+    "listSourceId": "AMZ",
+    "externalId": "18",
+    "name": "Mystery, Thriller & Suspense"
+  },
+  {
+    "id": "amz-20",
+    "listSourceId": "AMZ",
+    "externalId": "20",
+    "name": "Parenting & Relationships"
+  },
+  {
+    "id": "amz-3377866011",
+    "listSourceId": "AMZ",
+    "externalId": "3377866011",
+    "name": "Politics & Social Sciences"
+  },
+  {
+    "id": "amz-21",
+    "listSourceId": "AMZ",
+    "externalId": "21",
+    "name": "Reference"
+  },
+  {
+    "id": "amz-22",
+    "listSourceId": "AMZ",
+    "externalId": "22",
+    "name": "Religion & Spirituality"
+  },
+  {
+    "id": "amz-23",
+    "listSourceId": "AMZ",
+    "externalId": "23",
+    "name": "Romance"
+  },
+  {
+    "id": "amz-75",
+    "listSourceId": "AMZ",
+    "externalId": "75",
+    "name": "Science & Math"
+  },
+  {
+    "id": "amz-25",
+    "listSourceId": "AMZ",
+    "externalId": "25",
+    "name": "Science Fiction & Fantasy"
+  },
+  {
+    "id": "amz-4736",
+    "listSourceId": "AMZ",
+    "externalId": "4736",
+    "name": "Self-Help"
+  },
+  {
+    "id": "amz-26",
+    "listSourceId": "AMZ",
+    "externalId": "26",
+    "name": "Sports & Outdoors"
+  },
+  {
+    "id": "amz-28",
+    "listSourceId": "AMZ",
+    "externalId": "28",
+    "name": "Teen & Young Adult"
+  },
+  {
+    "id": "amz-5267710011",
+    "listSourceId": "AMZ",
+    "externalId": "5267710011",
+    "name": "Test Preparation"
+  },
+  {
+    "id": "amz-27",
+    "listSourceId": "AMZ",
+    "externalId": "27",
+    "name": "Travel"
+  }
+]

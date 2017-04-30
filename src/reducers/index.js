@@ -10,8 +10,7 @@ const init = {
   selectedCategoryId: '',
   bestSellers: [],
   isFetchingCategories: false,
-  amzCategories: [],
-  nytCategories: [],
+  categories:[]
 }
 
 function bestSellersReducer(state = {
@@ -51,8 +50,7 @@ function categoryReducer(state = {
     case RECEIVE_CATEGORIES:
       return Object.assign({}, state, {
         isFetchingCategories: false,
-        amzCategories: action.categories.amzCategories,
-        nytCategories: action.categories.nytCategories,
+        categories: action.categories,
       })
     default:
       return state
