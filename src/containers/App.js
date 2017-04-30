@@ -10,7 +10,6 @@ import BestSellersListContainer from './BestSellersListContainer'
 import LeftNavContainer from '../components/LeftNav'
 import './App.css';
 import { fetchAndMergeBestSellers, fetchCategories } from '../actions'
-//import { fetchCategories } from '../actions/CategoryActionCreators'
 
 const loggerMiddleware = createLogger()
 let store = createStore(

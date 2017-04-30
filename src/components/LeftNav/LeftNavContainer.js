@@ -5,7 +5,8 @@ const mapStateToProps = ({categoryState}) => {
   return {
     selectedCategoryIndex: categoryState.selectedCategoryId,
     amzCategories: categoryState.amzCategories,
-    amzIsFetchingCategories: categoryState.amzIsFetchingCategories,
+    nytCategories: categoryState.nytCategories,
+    isFetchingCategories: categoryState.isFetchingCategories,
   }
 }
 

@@ -9,6 +9,8 @@ const styles = {
   },
   navBody:{
     //border:'1px solid blue',
+    //maxHeight:642,
+    overflow:'hidden'
   },
 }
 
@@ -27,7 +29,7 @@ class LeftNav extends React.Component {
   }
 
   render(){
-    if (this.props.amzIsFetchingCategories){
+    if (this.props.isFetchingCategories){
       return <p>Loading...</p>
     } else {
       return (
@@ -41,7 +43,7 @@ class LeftNav extends React.Component {
             <CategoryMenu menuName='New York Times' 
               menuCode='NYT'
               handleExpanding={this.handleExpanding }
-              categories={this.props.amzCategories } 
+              categories={this.props.nytCategories } 
               expanded={this.state.expandedMenu === 'NYT'}/>
           </div>
         </div>

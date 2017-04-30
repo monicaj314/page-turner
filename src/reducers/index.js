@@ -9,10 +9,9 @@ const init = {
   isFetchingBestSellers: false,
   selectedCategoryId: '',
   bestSellers: [],
+  isFetchingCategories: false,
   amzCategories: [],
-  amzIsFetchingCategories: true,
   nytCategories: [],
-  nytIsFetchingCategories: false,
 }
 
 function bestSellersReducer(state = {
@@ -36,10 +35,9 @@ function bestSellersReducer(state = {
 
 function categoryReducer(state = {
   selectedCategoryId: init.selectedCategoryId,
+  isFetchingCategories: init.isFetchingCategories,
   amzCategories: init.amzCategories,
-  amzIsFetchingCategories: init.amzIsFetchingCategories,
   nytCategories: init.nytCategories,
-  nytIsFetchingCategories: init.nytIsFetchingCategories,
 }, action){
   switch (action.type) {
     case UPDATE_CATEGORY:
@@ -48,15 +46,13 @@ function categoryReducer(state = {
       })
     case REQUEST_CATEGORIES:
       return Object.assign({}, state, {
-        amzIsFetchingCategories: true,
-        nytIsFetchingCategories: true
+        isFetchingCategories: true,
       })
     case RECEIVE_CATEGORIES:
       return Object.assign({}, state, {
-        amzIsFetchingCategories: false,
-        nytIsFetchingCategories: false,
-        amzCategories: action.amzCategories,
-        //nytCategories: action.nytCategories
+        isFetchingCategories: false,
+        amzCategories: action.categories.amzCategories,
+        nytCategories: action.categories.nytCategories,
       })
     default:
       return state

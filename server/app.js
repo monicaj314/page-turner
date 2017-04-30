@@ -1,9 +1,11 @@
 const express = require('express')
 const app = express()
 const morgan = require('morgan')
-const path = require('path');
-var amazon = require('amazon-product-api');
-var keys = require('./utilities/apiKeys.json');
+const path = require('path')
+var amazon = require('amazon-product-api')
+var keys = require('./utilities/apiKeys.json')
+var fetch = require('isomorphic-fetch');
+var request = require('request')
 
 // Setup logger
 app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms'));
@@ -27,7 +29,7 @@ app.get('/api/amazon-categories', (req,res) => {
     const amzCategories = results[0].Children[0].BrowseNode
     let cats = amzCategories.map(result => {
       return {
-        Id: result.BrowseNodeId[0],
+        Id: 'amz-'+result.BrowseNodeId[0],
         Name: result.Name[0]
       }
     })
@@ -37,6 +39,63 @@ app.get('/api/amazon-categories', (req,res) => {
     res.json(err)
   });
 })
+
+app.get('/api/book-categories', (req,res) => {
+  let categories = {}
+  
+  let nytCategories = fetchNytCategories()
+     .then(results => categories.nytCategories = results)
+
+  let amzCategories = fetchAmzCategories()
+    .then(results => categories.amzCategories = results)
+
+  Promise.all([nytCategories, amzCategories])
+    .then(() => res.json(categories))
+    .catch((err) => {
+      console.error(err)
+      res.status(500).send(err.message)
+    })
+
+})
+
+function fetchNytCategories(){
+  const url = `https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=${keys.nyt_key}`
+  return fetch(url)
+    .then(response => {
+      if (response.status >= 400) {
+			  throw new Error("Bad response from server")
+		  }
+      return response.json()
+    })
+    .then(json => {
+      const nytCategories = json.results
+      let cats = nytCategories.map((result, key) => {
+        return {
+          Id: 'nyt-'+key,
+          Name: result.list_name
+        }
+      })
+      return cats
+    })
+}
+
+function fetchAmzCategories(){
+  return client.browseNodeLookup({
+    Operation: 'BrowseNodeLookup',
+    BrowseNodeId: 1000, //Books -> Subjects
+    responseGroup: 'BrowseNodeInfo'
+  }).then(function(results){
+    const amzCategories = results[0].Children[0].BrowseNode
+    let cats = amzCategories.map(result => {
+      return {
+        Id: 'amz-'+result.BrowseNodeId[0],
+        Name: result.Name[0]
+      }
+    })
+    return cats
+  })
+}
+
 
 app.get('/api/amazon-categories-test', (req,res) => {
     console.log('AMAZON TEST API CALL')
@@ -171,6 +230,12 @@ app.get('/api/amazon-categories-test', (req,res) => {
       }
     ]
     res.json(cats)
+})
+
+
+app.use(function (err, req, res, next) {
+  console.error(err.stack)
+  res.status(500).send('Something broke!')
 })
 
 

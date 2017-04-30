@@ -2,6 +2,7 @@ import React from 'react'
 import IconButton from 'material-ui/IconButton'
 import OpenIcon from 'material-ui/svg-icons/navigation/expand-more'
 import CloseIcon from 'material-ui/svg-icons/navigation/expand-less'
+import './LeftNav.css';
 
 const styles = {
   menuDiv:{
@@ -30,10 +31,14 @@ const styles = {
     padding: '2px 0px 2px 10px',
   },
   categoryMenuOpen:{
+    height: 'auto',
+    //transition: 'max-height 200ms linear',
+    overflow:'hidden',
   },
   categoryMenuClosed:{
-    height:'0px',
-    overflow:'hidden'
+    height:0,
+    //transition: 'max-height 200ms linear',
+    overflow:'hidden',
   },
 }
 
@@ -56,14 +61,14 @@ class CategoryMenu extends React.Component{
           <div style={styles.menuName}>
             {this.props.menuName}
           </div>
-          <IconButton style={styles.iconDiv} iconStyle={styles.icon}>
+          {/*<IconButton style={styles.iconDiv} iconStyle={styles.icon}>
             {this.props.expanded ? <CloseIcon /> : <OpenIcon />}
-          </IconButton>
+          </IconButton>*/}
         </div>
         <div style={this.props.expanded ? styles.categoryMenuOpen : styles.categoryMenuClosed}>
           {this.props.categories.map((cat) => {
             return (<div key={cat.Id} style={styles.category}>
-              <a href="#">{cat.Name}</a>
+              <a className='category-link' href="#">{ cat.Name }</a>
               </div>)
           })}
         </div>
