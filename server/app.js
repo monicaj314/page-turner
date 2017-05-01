@@ -92,7 +92,7 @@ function fetchCategoriesFromCache() {
 
 //DEV USE ONLY
 function fetchAmazonBooksIsbn(isbns){
-  return fetchAmazonBooksIsbnFromCache()
+  return fetchAmazonBooksIsbnFromCache(isbns)
     .then(data => {
       if (data){
         console.log('Fetching Amazon ISBN books from CACHE')
@@ -100,7 +100,7 @@ function fetchAmazonBooksIsbn(isbns){
       } else {
         return amzApi.fetchByIsbn(isbns)
           .then(data => {
-            redisClient.set('amazonIsbnBooks', JSON.stringify(data), 'EX', 3600);
+            redisClient.set(isbns.join(','), JSON.stringify(data));
             console.log('Fetching Amazon ISBN books from API.  CACHE hydrated.')
             return data
           })
@@ -108,9 +108,9 @@ function fetchAmazonBooksIsbn(isbns){
     })
 }
 
-function fetchAmazonBooksIsbnFromCache(){
+function fetchAmazonBooksIsbnFromCache(isbns){
   return new Promise((resolve, reject) => {
-    redisClient.get('amazonIsbnBooks', function (err, data) {
+    redisClient.get(isbns.join(','), function (err, data) {
       if (err) reject(err)
       resolve(JSON.parse(data))
     })
@@ -133,7 +133,20 @@ function fetchBestSellers(category){
             collection.books.push({
                nytTitle: nytBookDetails.title,
                isbn13: nytBookDetails.primary_isbn13,
-               isbn10: nytBookDetails.primary_isbn10
+               isbn10: nytBookDetails.primary_isbn10,
+               nytDescription: nytBookDetails.description,
+               rank: nytBook.rank,
+               weeksOnList: nytBook.weeks_on_list,
+               reviews: {
+                 nyt: {
+                   editorialReviews: nytBook.reviews,
+                   customerReviews: []
+                 },
+                 amz:{
+                   editorialReviews: [],
+                   customerReviews: []
+                 }
+               }
              })
            })
            return collection
@@ -143,40 +156,58 @@ function fetchBestSellers(category){
         })
         .then(amzBooks => {
           collection.books.map(book => {
-            let found = amzBooks.find(amzBook => {
+            
+            let matched = amzBooks.find(amzBook => {
               if (amzBook.ItemAttributes[0].ISBN){
-                return (amzBook.ItemAttributes[0].ISBN[0] === book.isbn13) || (amzBook.ItemAttributes[0].ISBN[0] === book.isbn10)
+                const amazonIsbn = amzBook.ItemAttributes[0].ISBN[0]
+                return (amazonIsbn === book.isbn13) || (amazonIsbn === book.isbn10)
               }
               else if (amzBook.ItemAttributes[0].EISBN){
-                return amzBook.ItemAttributes[0].EISBN[0] === book.isbn13
+                const amazonIsbn = amzBook.ItemAttributes[0].EISBN[0]
+                return (amazonIsbn === book.isbn13) || (amazonIsbn === book.isbn10)
               }
               else if (amzBook.ItemAttributes[0].EAN){
+                const amazonIsbn = amzBook.ItemAttributes[0].EAN[0]
                 return amzBook.ItemAttributes[0].EAN[0] === book.isbn13
               }
             })
 
-            if (!found){
-              console.log(book)
-              throw new Error('Didnt find it for '+book)
-            }
+            if (matched) {
+              if (matched.ItemAttributes[0].ISBN){
+                book.amzIsbn = matched.ItemAttributes[0].ISBN[0]
+              }
+              else if (matched.ItemAttributes[0].EISBN){
+                book.amzIsbn = matched.ItemAttributes[0].EISBN[0]
+              }
+              else if (matched.ItemAttributes[0].EAN){
+                book.amzIsbn = matched.ItemAttributes[0].EAN[0]
+              }
+              
+              book.amzTitle = matched.ItemAttributes[0].Title[0]
+              book.authors = matched.ItemAttributes[0].Author
+              book.numOfPages = matched.ItemAttributes[0].NumberOfPages[0]
+              book.publicationDate = matched.ItemAttributes[0].PublicationDate[0]
 
-            
-            let isbn
-            if (found.ItemAttributes[0].ISBN){
-              isbn = found.ItemAttributes[0].ISBN[0]
-            }
-            else if (found.ItemAttributes[0].EISBN){
-              isbn = found.ItemAttributes[0].EISBN[0]
-            }
-            else if (found.ItemAttributes[0].EAN){
-              isbn = found.ItemAttributes[0].EAN[0]
-            }
-            
-            book.amzTitle = found.ItemAttributes[0].Title[0]
-            book.amzIsbn = isbn
+              if (matched.EditorialReviews){
+                book.amzDescription = null
+
+                matched.EditorialReviews.map(review => {
+                  if (review.EditorialReview[0].Source[0] === 'Product Description'){
+                    book.amzDescription = review.EditorialReview[0].Content[0]
+                  } else {
+                    book.reviews.amz.editorialReviews.push({
+                      source: review.EditorialReview[0].Source[0],
+                      content: review.EditorialReview[0].Content[0],
+                    })
+                  }
+                })
+              }
+
+
+              
+            } //if matched
           })
-
-
+        
           return collection.books
 
         })
