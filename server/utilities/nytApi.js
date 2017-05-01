@@ -24,9 +24,11 @@ const nytApi = {
         return cats
       })
   },
-
-  test(){
-    console.log('yo im livin it up in the api')
+  
+  fetchBestSellers(externalId){
+    let url = `https://api.nytimes.com/svc/books/v3/lists.json?api-key=${keys.nyt_key}&list=${externalId}`
+    return fetch(url)
+      .then(response => response.json())
   }
 }
 

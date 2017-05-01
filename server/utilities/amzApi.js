@@ -1,14 +1,14 @@
 var keys = require('../data/apiKeys')
 const amazon = require('amazon-product-api')
 
+let client = amazon.createClient({
+    awsId: keys.access_key_id,
+    awsSecret: keys.secret_access_key,
+    awsTag: keys.associate_tag
+  });
+
 const amzApi = {
   fetchAmzCategories(){
-    let client = amazon.createClient({
-      awsId: keys.access_key_id,
-      awsSecret: keys.secret_access_key,
-      awsTag: keys.associate_tag
-    });
-    
     return client.browseNodeLookup({
       Operation: 'BrowseNodeLookup',
       BrowseNodeId: 1000, //Books -> Subjects
@@ -25,7 +25,26 @@ const amzApi = {
       })
       return cats
     })
-  } 
+  },
+
+  fetchBestSellers(externalId){
+    return [
+      {
+        name: 'page-turners Amazon',
+        author: 'Victor'
+      }
+    ]
+  },
+
+  fetchByIsbn(isbns){
+    return client.itemLookup({
+      idType:'ISBN',
+      itemId: isbns.slice(0,10).join(","),
+      ResponseGroup: 'Large,Reviews,Similarities'
+    }).then(function(results){
+      return results
+    })
+  }
 }
 
 module.exports = amzApi
