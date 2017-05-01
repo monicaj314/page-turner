@@ -183,11 +183,21 @@ function fetchBestSellers(category){
                 book.amzIsbn = matched.ItemAttributes[0].EAN[0]
               }
               
+              book.amzAsin = matched.ASIN[0]
               book.amzTitle = matched.ItemAttributes[0].Title[0]
               book.authors = matched.ItemAttributes[0].Author
               book.numOfPages = matched.ItemAttributes[0].NumberOfPages[0]
               book.publicationDate = matched.ItemAttributes[0].PublicationDate[0]
 
+              if (matched.CustomerReviews){
+                matched.CustomerReviews.map(review => {
+                  book.reviews.amz.customerReviews.push({
+                    hasReviews: review.HasReviews,
+                    iframeUrl: review.IFrameURL
+                  })
+                })
+              }
+              
               if (matched.EditorialReviews){
                 book.amzDescription = null
 
@@ -201,6 +211,16 @@ function fetchBestSellers(category){
                     })
                   }
                 })
+              }
+
+              if (matched.SmallImage){
+                book.smallImage = matched.SmallImage.URL
+              }
+              if (matched.MediumImage){
+                book.mediumImage = matched.MediumImage.URL
+              }
+              if (matched.LargeImage){
+                book.largeImage = matched.LargeImage.URL
               }
 
 
