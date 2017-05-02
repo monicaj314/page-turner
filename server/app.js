@@ -194,7 +194,7 @@ function fetchBestSellers(category){
                 matched.CustomerReviews.map(review => {
                   book.reviews.amz.customerReviews.push({
                     hasReviews: review.HasReviews,
-                    iframeUrl: review.IFrameURL
+                    iframeUrl: review.IFrameURL[0]
                   })
                 })
               }

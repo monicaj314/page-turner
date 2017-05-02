@@ -2,9 +2,9 @@ var keys = require('../data/apiKeys')
 const amazon = require('amazon-product-api')
 
 let client = amazon.createClient({
-    awsId: keys.access_key_id,
-    awsSecret: keys.secret_access_key,
-    awsTag: keys.associate_tag
+    awsId: keys.amz_access_key_id,
+    awsSecret: keys.amz_secret_access_key,
+    awsTag: keys.amz_associate_tag
   });
 
 const amzApi = {
@@ -39,10 +39,13 @@ const amzApi = {
   fetchByIsbn(isbns){
     return client.itemLookup({
       idType:'ISBN',
+      itemId: isbns.slice(0,10).join(","),
       condition:'New',
       merchantId: 'Amazon',
-      itemId: isbns.slice(0,10).join(","),
-      ResponseGroup: 'Large,Reviews,Similarities'
+      searchIndex: 'Books',
+      includeReviewsSummary: true,
+      truncateReviewsAt: 150,
+      responseGroup: 'Large,Reviews,Similarities'
     }).then(function(results){
       return results
     })

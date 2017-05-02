@@ -9,18 +9,19 @@ import HeaderContainer from './HeaderContainer'
 import BestSellersListContainer from './BestSellersListContainer'
 import LeftNavContainer from '../components/LeftNav'
 import './App.css';
-import { fetchAndMergeBestSellers, fetchCategories, fetchBestSellers } from '../actions'
+import { updateCategory, fetchCategories, fetchBestSellers } from '../actions'
 
 const loggerMiddleware = createLogger()
 let store = createStore(
   rootReducer,
   applyMiddleware(
     thunkMiddleware,
-    loggerMiddleware
+    //loggerMiddleware
   )
 );
 
 store.dispatch(fetchCategories())
+//store.dispatch(updateCategory('nyt-0'))
 //store.dispatch(fetchAndMergeBestSellers('Science'))
 store.dispatch(fetchBestSellers('nyt-0'))
 

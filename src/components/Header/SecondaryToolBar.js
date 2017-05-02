@@ -15,7 +15,7 @@ const styles = {
     fontWeight:'bold',
     color:'#444',
     //border:'1px solid black',
-    width:'182px',
+    width:'200px',
   },
   titleText:{
     //border:'1px solid red',
@@ -33,7 +33,7 @@ class SecondaryToolBar extends React.Component{
         <ToolbarTitle style={styles.toolBarTitle} text={test} />
       </ToolbarGroup>
       <ToolbarGroup>
-        
+        <p>{this.props.categoryName}</p>
       </ToolbarGroup>
     </Toolbar>
     )

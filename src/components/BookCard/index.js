@@ -30,7 +30,7 @@ const styles = {
   },
   bookDetails:{
     //border: '1px solid red',
-    maxWidth: 600
+    width: '600px'
   },
   title:{
     color:'#15c',
@@ -60,6 +60,12 @@ const styles = {
   small: {
     width: 15,
   },
+  amzCustomerReviewsIframe:{
+    border: '0px gray dashed',
+    width:'430px',
+    height:'150px'
+
+  }
 }
 
 class BookCard extends React.Component {
@@ -80,6 +86,10 @@ class BookCard extends React.Component {
 
   createMarkup(description) {
     return {__html: description};
+  }
+
+  iframeLoadListener(e){
+    console.log('loaded')
   }
 
   render(){
@@ -106,8 +116,13 @@ class BookCard extends React.Component {
           <span style={styles.author}>by {firstAuthor}</span>
           <div style={styles.description} onClick={this.handleExpanding}>
               {description}
+              
           </div>
         </div>
+        <iframe style={styles.amzCustomerReviewsIframe} 
+              scrolling="no"
+              onLoad={this.iframeLoadListener}
+              src={this.props.reviews.amz.customerReviews[0].iframeUrl} />
         <div>
           <IconButton tooltip={this.state.expanded ? 'Read Less!' : 'Read More!'}>
             {this.state.expanded
