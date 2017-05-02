@@ -12,7 +12,6 @@ const styles = {
     //border: '1px solid blue',
     borderBottom: '1px solid rgb(224,224,224)',
     padding: '10px 0px',
-    //maxHeight: '200px',
   },
   rankDiv:{
     //border: '1px solid blue',
@@ -23,13 +22,11 @@ const styles = {
     fontSize:'x-large'
   },
   bookImageDiv: {
+    //border: '1px solid blue',
     marginRight:'20px',
-    width:'128px',
-    height:'183px',
   },
   bookImage:{
-    width: 'auto',
-    height:'100%',
+    
   },
   bookDetails:{
     //border: '1px solid red',

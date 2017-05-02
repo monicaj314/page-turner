@@ -1,4 +1,5 @@
 import React from 'react'
+import './CategoryMenuItem.css'
 
 const styles = {
   category:{
@@ -15,9 +16,14 @@ class CategoryMenuItem extends React.Component {
   }
 
   render() {
+
+
     return (
       <div key={this.props.id} style={styles.category}>
-        <a className='category-link' onClick={this.handleCategoryClick} href="#">{ this.props.name }</a>
+        <a className={this.props.selectedCategoryId === this.props.id ? 'category-link-current' : 'category-link'}
+          onClick={this.handleCategoryClick} 
+          href="#">{ this.props.name }
+        </a>
       </div>
     )
   }

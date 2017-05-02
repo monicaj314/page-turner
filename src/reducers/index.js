@@ -7,7 +7,7 @@ import { REQUEST_NYT_BESTSELLERS,
 
 const init = {
   isFetchingBestSellers: false,
-  selectedCategoryId: '',
+  selectedCategoryId: 'nyt-0',
   bestSellers: [],
   isFetchingCategories: false,
   categories:[]
@@ -41,7 +41,7 @@ function categoryReducer(state = {
   switch (action.type) {
     case UPDATE_CATEGORY:
       return Object.assign({}, state, {
-        selectedCategoryIndex: action.categoryIndex,
+        selectedCategoryId: action.categoryId,
       })
     case REQUEST_CATEGORIES:
       return Object.assign({}, state, {

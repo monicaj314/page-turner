@@ -3,7 +3,6 @@ import IconButton from 'material-ui/IconButton'
 import OpenIcon from 'material-ui/svg-icons/navigation/expand-more'
 import CloseIcon from 'material-ui/svg-icons/navigation/expand-less'
 import CategoryMenuItem from './CategoryMenuItem'
-import './LeftNav.css';
 
 const styles = {
   menuDiv:{
@@ -64,7 +63,12 @@ class CategoryMenu extends React.Component{
         </div>
         <div style={this.props.expanded ? styles.categoryMenuOpen : styles.categoryMenuClosed}>
           {this.props.categories.map(function(cat){
-              return (<CategoryMenuItem key={cat.id} id={cat.id} name={cat.name} handleCategoryChange={this.props.handleCategoryChange}/>)
+              return (<CategoryMenuItem 
+              key={cat.id} 
+              id={cat.id} 
+              name={cat.name} 
+              selectedCategoryId={this.props.selectedCategoryId}
+              handleCategoryChange={this.props.handleCategoryChange}/>)
           }.bind(this))}
         </div>
       </div>

@@ -1,5 +1,18 @@
 var keys = require('../data/apiKeys')
 var fetch = require('isomorphic-fetch');
+const show = [
+  'combined-print-and-e-book-fiction',
+  'combined-print-and-e-book-nonfiction',
+  'hardcover-fiction',
+  'hardcover-nonfiction',
+  'trade-fiction-paperback',
+  'paperback-nonfiction',
+  'advice-how-to-and-miscellaneous',
+  'childrens-middle-grade-hardcover',
+  'picture-books',
+  'series-books',
+  'young-adult-hardcover'
+]
 
 const nytApi = {
   fetchNytCategories() {
@@ -18,7 +31,8 @@ const nytApi = {
             id: 'nyt-'+key, 
             listSourceId:'NYT',
             externalId: result.list_name_encoded,
-            name: result.display_name
+            name: result.display_name,
+            visible: show.includes(result.list_name_encoded)
           }
         })
         return cats

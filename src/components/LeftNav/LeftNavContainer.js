@@ -4,7 +4,7 @@ import { updateCategory, fetchBestSellers } from '../../actions'
 
 const mapStateToProps = ({categoryState}) => {
   return {
-    selectedCategoryIndex: categoryState.selectedCategoryId,
+    selectedCategoryId: categoryState.selectedCategoryId,
     categories: categoryState.categories,
     isFetchingCategories: categoryState.isFetchingCategories,
   }
@@ -13,7 +13,7 @@ const mapStateToProps = ({categoryState}) => {
 const mapDispatchToProps = (dispatch, getState) => {
     return {
       handleCategoryChange: (categoryId) => {
-        //dispatch(updateCategory(category))
+        dispatch(updateCategory(categoryId))
         dispatch(fetchBestSellers(categoryId))
       }
     }

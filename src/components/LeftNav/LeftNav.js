@@ -18,7 +18,7 @@ class LeftNav extends React.Component {
   constructor(props){
     super(props)
     this.state = {
-      expandedMenu:'AMZ'
+      expandedMenu:'NYT'
     }
   }
 
@@ -29,7 +29,7 @@ class LeftNav extends React.Component {
   }
 
   getCategories(menuCode){
-    return this.props.categories.filter(cat => cat.listSourceId === menuCode)
+    return this.props.categories.filter(cat => cat.listSourceId === menuCode && cat.visible)
   }
 
   render(){
@@ -39,18 +39,21 @@ class LeftNav extends React.Component {
       return (
         <div style={styles.leftNav}>
           <div style={styles.navBody}>
-            <CategoryMenu menuName='Amazon' 
-              menuCode='AMZ'
-              handleExpanding={this.handleExpanding}
-              handleCategoryChange={this.props.handleCategoryChange}
-              categories={this.getCategories('AMZ')} 
-              expanded={this.state.expandedMenu === 'AMZ'}/>
             <CategoryMenu menuName='New York Times' 
               menuCode='NYT'
               handleExpanding={this.handleExpanding }
               handleCategoryChange={this.props.handleCategoryChange}
+              selectedCategoryId={this.props.selectedCategoryId}
               categories={this.getCategories('NYT')} 
               expanded={this.state.expandedMenu === 'NYT'}/>
+            <CategoryMenu menuName='Amazon' 
+              menuCode='AMZ'
+              handleExpanding={this.handleExpanding}
+              handleCategoryChange={this.props.handleCategoryChange}
+              selectedCategoryId={this.props.selectedCategoryId}
+              categories={this.getCategories('AMZ')} 
+              expanded={this.state.expandedMenu === 'AMZ'}/>
+            
           </div>
         </div>
       )

@@ -16,10 +16,10 @@ export function receiveCategories(results){
 }
 
 export const UPDATE_CATEGORY = 'UPDATE_CATEGORY'
-export function updateCategory(categoryIndex){
+export function updateCategory(categoryId){
   return {
     type: UPDATE_CATEGORY,
-    categoryIndex
+    categoryId
   }
 }
 
