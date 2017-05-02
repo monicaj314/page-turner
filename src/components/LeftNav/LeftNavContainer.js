@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import LeftNav from './LeftNav'
-import { updateCategory, fetchAndMergeBestSellers2 } from '../../actions'
+import { updateCategory, fetchBestSellers } from '../../actions'
 
 const mapStateToProps = ({categoryState}) => {
   return {
@@ -14,7 +14,7 @@ const mapDispatchToProps = (dispatch, getState) => {
     return {
       handleCategoryChange: (categoryId) => {
         //dispatch(updateCategory(category))
-        dispatch(fetchAndMergeBestSellers2(categoryId))
+        dispatch(fetchBestSellers(categoryId))
       }
     }
 }

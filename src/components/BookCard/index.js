@@ -15,8 +15,8 @@ const styles = {
     //maxHeight: '200px',
   },
   rankDiv:{
-    padding:'0px 15px 0px 0px',
     //border: '1px solid blue',
+    width:'35px'
   },
   rankText:{
     color: '#444',
@@ -58,17 +58,7 @@ const styles = {
     color:'#333',
     //border: '1px solid blue',
     cursor: 'pointer',
-    padding: '0px 0px 20px 0px'
-  },
-  bookCardClosed:{
-    maxHeight:0,
-    transition: 'max-height 400ms ease-out',
-    overflow:'hidden',
-  },
-  bookCardOpen:{
-    maxHeight: 1000,
-    transition: 'max-height 400ms ease-in',
-    overflow:'hidden',
+    padding: '0px 0px 0px 0px'
   },
   small: {
     width: 15,
@@ -119,13 +109,6 @@ class BookCard extends React.Component {
           <span style={styles.author}>by {firstAuthor}</span>
           <div style={styles.description} onClick={this.handleExpanding}>
               {description}
-                
-              {/*<div onClick={this.handleExpanding}>
-                <ShortDescription isCardOpen={this.state.expanded} fullDescription={this.props.amzDescription} onReadLinkClick={this.handleExpanding} />
-              </div>
-              <div style={this.state.expanded ? styles.bookCardOpen : styles.bookCardClosed} onClick={this.handleExpanding}>
-                <LongDescription fullDescription={this.props.amzDescription} onReadLinkClick={this.handleExpanding} />
-              </div>*/}
           </div>
         </div>
         <div>

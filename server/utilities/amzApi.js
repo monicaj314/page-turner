@@ -39,6 +39,7 @@ const amzApi = {
   fetchByIsbn(isbns){
     return client.itemLookup({
       idType:'ISBN',
+      condition:'New',
       merchantId: 'Amazon',
       itemId: isbns.slice(0,10).join(","),
       ResponseGroup: 'Large,Reviews,Similarities'
