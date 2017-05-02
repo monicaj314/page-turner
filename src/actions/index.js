@@ -11,4 +11,5 @@ export {
   receiveBestSellers,
   fetchAndMergeBestSellers,
   fetchAndMergeBestSellers2, 
+  fetchBestSellers
 } from './BestSellersActionCreators'

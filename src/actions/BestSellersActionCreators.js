@@ -10,7 +10,16 @@ export function requestBestSellers(category){
 }
 
 export const RECEIVE_NYT_BESTSELLERS = 'RECEIVE_NYT_BESTSELLERS'
-export function receiveBestSellers(category, results){
+export function receiveBestSellers(category, result){
+  return {
+    type: RECEIVE_NYT_BESTSELLERS,
+    category: category,
+    bestSellers: result,
+  }
+}
+
+
+export function receiveBestSellers2(category, results){
   var bestSellers = results.map(result => {
     return {
       title: result.book_details[0].title,
@@ -28,6 +37,21 @@ export function receiveBestSellers(category, results){
     date: results.last_modified
   }
 }
+
+
+export function fetchBestSellers(categoryId){
+  return (dispatch) => {
+    dispatch(requestBestSellers(categoryId))
+
+    const url = `http://localhost:3000/api/best-sellers?categoryId=${categoryId}`
+    return fetch(url)
+      .then(response => response.json())
+      .then(results => dispatch(receiveBestSellers(categoryId, results)))
+  }
+}
+
+
+
 
 export function fetchAndMergeBestSellers(category){
   return function(dispatch) {

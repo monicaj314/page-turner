@@ -27,7 +27,7 @@ export function fetchCategories(){
   return function(dispatch) {
     dispatch(requestCategories())
 
-    return fetch('http://localhost:3000/api/book-categories-test')
+    return fetch('http://localhost:3000/api/book-categories')
       .then(response => response.json())
       .then(json => dispatch(receiveCategories(json)))
   }

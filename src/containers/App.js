@@ -9,7 +9,7 @@ import HeaderContainer from './HeaderContainer'
 import BestSellersListContainer from './BestSellersListContainer'
 import LeftNavContainer from '../components/LeftNav'
 import './App.css';
-import { fetchAndMergeBestSellers, fetchCategories } from '../actions'
+import { fetchAndMergeBestSellers, fetchCategories, fetchBestSellers } from '../actions'
 
 const loggerMiddleware = createLogger()
 let store = createStore(
@@ -21,7 +21,8 @@ let store = createStore(
 );
 
 store.dispatch(fetchCategories())
-store.dispatch(fetchAndMergeBestSellers('Science'))
+//store.dispatch(fetchAndMergeBestSellers('Science'))
+store.dispatch(fetchBestSellers('nyt-0'))
 
 
 const styles = {

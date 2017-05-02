@@ -4,6 +4,7 @@ import OpenIcon from 'material-ui/svg-icons/navigation/expand-more';
 import CloseIcon from 'material-ui/svg-icons/navigation/expand-less';
 //import ActionStar from 'material-ui/svg-icons/toggle/star';
 import { LongDescription, ShortDescription } from './BookDescription'
+import './BookCard.css'
 
 const styles = {
   card: {
@@ -90,25 +91,41 @@ class BookCard extends React.Component {
     })
   }
 
+  createMarkup(description) {
+    return {__html: description};
+  }
+
   render(){
+    let firstAuthor = 'Needs fixin..'
+    if (this.props.authors){
+      firstAuthor = this.props.authors[0]
+    }
+
+    let description = (<div className='short-description' style={styles.newDescriptionClosed} dangerouslySetInnerHTML={this.createMarkup(this.props.amzDescription)}/>)
+    if (this.state.expanded){
+      description = (<div dangerouslySetInnerHTML={this.createMarkup(this.props.amzDescription)}/>)
+    }
+
     return (
       <div style={styles.card}>
         <div style={styles.rankDiv}>
           <span style={styles.rankText}>{this.props.rank}</span>
         </div>
         <div style={styles.bookImageDiv}>
-          <img src={this.props.image} style={styles.bookImage} alt={this.props.title} />
+          <img src={this.props.mediumImage} style={styles.bookImage} alt={this.props.amzTitle} />
         </div>
         <div style={styles.bookDetails}>
-          <a href="https://google.com" style={styles.title}>{this.props.title}</a>
-          <span style={styles.author}>by {this.props.author}</span>
-          <div style={styles.description}>
-              <div onClick={this.handleExpanding}>
-                <ShortDescription isCardOpen={this.state.expanded} fullDescription={this.props.description} onReadLinkClick={this.handleExpanding} />
+          <a href={this.props.amazonLink} target="_blank" style={styles.title}>{this.props.amzTitle}</a>
+          <span style={styles.author}>by {firstAuthor}</span>
+          <div style={styles.description} onClick={this.handleExpanding}>
+              {description}
+                
+              {/*<div onClick={this.handleExpanding}>
+                <ShortDescription isCardOpen={this.state.expanded} fullDescription={this.props.amzDescription} onReadLinkClick={this.handleExpanding} />
               </div>
               <div style={this.state.expanded ? styles.bookCardOpen : styles.bookCardClosed} onClick={this.handleExpanding}>
-                <LongDescription fullDescription={this.props.description} onReadLinkClick={this.handleExpanding} />
-              </div>
+                <LongDescription fullDescription={this.props.amzDescription} onReadLinkClick={this.handleExpanding} />
+              </div>*/}
           </div>
         </div>
         <div>

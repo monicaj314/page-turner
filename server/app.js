@@ -186,8 +186,9 @@ function fetchBestSellers(category){
               book.amzAsin = matched.ASIN[0]
               book.amzTitle = matched.ItemAttributes[0].Title[0]
               book.authors = matched.ItemAttributes[0].Author
-              book.numOfPages = matched.ItemAttributes[0].NumberOfPages[0]
+              book.numOfPages = matched.ItemAttributes[0].NumberOfPages ? matched.ItemAttributes[0].NumberOfPages[0] : null
               book.publicationDate = matched.ItemAttributes[0].PublicationDate[0]
+              book.amazonLink = matched.DetailPageURL[0]
 
               if (matched.CustomerReviews){
                 matched.CustomerReviews.map(review => {
@@ -214,13 +215,13 @@ function fetchBestSellers(category){
               }
 
               if (matched.SmallImage){
-                book.smallImage = matched.SmallImage.URL
+                book.smallImage = matched.SmallImage[0].URL[0]
               }
               if (matched.MediumImage){
-                book.mediumImage = matched.MediumImage.URL
+                book.mediumImage = matched.MediumImage[0].URL[0]
               }
               if (matched.LargeImage){
-                book.largeImage = matched.LargeImage.URL
+                book.largeImage = matched.LargeImage[0].URL[0]
               }
 
 
