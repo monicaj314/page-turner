@@ -1,7 +1,8 @@
 .short-description { 
-  height: 110px;
+  max-height:110px;
   overflow: hidden;
   position: relative;
+  //transition: max-height 100ms ease-in;
 }
 
 .short-description:after {
@@ -14,4 +15,10 @@
   background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255, 1) 90%);
   width: 100%;
   height: 2em;
+}
+
+.long-description {
+  max-height:1000px;
+  overflow:hidden; 
+  transition: max-height 1s linear;
 }

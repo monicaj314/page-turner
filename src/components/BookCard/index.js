@@ -103,7 +103,7 @@ class BookCard extends React.Component {
 
     let description = (<div className='short-description' style={styles.newDescriptionClosed} dangerouslySetInnerHTML={this.createMarkup(this.props.amzDescription)}/>)
     if (this.state.expanded){
-      description = (<div dangerouslySetInnerHTML={this.createMarkup(this.props.amzDescription)}/>)
+      description = (<div className='long-description' dangerouslySetInnerHTML={this.createMarkup(this.props.amzDescription)}/>)
     }
 
     return (
