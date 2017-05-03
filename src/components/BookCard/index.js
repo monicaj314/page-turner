@@ -1,8 +1,11 @@
 import React from 'react'
-import IconButton from 'material-ui/IconButton';
-import OpenIcon from 'material-ui/svg-icons/navigation/expand-more';
-import CloseIcon from 'material-ui/svg-icons/navigation/expand-less';
-//import ActionStar from 'material-ui/svg-icons/toggle/star';
+import IconButton from 'material-ui/IconButton'
+import OpenIcon from 'material-ui/svg-icons/navigation/expand-more'
+import CloseIcon from 'material-ui/svg-icons/navigation/expand-less'
+import StarRating from './StarRating'
+import AmazonRating from './AmazonRating'
+
+//delete
 import { LongDescription, ShortDescription } from './BookDescription'
 import './BookCard.css'
 
@@ -60,12 +63,7 @@ const styles = {
   small: {
     width: 15,
   },
-  amzCustomerReviewsIframe:{
-    border: '0px gray dashed',
-    width:'430px',
-    height:'150px'
-
-  }
+  
 }
 
 class BookCard extends React.Component {
@@ -86,10 +84,6 @@ class BookCard extends React.Component {
 
   createMarkup(description) {
     return {__html: description};
-  }
-
-  iframeLoadListener(e){
-    console.log('loaded')
   }
 
   render(){
@@ -120,12 +114,12 @@ class BookCard extends React.Component {
           </div>
         </div>
         <div>
-          <iframe style={styles.amzCustomerReviewsIframe} 
-            scrolling="no"
-            onLoad={this.iframeLoadListener}
-            src={this.props.reviews.amz.customerReviews[0].iframeUrl} 
-          />
-          <p>Goodreads {this.props.reviews.goodreads.averageRating}/5 ({this.props.reviews.goodreads.ratingsCount}) </p>
+          <AmazonRating {...this.props} />
+          <StarRating 
+            source="Goodreads"
+            rating={this.props.reviews.goodreads.averageRating} 
+            ratingsCount={this.props.reviews.goodreads.ratingsCount}/>
+          
         </div>
         
 
