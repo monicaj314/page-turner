@@ -3,7 +3,7 @@ const app = express()
 const morgan = require('morgan')
 const path = require('path')
 const nytApi = require('./utilities/nytApi')
-const amzApi = require('./utilities/amzApi')
+const amazonApi = require('./utilities/amazonApi')
 const goodreadsApi = require('./utilities/goodreadsApi')
 
 const redis = require('redis')
@@ -43,12 +43,19 @@ app.get('/api/best-sellers', (req,res) => {
 })
 
 app.get('/api/raw', (req,res) => {
-  goodreadsApi.fetchBook('0441172717')
-    .then(results => {
+  const categoryId = req.query.categoryId
+  if (!categoryId)
+    throw new Error('Book Category is Required!')
+
+  getCategory(categoryId)
+    .then(category => {
+      if (!category) throw new Error('Category not found!')
+      return fetchBestSellers2(category)  //TWO!!!
+    }).then(results => {
       res.json(results)
     }).catch(err => {
-        console.error(err)
-        res.status(500).json(JSON.stringify(err))
+      console.error(err)
+      res.status(500).json(JSON.stringify(err))
     })
 })
 
@@ -82,7 +89,7 @@ function fetchCategoriesFromApis(){
     let nytFetch = nytApi.fetchNytCategories()
       .then(results => nytCategories = results)
 
-    let amzFetch = amzApi.fetchAmzCategories()
+    let amzFetch = amazonApi.fetchAmzCategories()
       .then(results => amzCategories = results)
 
     Promise.all([nytFetch, amzFetch])
@@ -110,7 +117,7 @@ function fetchAmazonBooksIsbn(isbns){
         console.log('Fetching Amazon ISBN books from CACHE')
         return data
       } else {
-        return amzApi.fetchByIsbn(isbns)
+        return amazonApi.fetchByIsbn(isbns)
           .then(data => {
             redisClient.set(isbns.join(','), JSON.stringify(data));
             console.log('Fetching Amazon ISBN books from API.  CACHE hydrated.')
@@ -132,15 +139,35 @@ function fetchAmazonBooksIsbnFromCache(isbns){
 function fetchBestSellers(category){
   switch (category.listSourceId){
     case 'AMZ':
-      return amzApi.fetchBestSellers(category.externalId)
+      return amazonApi.fetchBestSellers(category.externalId)
 
       case 'NYT':
       return fetchNytBooksAndReturnModels(category)
-        .then(ptBooks => fetchAmzBooksAndMerge(ptBooks))       
+        .then(ptBooks => fetchAmzBooksAndMerge(ptBooks))
+        .then(ptBooks => fetchGoodreadsReviewCountsAndMerge(ptBooks))
 
     default:
       throw new Error('Uh oh, listSource not found!')
   }
+}
+
+function fetchGoodreadsReviewCountsAndMerge(ptBooks){
+  let isbn13s = []
+  ptBooks.map(book => {isbn13s.push(book.isbn13)})
+  return goodreadsApi.fetchReviewCounts(isbn13s)
+    .then(reviewCounts => {
+      ptBooks.map(book => {
+        let matchedReview = reviewCounts.books.find(review => {
+          return (review.isbn === book.isbn10) || (review.isbn13 === book.isbn13)
+        })
+        book.goodreadsId = matchedReview.id
+        book.reviews.goodreads = {
+          averageRating: matchedReview.average_rating,
+          ratingsCount: matchedReview.work_ratings_count
+        }
+      })
+      return ptBooks
+    })
 }
 
 function fetchAmzBooksAndMerge(ptBooks){

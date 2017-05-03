@@ -7,7 +7,7 @@ let client = amazon.createClient({
     awsTag: keys.amz_associate_tag
   });
 
-const amzApi = {
+const amazonApi = {
   fetchAmzCategories(){
     return client.browseNodeLookup({
       Operation: 'BrowseNodeLookup',
@@ -52,4 +52,4 @@ const amzApi = {
   }
 }
 
-module.exports = amzApi
+module.exports = amazonApi
