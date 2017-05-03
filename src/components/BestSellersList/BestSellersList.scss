@@ -6,5 +6,6 @@
 .example-appear.example-appear-active {
   margin-left: 0px;
   opacity: 1;
-  transition: margin-left 400ms ease-out, opacity 400ms ease-in;
+  //transition: margin-left 400ms ease-out, opacity 400ms ease-in;
+  transition: opacity 1s ease-in;
 }

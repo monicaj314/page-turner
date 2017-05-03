@@ -2,8 +2,8 @@ import React from 'react'
 import IconButton from 'material-ui/IconButton'
 import OpenIcon from 'material-ui/svg-icons/navigation/expand-more'
 import CloseIcon from 'material-ui/svg-icons/navigation/expand-less'
-import StarRating from './StarRating'
-import AmazonRating from './AmazonRating'
+import BookCardRatings from './BookCardRatings'
+
 
 //delete
 import { LongDescription, ShortDescription } from './BookDescription'
@@ -27,22 +27,25 @@ const styles = {
   bookImageDiv: {
     //border: '1px solid blue',
     marginRight:'20px',
+    minWidth:'115px'
   },
   bookImage:{
     
   },
   bookDetails:{
     //border: '1px solid red',
-    width: '600px'
+    width: '450px'
   },
   title:{
+    //border: '1px solid blue',
+    display: 'block',
+    padding: '5px 0px',
+  },
+  titleLink:{
     color:'#15c',
     textDecoration: 'none',
     fontSize:'20px',
     fontWeight: 'bold',
-    //border: '1px solid blue',
-    display: 'block',
-    padding: '5px 0px'
   },
   author:{
     fontSize:'14px',
@@ -99,29 +102,26 @@ class BookCard extends React.Component {
 
     return (
       <div style={styles.card}>
+        
         <div style={styles.rankDiv}>
           <span style={styles.rankText}>{this.props.rank}</span>
         </div>
+        
         <div style={styles.bookImageDiv}>
           <img src={this.props.mediumImage} style={styles.bookImage} alt={this.props.amzTitle} />
         </div>
+        
         <div style={styles.bookDetails}>
-          <a href={this.props.amazonLink} target="_blank" style={styles.title}>{this.props.amzTitle}</a>
+          <div style={styles.title}>
+            <a href={this.props.amazonLink} target="_blank" style={styles.titleLink}>{this.props.amzTitle}</a>
+          </div>
           <span style={styles.author}>by {firstAuthor}</span>
           <div style={styles.description} onClick={this.handleExpanding}>
               {description}
-              
           </div>
         </div>
-        <div>
-          <AmazonRating {...this.props} />
-          <StarRating 
-            source="Goodreads"
-            rating={this.props.reviews.goodreads.averageRating} 
-            ratingsCount={this.props.reviews.goodreads.ratingsCount}/>
-          
-        </div>
-        
+
+        <BookCardRatings {...this.props} />
 
         <div>
           <IconButton tooltip={this.state.expanded ? 'Read Less!' : 'Read More!'}>

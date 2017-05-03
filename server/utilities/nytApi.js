@@ -11,7 +11,8 @@ const show = [
   'childrens-middle-grade-hardcover',
   'picture-books',
   'series-books',
-  'young-adult-hardcover'
+  'young-adult-hardcover',
+  'science'
 ]
 
 const nytApi = {

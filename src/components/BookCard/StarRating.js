@@ -9,18 +9,16 @@ const styles = {
     maxWidth:'235px',
     display:'flex',
     flexDirection:'column',
-    //border:'1px solid red'
+    paddingLeft:'16px',
   },
   title:{
     fontSize:'16px',
-    fontWeight:'bold',
     padding:'5px 0px'
   },
   starsWrapper:{
     display:'flex',
   },
   starIcon:{
-    color:'#f44336',
     width:20,
     height:20,
   },
@@ -28,17 +26,17 @@ const styles = {
     paddingTop:'3px',
     fontSize:'12px',
     fontWeight:'bold'
-    //border:'1px solid green'
   }
 }
 
 class StarRating extends React.Component{
   render(){
+    styles.starIcon.color = this.props.starColor ? this.props.starColor : '#f44336'
     return(
       <div style={styles.wrapper}>
         <div style={styles.title}>{this.props.source}</div>
         <div style={styles.starsWrapper}>
-          <StarRatingComponent style={{border:'1px solid yellow'}}
+          <StarRatingComponent 
             name="rate" 
             value={Number(this.props.rating)} 
             starCount={5} 
@@ -46,7 +44,7 @@ class StarRating extends React.Component{
             renderStarIconHalf={() => <StarHalf style={styles.starIcon}/>}
             editing={false}
           />
-          <span style={styles.stats}>{this.props.rating}&nbsp;&nbsp;-&nbsp;&nbsp;{this.props.ratingsCount} ratings</span>
+          <span style={styles.stats}>{this.props.rating}</span>
         </div>
       </div>
     )    
