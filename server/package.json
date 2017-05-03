@@ -9,6 +9,7 @@
     "amazon-product-api": "^0.4.3",
     "express": "^4.15.2",
     "morgan": "^1.8.1",
-    "redis": "^2.7.1"
+    "redis": "^2.7.1",
+    "xml2js": "^0.4.17"
   }
 }

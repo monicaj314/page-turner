@@ -120,9 +120,11 @@ class BookCard extends React.Component {
           </div>
         </div>
         <iframe style={styles.amzCustomerReviewsIframe} 
-              scrolling="no"
-              onLoad={this.iframeLoadListener}
-              src={this.props.reviews.amz.customerReviews[0].iframeUrl} />
+          scrolling="no"
+          onLoad={this.iframeLoadListener}
+          src={this.props.reviews.amz.customerReviews[0].iframeUrl} 
+        />
+
         <div>
           <IconButton tooltip={this.state.expanded ? 'Read Less!' : 'Read More!'}>
             {this.state.expanded
