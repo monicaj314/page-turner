@@ -1,6 +1,8 @@
 var keys = require('../data/apiKeys')
 const amazon = require('amazon-product-api')
 
+
+
 let client = amazon.createClient({
     awsId: keys.amz_access_key_id,
     awsSecret: keys.amz_secret_access_key,
@@ -20,7 +22,8 @@ const amazonApi = {
           id: 'amz-'+result.BrowseNodeId[0],
           listSourceId:'AMZ',
           externalId: result.BrowseNodeId[0],
-          name: result.Name[0]
+          name: result.Name[0],
+          visible: true
         }
       })
       return cats
@@ -28,18 +31,29 @@ const amazonApi = {
   },
 
   fetchBestSellers(externalId){
-    return [
-      {
-        name: 'page-turners Amazon',
-        author: 'Victor'
-      }
-    ]
+    return client.browseNodeLookup({
+      BrowseNodeId: externalId,
+      responseGroup: 'TopSellers',
+      searchIndex: 'Books',
+    }).then(function(results){
+      return results
+    })
   },
 
-  fetchByIsbn(isbns){
+   fetchBestSellers2(externalId){
+    return client.browseNodeLookup({
+      BrowseNodeId: externalId,
+      responseGroup: 'TopSellers',
+      searchIndex: 'Books',
+    }).then(function(results){
+      return results
+    })
+  },
+
+  fetchByIsbn(idType, itemIds){
     return client.itemLookup({
-      idType:'ISBN',
-      itemId: isbns.slice(0,10).join(","),
+      idType: idType,
+      itemId: itemIds.slice(0,10).join(","),
       condition:'New',
       merchantId: 'Amazon',
       searchIndex: 'Books',

@@ -37,12 +37,12 @@ const styles = {
     display:'flex',
     flexDirection:'column',
     justifyContent:'center',
-    transition: 'opacity 1s ease-out',
+    transition: 'opacity 500ms ease-out',
     opacity:0,
   },
   contentVisible:{
     opacity:1,
-    transition: 'opacity 1s ease-in',
+    transition: 'opacity 500ms ease-in',
   },
   contentNotVisible:{
     opacity:0,

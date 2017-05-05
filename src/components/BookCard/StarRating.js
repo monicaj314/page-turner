@@ -31,7 +31,7 @@ const styles = {
 
 class StarRating extends React.Component{
   render(){
-    styles.starIcon.color = this.props.starColor ? this.props.starColor : '#f44336'
+    //styles.starIcon.color = this.props.starColor ? this.props.starColor : '#f44336'
     return(
       <div style={styles.wrapper}>
         <div style={styles.title}>{this.props.source}</div>

@@ -50,7 +50,7 @@ app.get('/api/raw', (req,res) => {
   getCategory(categoryId)
     .then(category => {
       if (!category) throw new Error('Category not found!')
-      return fetchBestSellers2(category)  //TWO!!!
+      return fetchBestSellers(category)  //TWO!!!
     }).then(results => {
       res.json(results)
     }).catch(err => {
@@ -110,16 +110,16 @@ function fetchCategoriesFromCache() {
 }
 
 //DEV USE ONLY
-function fetchAmazonBooksIsbn(isbns){
-  return fetchAmazonBooksIsbnFromCache(isbns)
+function fetchAmazonBooksIsbn(idType, itemIds){
+  return fetchAmazonBooksIsbnFromCache(itemIds)
     .then(data => {
       if (data){
         console.log('Fetching Amazon ISBN books from CACHE')
         return data
       } else {
-        return amazonApi.fetchByIsbn(isbns)
+        return amazonApi.fetchByIsbn(idType, itemIds)
           .then(data => {
-            redisClient.set(isbns.join(','), JSON.stringify(data));
+            redisClient.set(itemIds.join(','), JSON.stringify(data));
             console.log('Fetching Amazon ISBN books from API.  CACHE hydrated.')
             return data
           })
@@ -136,10 +136,106 @@ function fetchAmazonBooksIsbnFromCache(isbns){
   })
 }
 
+function fetchAmazonBooksAndReturnModelsTEST(category){
+return amazonApi.fetchBestSellers(category.externalId)
+    .then(results => {
+      const bestSellers = results[0]["TopSellers"][0].TopSeller
+      let asins = []
+      bestSellers.map(amazonBestSeller => asins.push(amazonBestSeller["ASIN"][0]))
+      return fetchAmazonBooksIsbn("ASIN", ["B01D24NAL6"])
+    })
+}
+
+function fetchAmazonBooksAndReturnModels(category){
+  return amazonApi.fetchBestSellers(category.externalId)
+    .then(results => {
+      const bestSellers = results[0]["TopSellers"][0].TopSeller
+      let asins = []
+      bestSellers.map(amazonBestSeller => asins.push(amazonBestSeller["ASIN"][0]))
+      return fetchAmazonBooksIsbn("ASIN", asins)
+    })
+    .then(amzBooks => {
+      let books = []
+      amzBooks.map((amzBook,i) => {
+        let book = {
+          reviews:{
+            amz: {
+              customerReviews:[],
+              editorialReviews:[]
+            }
+          }
+        }
+        book.rank = i
+
+        //EXTRACT & REFACTOR
+        if (amzBook.ItemAttributes[0].ISBN){
+          book.amzIsbn = amzBook.ItemAttributes[0].ISBN[0]
+          book.isbn10 = amzBook.ItemAttributes[0].ISBN[0] //added
+        }
+        if (amzBook.ItemAttributes[0].EAN){
+          book.amzIsbn = amzBook.ItemAttributes[0].EAN[0]
+          book.isbn13= amzBook.ItemAttributes[0].EAN[0] //added
+        }
+        if (amzBook.ItemAttributes[0].EISBN){
+          book.amzIsbn = amzBook.ItemAttributes[0].EISBN[0]
+          book.isbn13= amzBook.ItemAttributes[0].EISBN[0] //added
+        }
+        
+        
+        book.amzAsin = amzBook.ASIN[0]
+        book.amzTitle = amzBook.ItemAttributes[0].Title[0]
+        book.authors = amzBook.ItemAttributes[0].Author
+        book.numOfPages = amzBook.ItemAttributes[0].NumberOfPages ? amzBook.ItemAttributes[0].NumberOfPages[0] : null
+        book.publicationDate = amzBook.ItemAttributes[0].PublicationDate[0]
+        book.amazonLink = amzBook.DetailPageURL[0]
+
+        if (amzBook.CustomerReviews){
+          amzBook.CustomerReviews.map(review => {
+            book.reviews.amz.customerReviews.push({
+              hasReviews: review.HasReviews,
+              iframeUrl: review.IFrameURL[0]
+            })
+          })
+        }
+        
+        if (amzBook.EditorialReviews){
+          book.amzDescription = null
+
+          amzBook.EditorialReviews.map(review => {
+            if (review.EditorialReview[0].Source[0] === 'Product Description'){
+              book.amzDescription = review.EditorialReview[0].Content[0]
+            } else {
+              book.reviews.amz.editorialReviews.push({
+                source: review.EditorialReview[0].Source[0],
+                content: review.EditorialReview[0].Content[0],
+              })
+            }
+          })
+        }
+
+        if (amzBook.SmallImage){
+          book.smallImage = amzBook.SmallImage[0].URL[0]
+        }
+        if (amzBook.MediumImage){
+          book.mediumImage = amzBook.MediumImage[0].URL[0]
+        }
+        if (amzBook.LargeImage){
+          book.largeImage = amzBook.LargeImage[0].URL[0]
+        }
+        //END EXTRACT & REFACTOR
+
+        books.push(book)
+        
+      })
+      return books;
+    })
+}
+
 function fetchBestSellers(category){
   switch (category.listSourceId){
     case 'AMZ':
-      return amazonApi.fetchBestSellers(category.externalId)
+      return fetchAmazonBooksAndReturnModels(category)
+        //.then(ptBooks => fetchGoodreadsReviewCountsAndMerge(ptBooks))
 
       case 'NYT':
       return fetchNytBooksAndReturnModels(category)
@@ -171,9 +267,23 @@ function fetchGoodreadsReviewCountsAndMerge(ptBooks){
 }
 
 function fetchAmzBooksAndMerge(ptBooks){
+  let amazonAsins = []
   let isbn13s = []
-  ptBooks.map(book => {isbn13s.push(book.isbn13)})
-  return fetchAmazonBooksIsbn(isbn13s)
+  ptBooks.map(book => {
+    if (book.nytAmazonAsin){
+      amazonAsins.push(book.nytAmazonAsin)
+    }
+    isbn13s.push(book.isbn13)
+  })
+
+  let idType = 'ISBN'
+  let itemIds = isbn13s
+  if (amazonAsins.length === 10 && false){
+    idType = 'ASIN'
+    itemIds = amazonAsins
+  }
+  
+  return fetchAmazonBooksIsbn(idType, itemIds)
     .then(amzBooks => mergeAmzBooks(amzBooks, ptBooks))
 }
 
@@ -257,7 +367,15 @@ function fetchNytBooksAndReturnModels(category){
       let books = []
       nytBestSellers.map(nytBook => {
         const nytBookDetails = nytBook.book_details[0]
+        //match ASIN number after /dp/xxxxx? 
+        const regex = /\/dp\/([a-zA-Z0-9]*)/i
+        const url = nytBook.amazon_product_url
+        const regexMatches = url.match(regex)
+        if (regexMatches && regexMatches[1]){
+          var amazonAsin = regexMatches[1]
+        }
         books.push({
+          nytAmazonAsin: amazonAsin,
           nytTitle: nytBookDetails.title,
           isbn13: nytBookDetails.primary_isbn13,
           isbn10: nytBookDetails.primary_isbn10,
@@ -279,13 +397,6 @@ function fetchNytBooksAndReturnModels(category){
       return books
     })
 }
-
-function shit(json, collection){
-  
-}
-
-
-
 
 app.use(function (err, req, res, next) {
   console.error(err.stack)
