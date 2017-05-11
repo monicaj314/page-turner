@@ -29,7 +29,7 @@ app.get('/api/best-sellers', (req,res) => {
   const categoryId = req.query.categoryId
   if (!categoryId)
     throw new Error('Book Category is Required!')
-  
+
   getCategory(categoryId)
     .then(category => {
       if (!category) throw new Error('Category not found!')
@@ -59,6 +59,21 @@ app.get('/api/raw', (req,res) => {
     })
 })
 
+function fetchBestSellers(category){
+  switch (category.listSourceId){
+    case 'AMZ':
+      return fetchAmazonBooksAndReturnModels(category)
+        //.then(ptBooks => fetchGoodreadsReviewCountsAndMerge(ptBooks))
+
+      case 'NYT':
+      return fetchNytBooksAndReturnModels(category)
+        .then(ptBooks => fetchAmzBooksAndMerge(ptBooks))
+        .then(ptBooks => fetchGoodreadsReviewCountsAndMerge(ptBooks))
+
+    default:
+      throw new Error('Uh oh, listSource not found!')
+  }
+}
 
 function fetchCategories(){
   return fetchCategoriesFromCache()
@@ -165,7 +180,7 @@ function fetchAmazonBooksAndReturnModels(category){
             }
           }
         }
-        book.rank = i
+        book.rank = i+1
 
         //EXTRACT & REFACTOR
         if (amzBook.ItemAttributes[0].ISBN){
@@ -180,14 +195,17 @@ function fetchAmazonBooksAndReturnModels(category){
           book.amzIsbn = amzBook.ItemAttributes[0].EISBN[0]
           book.isbn13= amzBook.ItemAttributes[0].EISBN[0] //added
         }
-        
-        
+
         book.amzAsin = amzBook.ASIN[0]
         book.amzTitle = amzBook.ItemAttributes[0].Title[0]
         book.authors = amzBook.ItemAttributes[0].Author
         book.numOfPages = amzBook.ItemAttributes[0].NumberOfPages ? amzBook.ItemAttributes[0].NumberOfPages[0] : null
-        book.publicationDate = amzBook.ItemAttributes[0].PublicationDate[0]
+        book.publicationDate = amzBook.ItemAttributes[0].PublicationDate ? amzBook.ItemAttributes[0].PublicationDate[0] : null
         book.amazonLink = amzBook.DetailPageURL[0]
+
+        if (amzBook.ItemAttributes[0].Binding){
+          book.binding = amzBook.ItemAttributes[0].Binding[0] //added
+        }
 
         if (amzBook.CustomerReviews){
           amzBook.CustomerReviews.map(review => {
@@ -197,7 +215,7 @@ function fetchAmazonBooksAndReturnModels(category){
             })
           })
         }
-        
+
         if (amzBook.EditorialReviews){
           book.amzDescription = null
 
@@ -225,26 +243,10 @@ function fetchAmazonBooksAndReturnModels(category){
         //END EXTRACT & REFACTOR
 
         books.push(book)
-        
+
       })
       return books;
     })
-}
-
-function fetchBestSellers(category){
-  switch (category.listSourceId){
-    case 'AMZ':
-      return fetchAmazonBooksAndReturnModels(category)
-        //.then(ptBooks => fetchGoodreadsReviewCountsAndMerge(ptBooks))
-
-      case 'NYT':
-      return fetchNytBooksAndReturnModels(category)
-        .then(ptBooks => fetchAmzBooksAndMerge(ptBooks))
-        .then(ptBooks => fetchGoodreadsReviewCountsAndMerge(ptBooks))
-
-    default:
-      throw new Error('Uh oh, listSource not found!')
-  }
 }
 
 function fetchGoodreadsReviewCountsAndMerge(ptBooks){
@@ -256,11 +258,14 @@ function fetchGoodreadsReviewCountsAndMerge(ptBooks){
         let matchedReview = reviewCounts.books.find(review => {
           return (review.isbn === book.isbn10) || (review.isbn13 === book.isbn13)
         })
-        book.goodreadsId = matchedReview.id
-        book.reviews.goodreads = {
-          averageRating: matchedReview.average_rating,
-          ratingsCount: matchedReview.work_ratings_count
+        if (matchedReview){
+          book.goodreadsId = matchedReview.id
+          book.reviews.goodreads = {
+            averageRating: matchedReview.average_rating,
+            ratingsCount: matchedReview.work_ratings_count
+          }
         }
+
       })
       return ptBooks
     })
@@ -282,7 +287,7 @@ function fetchAmzBooksAndMerge(ptBooks){
     idType = 'ASIN'
     itemIds = amazonAsins
   }
-  
+
   return fetchAmazonBooksIsbn(idType, itemIds)
     .then(amzBooks => mergeAmzBooks(amzBooks, ptBooks))
 }
@@ -290,37 +295,41 @@ function fetchAmzBooksAndMerge(ptBooks){
 function mergeAmzBooks(amzBooks, ptBooks){
   ptBooks.map(book => {
     let matched = amzBooks.find(amzBook => {
-      if (amzBook.ItemAttributes[0].ISBN){
-        const amazonIsbn = amzBook.ItemAttributes[0].ISBN[0]
-        return (amazonIsbn === book.isbn13) || (amazonIsbn === book.isbn10)
+      if (amzBook.ItemAttributes[0].EAN){
+        const amazonIsbn = amzBook.ItemAttributes[0].EAN[0]
+        return amzBook.ItemAttributes[0].EAN[0] === book.isbn13
       }
       else if (amzBook.ItemAttributes[0].EISBN){
         const amazonIsbn = amzBook.ItemAttributes[0].EISBN[0]
         return (amazonIsbn === book.isbn13) || (amazonIsbn === book.isbn10)
       }
-      else if (amzBook.ItemAttributes[0].EAN){
-        const amazonIsbn = amzBook.ItemAttributes[0].EAN[0]
-        return amzBook.ItemAttributes[0].EAN[0] === book.isbn13
+      else if (amzBook.ItemAttributes[0].ISBN){
+        const amazonIsbn = amzBook.ItemAttributes[0].ISBN[0]
+        return (amazonIsbn === book.isbn13) || (amazonIsbn === book.isbn10)
       }
     })
 
     if (matched) {
-      if (matched.ItemAttributes[0].ISBN){
-        book.amzIsbn = matched.ItemAttributes[0].ISBN[0]
+      if (matched.ItemAttributes[0].EAN){
+        book.amzIsbn = matched.ItemAttributes[0].EAN[0]
       }
       else if (matched.ItemAttributes[0].EISBN){
         book.amzIsbn = matched.ItemAttributes[0].EISBN[0]
       }
-      else if (matched.ItemAttributes[0].EAN){
-        book.amzIsbn = matched.ItemAttributes[0].EAN[0]
+      else if (matched.ItemAttributes[0].ISBN){
+        book.amzIsbn = matched.ItemAttributes[0].ISBN[0]
       }
-      
+
       book.amzAsin = matched.ASIN[0]
       book.amzTitle = matched.ItemAttributes[0].Title[0]
       book.authors = matched.ItemAttributes[0].Author
       book.numOfPages = matched.ItemAttributes[0].NumberOfPages ? matched.ItemAttributes[0].NumberOfPages[0] : null
       book.publicationDate = matched.ItemAttributes[0].PublicationDate[0]
       book.amazonLink = matched.DetailPageURL[0]
+
+      if (matched.ItemAttributes[0].Binding){
+        book.binding = matched.ItemAttributes[0].Binding[0] //added
+      }
 
       if (matched.CustomerReviews){
         matched.CustomerReviews.map(review => {
@@ -330,7 +339,7 @@ function mergeAmzBooks(amzBooks, ptBooks){
           })
         })
       }
-      
+
       if (matched.EditorialReviews){
         book.amzDescription = null
 
@@ -367,7 +376,7 @@ function fetchNytBooksAndReturnModels(category){
       let books = []
       nytBestSellers.map(nytBook => {
         const nytBookDetails = nytBook.book_details[0]
-        //match ASIN number after /dp/xxxxx? 
+        //match ASIN number after /dp/xxxxx?
         const regex = /\/dp\/([a-zA-Z0-9]*)/i
         const url = nytBook.amazon_product_url
         const regexMatches = url.match(regex)
@@ -382,6 +391,7 @@ function fetchNytBooksAndReturnModels(category){
           nytDescription: nytBookDetails.description,
           rank: nytBook.rank,
           weeksOnList: nytBook.weeks_on_list,
+          nytAmazonLink: nytBook.amazon_product_url,
           reviews: {
             nyt: {
               editorialReviews: nytBook.reviews,

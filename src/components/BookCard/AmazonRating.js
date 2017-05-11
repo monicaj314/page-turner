@@ -1,5 +1,4 @@
 import React from 'react'
-import './AmazonRating.css'
 import amazonLogo from './amazon-logo-tiny.gif';
 import CircularProgress from 'material-ui/CircularProgress';
 
@@ -12,10 +11,10 @@ const styles = {
     position:'relative',
   },
   imgDiv: {
-    position: 'absolute', 
-    zIndex:'1', 
+    position: 'absolute',
+    zIndex:'1',
     width:'240px',
-    height:'30px', 
+    height:'30px',
     backgroundColor:'#FFF',
     //border: '1px solid blue',
   },
@@ -63,7 +62,7 @@ class AmazonRating extends React.Component {
     })
   }
   render(){
-    
+
     return (
     <div style={styles.wrapper}>
       <div style={this.state.loading ? styles.loadingDiv : {display:'none'}}>
@@ -78,7 +77,7 @@ class AmazonRating extends React.Component {
         <iframe style={styles.iframe}
           scrolling="no"
           onLoad={this.iframeLoadListener}
-          src={this.props.reviews.amz.customerReviews[0].iframeUrl} 
+          src={this.props.reviews.amz.customerReviews[0].iframeUrl}
         />
 
       </div>

@@ -4,7 +4,8 @@ import CategoryMenu from './CategoryMenu'
 const styles = {
   leftNav:{
     //border:'1px solid red',
-    width:200,
+
+    minWidth:200,
     padding:'10px 16px 16px 20px'
   },
   navBody:{
@@ -39,21 +40,21 @@ class LeftNav extends React.Component {
       return (
         <div style={styles.leftNav}>
           <div style={styles.navBody}>
-            <CategoryMenu menuName='New York Times' 
+            <CategoryMenu menuName='New York Times'
               menuCode='NYT'
               handleExpanding={this.handleExpanding }
               handleCategoryChange={this.props.handleCategoryChange}
               selectedCategoryId={this.props.selectedCategoryId}
-              categories={this.getCategories('NYT')} 
+              categories={this.getCategories('NYT')}
               expanded={this.state.expandedMenu === 'NYT'}/>
-            <CategoryMenu menuName='Amazon' 
+            <CategoryMenu menuName='Amazon'
               menuCode='AMZ'
               handleExpanding={this.handleExpanding}
               handleCategoryChange={this.props.handleCategoryChange}
               selectedCategoryId={this.props.selectedCategoryId}
-              categories={this.getCategories('AMZ')} 
+              categories={this.getCategories('AMZ')}
               expanded={this.state.expandedMenu === 'AMZ'}/>
-            
+
           </div>
         </div>
       )

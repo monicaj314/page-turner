@@ -40,16 +40,6 @@ const amazonApi = {
     })
   },
 
-   fetchBestSellers2(externalId){
-    return client.browseNodeLookup({
-      BrowseNodeId: externalId,
-      responseGroup: 'TopSellers',
-      searchIndex: 'Books',
-    }).then(function(results){
-      return results
-    })
-  },
-
   fetchByIsbn(idType, itemIds){
     return client.itemLookup({
       idType: idType,

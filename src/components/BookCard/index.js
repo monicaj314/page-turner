@@ -3,11 +3,8 @@ import IconButton from 'material-ui/IconButton'
 import OpenIcon from 'material-ui/svg-icons/navigation/expand-more'
 import CloseIcon from 'material-ui/svg-icons/navigation/expand-less'
 import BookCardRatings from './BookCardRatings'
-
-
-//delete
-import { LongDescription, ShortDescription } from './BookDescription'
 import './BookCard.css'
+
 
 const styles = {
   card: {
@@ -27,10 +24,10 @@ const styles = {
   bookImageDiv: {
     //border: '1px solid blue',
     marginRight:'20px',
-    minWidth:'115px'
+    width:'160px',
   },
   bookImage:{
-    
+
   },
   bookDetails:{
     //border: '1px solid red',
@@ -50,23 +47,34 @@ const styles = {
   author:{
     fontSize:'14px',
     color: 'gray',
-    display:'block',
     //border: '1px solid blue',
     padding: '2px 0px',
-    marginBottom:'20px'
-
+    display:'block'
+  },
+  binding:{
+    fontSize:'12px',
+    color: 'gray',
+    padding: '2px 0px',
+    fontStyle:'italic'
+  },
+  isbn:{
+    fontSize:'14px',
+    color: 'gray',
+    border: '1px solid blue',
+    padding: '2px 0px',
   },
   description:{
-    fontSize:'14px',
+    fontSize:'13px',
     color:'#333',
     //border: '1px solid blue',
     cursor: 'pointer',
-    padding: '0px 0px 0px 0px'
+    padding: '0px 0px 0px 0px',
+    marginTop:'20px'
   },
   small: {
     width: 15,
   },
-  
+
 }
 
 class BookCard extends React.Component {
@@ -90,11 +98,6 @@ class BookCard extends React.Component {
   }
 
   render(){
-    let firstAuthor = 'Needs fixin..'
-    if (this.props.authors){
-      firstAuthor = this.props.authors[0]
-    }
-
     let description = (<div className='short-description' style={styles.newDescriptionClosed} dangerouslySetInnerHTML={this.createMarkup(this.props.amzDescription)}/>)
     if (this.state.expanded){
       description = (<div className='long-description' dangerouslySetInnerHTML={this.createMarkup(this.props.amzDescription)}/>)
@@ -102,20 +105,22 @@ class BookCard extends React.Component {
 
     return (
       <div style={styles.card}>
-        
+
         <div style={styles.rankDiv}>
           <span style={styles.rankText}>{this.props.rank}</span>
         </div>
-        
+
         <div style={styles.bookImageDiv}>
           <img src={this.props.mediumImage} style={styles.bookImage} alt={this.props.amzTitle} />
         </div>
-        
+
         <div style={styles.bookDetails}>
           <div style={styles.title}>
             <a href={this.props.amazonLink} target="_blank" style={styles.titleLink}>{this.props.amzTitle}</a>
           </div>
-          <span style={styles.author}>by {firstAuthor}</span>
+          <span style={styles.author}>{this.props.authors ? 'by '+ this.props.authors.join(", ") : null}</span>
+          <span style={styles.binding}>{this.props.binding}</span>
+
           <div style={styles.description} onClick={this.handleExpanding}>
               {description}
           </div>

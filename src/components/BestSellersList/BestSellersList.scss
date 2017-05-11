@@ -1,11 +1,11 @@
 .example-appear {
-  margin-left: -20px;
+  margin-left: 20px;
   opacity: 0;
 }
 
 .example-appear.example-appear-active {
   margin-left: 0px;
   opacity: 1;
-  //transition: margin-left 400ms ease-out, opacity 400ms ease-in;
-  transition: opacity 1s ease-in;
+  transition: margin-left 400ms ease-out, opacity 400ms ease-in;
+  //transition: opacity 1s ease-in;
 }
