@@ -18,11 +18,10 @@ export function receiveCategories(results){
 export const UPDATE_CATEGORY = 'UPDATE_CATEGORY'
 export function updateCategory(categoryId){
   return function(dispatch, getState){
-    const categoryName = getState().categoryState.categories.find(cat=>cat.id === categoryId).name
+    const category = getState().categoryState.categories.find(cat=>cat.id === categoryId)
     dispatch({
       type: UPDATE_CATEGORY,
-      categoryId,
-      categoryName
+      category
     })
   }
 }

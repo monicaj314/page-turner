@@ -13,9 +13,9 @@ const styles = {
     //backgroundColor:'#f1f1f1'
   },
   menuName:{
-    fontSize:'13px',
+    fontSize:'14px',
     fontWeight:'bold',
-    padding: '0px 0px 2px 0px',
+    padding: '4px 0px 4px 0px',
   },
   iconDiv:{
     height:'auto',
@@ -63,10 +63,10 @@ class CategoryMenu extends React.Component{
         </div>
         <div style={this.props.expanded ? styles.categoryMenuOpen : styles.categoryMenuClosed}>
           {this.props.categories.map(function(cat){
-              return (<CategoryMenuItem 
-              key={cat.id} 
-              id={cat.id} 
-              name={cat.name} 
+              return (<CategoryMenuItem
+              key={cat.id}
+              id={cat.id}
+              name={cat.name}
               selectedCategoryId={this.props.selectedCategoryId}
               handleCategoryChange={this.props.handleCategoryChange}/>)
           }.bind(this))}

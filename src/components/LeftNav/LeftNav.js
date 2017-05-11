@@ -5,7 +5,7 @@ const styles = {
   leftNav:{
     //border:'1px solid red',
 
-    minWidth:200,
+    width:180,
     padding:'10px 16px 16px 20px'
   },
   navBody:{

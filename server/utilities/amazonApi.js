@@ -20,7 +20,8 @@ const amazonApi = {
       let cats = amzCategories.map(result => {
         return {
           id: 'amz-'+result.BrowseNodeId[0],
-          listSourceId:'AMZ',
+          listSourceId: 'AMZ',
+          listSource: 'Amazon',
           externalId: result.BrowseNodeId[0],
           name: result.Name[0],
           visible: true

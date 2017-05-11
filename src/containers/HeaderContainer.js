@@ -2,10 +2,9 @@ import { connect } from 'react-redux'
 import { fetchAndMergeBestSellers } from '../actions'
 import Header from '../components/Header'
 
-const mapStateToProps = ({categoryState}, getState) => {
+const mapStateToProps = ({categoryState}) => {
   return {
-    selectedCategoryId: categoryState.selectedCategoryId,
-    categoryName: categoryState.categoryName
+    selectedCategory: categoryState.selectedCategory
   }
 }
 

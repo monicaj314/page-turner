@@ -29,8 +29,9 @@ const nytApi = {
         const nytCategories = json.results
         let cats = nytCategories.map((result, key) => {
           return {
-            id: 'nyt-'+key, 
+            id: 'nyt-'+key,
             listSourceId:'NYT',
+            listSource: 'New York Times',
             externalId: result.list_name_encoded,
             name: result.display_name,
             visible: show.includes(result.list_name_encoded)
@@ -39,7 +40,7 @@ const nytApi = {
         return cats
       })
   },
-  
+
   fetchBestSellers(externalId){
     let url = `https://api.nytimes.com/svc/books/v3/lists.json?api-key=${keys.nyt_key}&list=${externalId}`
     return fetch(url)

@@ -1,9 +1,9 @@
-export { 
+export {
   REQUEST_CATEGORIES,
   RECEIVE_CATEGORIES,
   UPDATE_CATEGORY,
   fetchCategories,
-  updateCategory
+  updateCategory,
 } from './CategoryActionCreators'
 
 export {
@@ -11,5 +11,6 @@ export {
   RECEIVE_NYT_BESTSELLERS,
   requestBestSellers,
   receiveBestSellers,
-  fetchBestSellers
+  fetchBestSellers,
+  initLoad
 } from './BestSellersActionCreators'

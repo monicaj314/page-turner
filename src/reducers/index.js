@@ -1,14 +1,16 @@
 import { combineReducers } from 'redux'
-import { REQUEST_NYT_BESTSELLERS, 
-  RECEIVE_NYT_BESTSELLERS, 
-  UPDATE_CATEGORY, 
-  REQUEST_CATEGORIES, 
+import { REQUEST_NYT_BESTSELLERS,
+  RECEIVE_NYT_BESTSELLERS,
+  UPDATE_CATEGORY,
+  REQUEST_CATEGORIES,
   RECEIVE_CATEGORIES } from '../actions'
 
 const init = {
   isFetchingBestSellers: false,
-  selectedCategoryId: 'nyt-0',
-  categoryName: 'Combined Print & E-Book Fiction',
+  //selectedCategoryId: 'nyt-0',
+  selectedCategory: null,
+  //categoryName: 'Combined Print & E-Book Fiction',
+  //categoryListSource:'NYT',
   bestSellers: [],
   isFetchingCategories: false,
   categories:[]
@@ -34,17 +36,15 @@ function bestSellersReducer(state = {
 }
 
 function categoryReducer(state = {
-  selectedCategoryId: init.selectedCategoryId,
+  //selectedCategoryId: init.selectedCategoryId,
   isFetchingCategories: init.isFetchingCategories,
-  amzCategories: init.amzCategories,
-  nytCategories: init.nytCategories,
-  categoryName: init.categoryName
+  categoryName: init.categoryName,
+  selectedCategory: init.selectedCategory
 }, action){
   switch (action.type) {
     case UPDATE_CATEGORY:
       return Object.assign({}, state, {
-        selectedCategoryId: action.categoryId,
-        categoryName: action.categoryName
+        selectedCategory: action.category
       })
     case REQUEST_CATEGORIES:
       return Object.assign({}, state, {

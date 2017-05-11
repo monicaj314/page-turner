@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import keys from '../utilities/apiKeys.json'
+import { requestCategories, receiveCategories, updateCategory} from './CategoryActionCreators'
 
 export const REQUEST_NYT_BESTSELLERS = 'REQUEST_NYT_BESTSELLERS'
 export function requestBestSellers(category){
@@ -70,14 +71,14 @@ export function fetchAndMergeBestSellers2(categoryId){
   return function(dispatch, getState) {
     const categories = getState().categoryState.categories
     const category = categories.find(cat => cat.id === categoryId)
-    
+
     if (category.listSourceId === 'NYT'){
       dispatch(requestBestSellers(category))
       return fetchNytBestSellers(category.externalId, dispatch)
         .then(nytResults => fetchAndMergeGoogleList(nytResults.results))
         .then(aggregatedResults => dispatch(receiveBestSellers(category, aggregatedResults)))
     }
-    
+
   }
 }
 
@@ -118,4 +119,16 @@ function mergeBookData(nytBook, googleJson){
       nytBook.image = 'http://www.i2clipart.com/cliparts/f/9/4/d/clipart-sad-face-outline-128x128-f94d.png'
   }
   return nytBook
+}
+
+export function initLoad(initCategoryId){
+  return function (dispatch){
+    dispatch(requestCategories)
+
+    return fetch('http://localhost:3000/api/book-categories')
+      .then(response => response.json())
+      .then(json => dispatch(receiveCategories(json)))
+      .then(() => dispatch(updateCategory(initCategoryId)))
+      .then(() => dispatch(fetchBestSellers(initCategoryId)))
+  }
 }

@@ -9,22 +9,18 @@ import HeaderContainer from './HeaderContainer'
 import BestSellersListContainer from './BestSellersListContainer'
 import LeftNavContainer from '../components/LeftNav'
 import './App.css';
-import { updateCategory, fetchCategories, fetchBestSellers } from '../actions'
+import { initLoad } from '../actions'
+import CircularProgress from 'material-ui/CircularProgress';
+
 
 const loggerMiddleware = createLogger()
 let store = createStore(
   rootReducer,
   applyMiddleware(
     thunkMiddleware,
-    //loggerMiddleware
+    loggerMiddleware
   )
 );
-
-store.dispatch(fetchCategories())
-//store.dispatch(updateCategory('nyt-0'))
-//store.dispatch(fetchAndMergeBestSellers('Science'))
-store.dispatch(fetchBestSellers('nyt-0'))
-
 
 const styles = {
   bodyWrapper:{
@@ -33,17 +29,41 @@ const styles = {
 }
 
 class App extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      loading: true,
+    }
+  }
+  componentDidMount(){
+    store.dispatch(initLoad('nyt-0'))
+    .then(() => this.setState({loading:false}))
+  }
+
   render() {
+    let body = (
+      <div style={{display:'flex', height:'100vh'}}>
+        <div style={{margin:'auto'}}>
+        <CircularProgress />
+        </div>
+      </div>
+    )
+
+    if (!this.state.loading) {
+      body = (
+        <div className="App">
+          <HeaderContainer />
+          <div style={styles.bodyWrapper}>
+            <LeftNavContainer />
+            <BestSellersListContainer />
+          </div>
+        </div>
+        )
+    }
     return (
       <Provider store={store}>
         <MuiThemeProvider>
-          <div className="App">
-              <HeaderContainer />
-              <div style={styles.bodyWrapper}>
-                <LeftNavContainer />
-                <BestSellersListContainer />
-              </div>
-          </div>
+          {body}
         </MuiThemeProvider>
       </Provider>
     );
