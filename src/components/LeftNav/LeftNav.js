@@ -4,13 +4,11 @@ import CategoryMenu from './CategoryMenu'
 const styles = {
   leftNav:{
     //border:'1px solid red',
-
-    width:180,
+    minWidth:'180px',
     padding:'10px 16px 16px 20px'
   },
   navBody:{
     //border:'1px solid blue',
-    //maxHeight:642,
     overflow:'hidden'
   },
 }
@@ -60,10 +58,6 @@ class LeftNav extends React.Component {
       )
     }
   }
-
-
-
-
 }
 
 export default LeftNav

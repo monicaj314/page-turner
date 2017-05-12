@@ -23,7 +23,6 @@ const styles = {
   },
   bookImageDiv: {
     //border: '1px solid blue',
-    marginRight:'20px',
     width:'160px',
   },
   bookImage:{
@@ -31,7 +30,8 @@ const styles = {
   },
   bookDetails:{
     //border: '1px solid red',
-    width: '450px'
+    width: '450px',
+    margin:'0px 20px'
   },
   title:{
     //border: '1px solid blue',

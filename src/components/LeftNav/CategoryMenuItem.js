@@ -16,12 +16,10 @@ class CategoryMenuItem extends React.Component {
   }
 
   render() {
-
-
     return (
       <div key={this.props.id} style={styles.category}>
         <a className={this.props.selectedCategoryId === this.props.id ? 'category-link-current' : 'category-link'}
-          onClick={this.handleCategoryClick} 
+          onClick={this.handleCategoryClick}
           href="#">{ this.props.name }
         </a>
       </div>

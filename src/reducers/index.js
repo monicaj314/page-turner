@@ -7,10 +7,7 @@ import { REQUEST_NYT_BESTSELLERS,
 
 const init = {
   isFetchingBestSellers: false,
-  //selectedCategoryId: 'nyt-0',
   selectedCategory: null,
-  //categoryName: 'Combined Print & E-Book Fiction',
-  //categoryListSource:'NYT',
   bestSellers: [],
   isFetchingCategories: false,
   categories:[]

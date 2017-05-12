@@ -6,24 +6,16 @@ const styles = {
   ratingsWrapper:{
     display:'flex',
     flexDirection:'column',
-    justifyContent: 'space-between',
-    maxHeight:'180px',
-    minWidth:'500px',
+    //justifyContent: 'space-between',
+    //maxHeight:'180px',
+    //minWidth:'500px',
     //border:'1px solid green'
   },
-  topRowRatings:{
-    display:'flex',
-    flexDirection:'row',
-    justifyContent: 'space-between',
-    //border:'1px solid red',
-    width:'430px' //matches amazon widget width
-  },
-  bottomRowRatings:{
-    display:'flex',
-    flexDirection:'row',
-    justifyContent: 'space-between',
-    width:'430px' //matches amazon widget width
-  },
+  starRatingDiv:{
+    padding:'10px 0px',
+    //border:'1px solid green'
+
+  }
 }
 
 class BookCardRatings extends React.Component {
@@ -31,28 +23,30 @@ class BookCardRatings extends React.Component {
     const reviews = this.props.reviews
     return (
       <div style={styles.ratingsWrapper}>
-        <div style={styles.topRowRatings}>
+        <div style={styles.starRatingDiv}>
           {reviews.goodreads && reviews.goodreads.averageRating ?
-          <StarRating 
+          <StarRating
             source="Goodreads"
-            rating={reviews.goodreads.averageRating} 
+            rating={reviews.goodreads.averageRating}
             ratingsCount={reviews.goodreads.ratingsCount}/>
           : null}
+        </div>
 
+        <div style={styles.starRatingDiv}>
           {reviews.goodreads && reviews.goodreads.averageRating ?
-          <StarRating 
+          <StarRating
             source="Google"
-            rating={reviews.goodreads.averageRating} 
+            rating={reviews.goodreads.averageRating}
             ratingsCount={reviews.goodreads.ratingsCount}
-            starColor="#1565c0"/> 
+            starColor="#1565c0"/>
             : null
           }
-          
         </div>
-        <div style={styles.bottomRowRatings}>
+
+        {/* <div style={styles.bottomRowRatings}>
           <AmazonRating {...this.props} />
-        </div>
-        
+        </div> */}
+
       </div>
     )
   }

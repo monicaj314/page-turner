@@ -63,7 +63,7 @@ function fetchBestSellers(category){
   switch (category.listSourceId){
     case 'AMZ':
       return fetchAmazonBooksAndReturnModels(category)
-        //.then(ptBooks => fetchGoodreadsReviewCountsAndMerge(ptBooks))
+        .then(ptBooks => fetchGoodreadsReviewCountsAndMerge(ptBooks))
 
       case 'NYT':
       return fetchNytBooksAndReturnModels(category)
