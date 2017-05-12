@@ -5,6 +5,7 @@ const path = require('path')
 const nytApi = require('./utilities/nytApi')
 const amazonApi = require('./utilities/amazonApi')
 const goodreadsApi = require('./utilities/goodreadsApi')
+const googleApi = require('./utilities/googleApi')
 
 const redis = require('redis')
 const redisClient = redis.createClient()
@@ -50,7 +51,7 @@ app.get('/api/raw', (req,res) => {
   getCategory(categoryId)
     .then(category => {
       if (!category) throw new Error('Category not found!')
-      return fetchBestSellers(category)  //TWO!!!
+      return fetchBestSellers(category)
     }).then(results => {
       res.json(results)
     }).catch(err => {
@@ -69,6 +70,7 @@ function fetchBestSellers(category){
       return fetchNytBooksAndReturnModels(category)
         .then(ptBooks => fetchAmzBooksAndMerge(ptBooks))
         .then(ptBooks => fetchGoodreadsReviewCountsAndMerge(ptBooks))
+        .then(ptBooks => fetchGoogleBookAndMerge(ptBooks))
 
     default:
       throw new Error('Uh oh, listSource not found!')
@@ -269,6 +271,25 @@ function fetchGoodreadsReviewCountsAndMerge(ptBooks){
       })
       return ptBooks
     })
+}
+
+function fetchGoogleBookAndMerge(ptBooks){
+  var googlePromises = ptBooks.map(ptBook => {
+    return googleApi.fetchBook(ptBook.isbn13)
+      .then(googleBook => {
+        if (googleBook.items && googleBook.items[0] ){
+          ptBook.reviews.google = {
+            averageRating: googleBook.items[0].volumeInfo.averageRating ? googleBook.items[0].volumeInfo.averageRating.toFixed(2) : undefined,
+            ratingsCount: googleBook.items[0].volumeInfo.ratingsCount
+          }
+          ptBook.googlePreviewLink=googleBook.items[0].volumeInfo.previewLink
+        }
+        return ptBook
+      })
+  })
+
+  return Promise.all(googlePromises)
+
 }
 
 function fetchAmzBooksAndMerge(ptBooks){

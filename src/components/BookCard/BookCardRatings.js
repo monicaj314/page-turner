@@ -12,9 +12,8 @@ const styles = {
     //border:'1px solid green'
   },
   starRatingDiv:{
-    padding:'10px 0px',
-    //border:'1px solid green'
-
+    padding:'2px 0px',
+    //border:'1px solid blue'
   }
 }
 
@@ -33,11 +32,11 @@ class BookCardRatings extends React.Component {
         </div>
 
         <div style={styles.starRatingDiv}>
-          {reviews.goodreads && reviews.goodreads.averageRating ?
+          {reviews.google && reviews.google.averageRating ?
           <StarRating
-            source="Google"
-            rating={reviews.goodreads.averageRating}
-            ratingsCount={reviews.goodreads.ratingsCount}
+            source="Google Books"
+            rating={reviews.google.averageRating}
+            ratingsCount={reviews.google.ratingsCount}
             starColor="#1565c0"/>
             : null
           }
