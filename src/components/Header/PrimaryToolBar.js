@@ -33,7 +33,7 @@ class MainToolBar extends Component {
         <Toolbar style={styles.mainToolBar}>
           <ToolbarGroup firstChild={true}>
             <img src={logo} className="header-logo" alt="logo" />
-            <ToolbarTitle style={styles.mainToolBarTitle} text="Page Turner" />
+            <ToolbarTitle style={styles.mainToolBarTitle} text="Page Turners" />
           </ToolbarGroup>
           <ToolbarGroup>
             <IconMenu iconButtonElement={

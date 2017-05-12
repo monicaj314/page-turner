@@ -1,6 +1,6 @@
 import React from 'react'
 import StarRating from './StarRating'
-import AmazonRating from './AmazonRating'
+import AmazonRating from './AmazonRating2'
 
 const styles = {
   ratingsWrapper:{
@@ -23,6 +23,9 @@ class BookCardRatings extends React.Component {
     return (
       <div style={styles.ratingsWrapper}>
         <div style={styles.starRatingDiv}>
+          <AmazonRating {...this.props} />
+        </div>
+        <div style={styles.starRatingDiv}>
           {reviews.goodreads && reviews.goodreads.averageRating ?
           <StarRating
             source="Goodreads"
@@ -41,11 +44,6 @@ class BookCardRatings extends React.Component {
             : null
           }
         </div>
-
-        {/* <div style={styles.bottomRowRatings}>
-          <AmazonRating {...this.props} />
-        </div> */}
-
       </div>
     )
   }

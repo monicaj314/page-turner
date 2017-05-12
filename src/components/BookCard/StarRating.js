@@ -14,7 +14,7 @@ const styles = {
   },
   title:{
     fontSize:'13px',
-    padding:'0px 5px 0px 0px',
+    padding:'0px 23px 0px 0px',
     width:'100px',
     textAlign:'right'
   },
@@ -23,11 +23,13 @@ const styles = {
     display:'flex'
   },
   starIcon:{
-    width:15,
-    height:15,
+    width:14,
+    height:14,
+    marginRight:'-4px'
   },
   stats:{
     //paddingTop:'3px',
+    marginLeft:'7px',
     fontSize:'13px',
   }
 }
