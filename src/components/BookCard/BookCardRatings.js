@@ -19,31 +19,31 @@ const styles = {
 
 class BookCardRatings extends React.Component {
   render(){
-    const reviews = this.props.reviews
+    const ratings = this.props.ratings
     return (
       <div style={styles.ratingsWrapper}>
         <div style={styles.starRatingDiv}>
           <AmazonRating {...this.props} />
         </div>
+
+        {ratings.goodreads && ratings.goodreads.averageRating ?
         <div style={styles.starRatingDiv}>
-          {reviews.goodreads && reviews.goodreads.averageRating ?
           <StarRating
             source="Goodreads"
-            rating={reviews.goodreads.averageRating}
-            ratingsCount={reviews.goodreads.ratingsCount}/>
-          : null}
-        </div>
+            rating={ratings.goodreads.averageRating}
+            ratingsCount={ratings.goodreads.ratingsCount}/>
+        </div>: null
+        }
 
-        <div style={styles.starRatingDiv}>
-          {reviews.google && reviews.google.averageRating ?
-          <StarRating
-            source="Google Books"
-            rating={reviews.google.averageRating}
-            ratingsCount={reviews.google.ratingsCount}
-            starColor="#1565c0"/>
-            : null
-          }
-        </div>
+        {ratings.google && ratings.google.averageRating ?
+          <div style={styles.starRatingDiv}>
+            <StarRating
+              source="Google Books"
+              rating={ratings.google.averageRating}
+              ratingsCount={ratings.google.ratingsCount}
+              starColor="#1565c0"/>
+          </div> : null
+        }
       </div>
     )
   }

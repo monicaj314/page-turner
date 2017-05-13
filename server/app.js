@@ -39,7 +39,7 @@ app.get('/api/best-sellers', (req,res) => {
       res.json(results)
     }).catch(err => {
       console.error(err)
-      res.status(500).json(JSON.stringify(err))
+      res.status(500).json({message: err.message, stack:err.stack})
     })
 })
 
@@ -65,6 +65,7 @@ function fetchBestSellers(category){
     case 'AMZ':
       return fetchAmazonBooksAndReturnModels(category)
         .then(ptBooks => fetchGoodreadsReviewCountsAndMerge(ptBooks))
+        .then(ptBooks => fetchGoogleBookAndMerge(ptBooks))
 
       case 'NYT':
       return fetchNytBooksAndReturnModels(category)
@@ -153,16 +154,6 @@ function fetchAmazonBooksIsbnFromCache(isbns){
   })
 }
 
-function fetchAmazonBooksAndReturnModelsTEST(category){
-return amazonApi.fetchBestSellers(category.externalId)
-    .then(results => {
-      const bestSellers = results[0]["TopSellers"][0].TopSeller
-      let asins = []
-      bestSellers.map(amazonBestSeller => asins.push(amazonBestSeller["ASIN"][0]))
-      return fetchAmazonBooksIsbn("ASIN", ["B01D24NAL6"])
-    })
-}
-
 function fetchAmazonBooksAndReturnModels(category){
   return amazonApi.fetchBestSellers(category.externalId)
     .then(results => {
@@ -174,14 +165,7 @@ function fetchAmazonBooksAndReturnModels(category){
     .then(amzBooks => {
       let books = []
       amzBooks.map((amzBook,i) => {
-        let book = {
-          reviews:{
-            amz: {
-              customerReviews:[],
-              editorialReviews:[]
-            }
-          }
-        }
+        let book = {reviews:[], ratings:{}}
         book.rank = i+1
 
         //EXTRACT & REFACTOR
@@ -211,9 +195,12 @@ function fetchAmazonBooksAndReturnModels(category){
 
         if (amzBook.CustomerReviews){
           amzBook.CustomerReviews.map(review => {
-            book.reviews.amz.customerReviews.push({
-              hasReviews: review.HasReviews,
-              iframeUrl: review.IFrameURL[0]
+            book.reviews.push({
+              source: 'Amazon',
+              type: 'customer',
+              isLink: true,
+              content: review.IFrameURL[0],
+              contentTitle: 'Amazon Customer Reviews'
             })
           })
         }
@@ -225,8 +212,11 @@ function fetchAmazonBooksAndReturnModels(category){
             if (review.EditorialReview[0].Source[0] === 'Product Description'){
               book.amzDescription = review.EditorialReview[0].Content[0]
             } else {
-              book.reviews.amz.editorialReviews.push({
-                source: review.EditorialReview[0].Source[0],
+              book.reviews.push({
+                source: 'Amazon',
+                type: 'editorial',
+                isLink: false,
+                contentTitle: review.EditorialReview[0].Source[0],
                 content: review.EditorialReview[0].Content[0],
               })
             }
@@ -262,7 +252,7 @@ function fetchGoodreadsReviewCountsAndMerge(ptBooks){
         })
         if (matchedReview){
           book.goodreadsId = matchedReview.id
-          book.reviews.goodreads = {
+          book.ratings.goodreads = {
             averageRating: matchedReview.average_rating,
             ratingsCount: matchedReview.work_ratings_count
           }
@@ -273,12 +263,31 @@ function fetchGoodreadsReviewCountsAndMerge(ptBooks){
     })
 }
 
-function fetchGoogleBookAndMerge(ptBooks){
+function fetchGoogleBookAndMerge2(ptBooks){
   var googlePromises = ptBooks.map(ptBook => {
     return googleApi.fetchBook(ptBook.isbn13)
       .then(googleBook => {
         if (googleBook.items && googleBook.items[0] ){
-          ptBook.reviews.google = {
+          ptBook.ratings.google = {
+            averageRating: googleBook.items[0].volumeInfo.averageRating ? googleBook.items[0].volumeInfo.averageRating.toFixed(2) : undefined,
+            ratingsCount: googleBook.items[0].volumeInfo.ratingsCount
+          }
+          ptBook.googlePreviewLink=googleBook.items[0].volumeInfo.previewLink
+        }
+        return ptBook
+      })
+  })
+
+  return Promise.all(googlePromises)
+
+}
+
+function fetchGoogleBookAndMerge(ptBooks){
+  var googlePromises = ptBooks.map(ptBook => {
+    return googleApi.searchForBook(ptBook.authors ? ptBook.authors[0] : null, ptBook.amzTitle)
+      .then(googleBook => {
+        if (googleBook.items && googleBook.items[0] ){
+          ptBook.ratings.google = {
             averageRating: googleBook.items[0].volumeInfo.averageRating ? googleBook.items[0].volumeInfo.averageRating.toFixed(2) : undefined,
             ratingsCount: googleBook.items[0].volumeInfo.ratingsCount
           }
@@ -353,10 +362,14 @@ function mergeAmzBooks(amzBooks, ptBooks){
       }
 
       if (matched.CustomerReviews){
+
         matched.CustomerReviews.map(review => {
-          book.reviews.amz.customerReviews.push({
-            hasReviews: review.HasReviews,
-            iframeUrl: review.IFrameURL[0]
+          book.reviews.push({
+            source: 'Amazon',
+            type: 'customer',
+            isLink: true,
+            content: review.IFrameURL[0],
+            contentTitle: 'Amazon Customer Reviews'
           })
         })
       }
@@ -368,8 +381,11 @@ function mergeAmzBooks(amzBooks, ptBooks){
           if (review.EditorialReview[0].Source[0] === 'Product Description'){
             book.amzDescription = review.EditorialReview[0].Content[0]
           } else {
-            book.reviews.amz.editorialReviews.push({
-              source: review.EditorialReview[0].Source[0],
+            book.reviews.push({
+              source: 'Amazon',
+              type: 'editorial',
+              isLink: false,
+              contentTitle: review.EditorialReview[0].Source[0],
               content: review.EditorialReview[0].Content[0],
             })
           }
@@ -404,6 +420,7 @@ function fetchNytBooksAndReturnModels(category){
         if (regexMatches && regexMatches[1]){
           var amazonAsin = regexMatches[1]
         }
+
         books.push({
           nytAmazonAsin: amazonAsin,
           nytTitle: nytBookDetails.title,
@@ -413,16 +430,25 @@ function fetchNytBooksAndReturnModels(category){
           rank: nytBook.rank,
           weeksOnList: nytBook.weeks_on_list,
           nytAmazonLink: nytBook.amazon_product_url,
-          reviews: {
-            nyt: {
-              editorialReviews: nytBook.reviews,
-              customerReviews: []
-            },
-            amz:{
-              editorialReviews: [],
-              customerReviews: []
-            }
-          }
+          ratings:{
+            nyt:null,
+            amazon:null,
+            goodreads:null,
+            google:null
+          },
+          reviews: [{
+            source:'New York Times',
+            type:'editorial',
+            isLink:'true',
+            content: nytBook.reviews[0].book_review_link,
+            contentTitle: 'New York Times Book Review'
+          },{
+            source:'New York Times',
+            type:'editorial',
+            isLink:'true',
+            content: nytBook.reviews[0].sunday_review_link,
+            contentTitle: 'New York Times Sunday Book Review'
+          }]
         })
       })
       return books

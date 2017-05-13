@@ -47,7 +47,7 @@ class AmazonRating2 extends React.Component {
   constructor(props){
     super(props)
     this.state={
-      loading:true
+      loading:true,
     }
   }
 
@@ -56,7 +56,14 @@ class AmazonRating2 extends React.Component {
       loading:false
     })
   }
+
+  getIframeUrl(){
+    const amazonReview = this.props.reviews.find(review => review.source === 'Amazon')
+    return amazonReview ? amazonReview.content : ''
+  }
+
   render(){
+    this.props.reviews.find(review=>review.source=='Amazon')
 
     return (
     <div style={styles.wrapper}>
@@ -69,7 +76,7 @@ class AmazonRating2 extends React.Component {
           <iframe style={styles.iframe}
             scrolling="no"
             onLoad={this.iframeLoadListener}
-            src={this.props.reviews.amz.customerReviews[0].iframeUrl}
+            src={this.getIframeUrl()}
           />
         </div>
       </div>

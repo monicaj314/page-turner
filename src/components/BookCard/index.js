@@ -3,7 +3,9 @@ import IconButton from 'material-ui/IconButton'
 import OpenIcon from 'material-ui/svg-icons/navigation/expand-more'
 import CloseIcon from 'material-ui/svg-icons/navigation/expand-less'
 import BookCardRatings from './BookCardRatings'
+import EditorialReview from './EditorialReview'
 import './BookCard.css'
+
 
 
 const styles = {
@@ -125,8 +127,10 @@ class BookCard extends React.Component {
               {description}
           </div>
         </div>
-
-        <BookCardRatings {...this.props} />
+        <div>
+          <BookCardRatings {...this.props} />
+          <EditorialReview reviews={this.props.reviews}/>
+        </div>
 
         <div>
           <IconButton tooltip={this.state.expanded ? 'Read Less!' : 'Read More!'}>
