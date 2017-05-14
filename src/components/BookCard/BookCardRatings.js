@@ -2,6 +2,8 @@ import React from 'react'
 import StarRating from './StarRating'
 import AmazonRating from './AmazonRating2'
 
+import StarRatingComponent from 'react-star-rating-component'
+
 const styles = {
   ratingsWrapper:{
     display:'flex',
@@ -14,10 +16,15 @@ const styles = {
   starRatingDiv:{
     padding:'2px 0px',
     //border:'1px solid blue'
-  }
+  },
+
 }
 
 class BookCardRatings extends React.Component {
+    onStarClickHalfStar(nextValue, prevValue, name) {
+      console.log('name: %s, nextValue: %s, prevValue: %s', name, nextValue, prevValue);
+    }
+
   render(){
     const ratings = this.props.ratings
     return (
@@ -35,7 +42,7 @@ class BookCardRatings extends React.Component {
               starColor="#1565c0"/>
           </div> : null
         }
-        
+
         {ratings.goodreads && ratings.goodreads.averageRating ?
         <div style={styles.starRatingDiv}>
           <StarRating
@@ -44,7 +51,6 @@ class BookCardRatings extends React.Component {
             ratingsCount={ratings.goodreads.ratingsCount}/>
         </div>: null
         }
-
 
       </div>
     )

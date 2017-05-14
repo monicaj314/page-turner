@@ -44,7 +44,7 @@ class BookImageCell extends React.Component{
 
         <a href={this.props.buyLink} target="_blank">
           <button style={styles.buyButton}>
-            <a>Buy on Amazon</a>
+            Buy on Amazon
           </button>
         </a>
       </div>

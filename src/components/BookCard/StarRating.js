@@ -37,16 +37,32 @@ const styles = {
 class StarRating extends React.Component{
   render(){
     //styles.starIcon.color = this.props.starColor ? this.props.starColor : '#f44336'
+    //console.log('-----------------------')
+    //console.log(this.props.source)
+    //console.log('number: '+ Number(this.props.rating))
+    var ratingPlusOne =  Number(this.props.rating) + 1 //hack to fix rating issue with component
+    //console.log('number+1: '+ ratingPlusOne)
     return(
       <div style={styles.wrapper}>
         <div style={styles.title}>{this.props.source} </div>
         <div style={styles.starsWrapper}>
           <StarRatingComponent
             name="rate"
-            value={Number(this.props.rating)}
+            value={ratingPlusOne}
             starCount={5}
-            renderStarIcon={(index, value) => { return index <= value ? <Star style={styles.starIcon}/> : <StarEmpty style={styles.starIcon}/>}}
-            renderStarIconHalf={() => <StarHalf style={styles.starIcon}/>}
+            renderStarIcon={(index, value) => {
+              if (value > index){
+                //console.log(`value:${value} > index:${index} -?- show full star`)
+                return <Star style={styles.starIcon}/>
+              } else {
+                //console.log(`value:${value} is not > index:${index} -?- show empty star`)
+                return <StarEmpty style={styles.starIcon}/>
+              }
+            }}
+            renderStarIconHalf={(index, value) => {
+              //console.log(`value:${value} - index:${index} -?- show half star`)
+              return <StarHalf style={styles.starIcon}/>
+            }}
             editing={false}
           />
 
