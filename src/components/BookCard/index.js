@@ -4,6 +4,7 @@ import OpenIcon from 'material-ui/svg-icons/navigation/expand-more'
 import CloseIcon from 'material-ui/svg-icons/navigation/expand-less'
 import BookCardRatings from './BookCardRatings'
 import EditorialReview from './EditorialReview'
+import BookImageCell from './BookImageCell'
 import './BookCard.css'
 
 
@@ -23,13 +24,7 @@ const styles = {
     color: '#444',
     fontSize:'x-large'
   },
-  bookImageDiv: {
-    //border: '1px solid blue',
-    width:'160px',
-  },
-  bookImage:{
 
-  },
   bookDetails:{
     //border: '1px solid red',
     width: '450px',
@@ -112,9 +107,7 @@ class BookCard extends React.Component {
           <span style={styles.rankText}>{this.props.rank}</span>
         </div>
 
-        <div style={styles.bookImageDiv}>
-          <img src={this.props.mediumImage} style={styles.bookImage} alt={this.props.amzTitle} />
-        </div>
+        <BookImageCell mediumImage={this.props.mediumImage} bookTitle={this.props.amzTitle} buyLink={this.props.amazonLink} />
 
         <div style={styles.bookDetails}>
           <div style={styles.title}>

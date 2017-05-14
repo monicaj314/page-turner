@@ -65,13 +65,13 @@ function fetchBestSellers(category){
     case 'AMZ':
       return fetchAmazonBooksAndReturnModels(category)
         .then(ptBooks => fetchGoodreadsReviewCountsAndMerge(ptBooks))
-        //.then(ptBooks => fetchGoogleBookAndMerge(ptBooks))
+        .then(ptBooks => fetchGoogleBookAndMerge(ptBooks))
 
       case 'NYT':
       return fetchNytBooksAndReturnModels(category)
         .then(ptBooks => fetchAmzBooksAndMerge(ptBooks))
         .then(ptBooks => fetchGoodreadsReviewCountsAndMerge(ptBooks))
-        //.then(ptBooks => fetchGoogleBookAndMerge(ptBooks))
+        .then(ptBooks => fetchGoogleBookAndMerge(ptBooks))
 
     default:
       throw new Error('Uh oh, listSource not found!')
@@ -264,25 +264,6 @@ function fetchGoodreadsReviewCountsAndMerge(ptBooks){
       })
       return ptBooks
     })
-}
-
-function fetchGoogleBookAndMerge2(ptBooks){
-  var googlePromises = ptBooks.map(ptBook => {
-    return googleApi.fetchBook(ptBook.isbn13)
-      .then(googleBook => {
-        if (googleBook.items && googleBook.items[0] ){
-          ptBook.ratings.google = {
-            averageRating: googleBook.items[0].volumeInfo.averageRating ? googleBook.items[0].volumeInfo.averageRating.toFixed(2) : undefined,
-            ratingsCount: googleBook.items[0].volumeInfo.ratingsCount
-          }
-          ptBook.googlePreviewLink=googleBook.items[0].volumeInfo.previewLink
-        }
-        return ptBook
-      })
-  })
-
-  return Promise.all(googlePromises)
-
 }
 
 function fetchGoogleBookAndMerge(ptBooks){
