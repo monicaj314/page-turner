@@ -26,15 +26,6 @@ class BookCardRatings extends React.Component {
           <AmazonRating {...this.props} />
         </div>
 
-        {ratings.goodreads && ratings.goodreads.averageRating ?
-        <div style={styles.starRatingDiv}>
-          <StarRating
-            source="Goodreads"
-            rating={ratings.goodreads.averageRating}
-            ratingsCount={ratings.goodreads.ratingsCount}/>
-        </div>: null
-        }
-
         {ratings.google && ratings.google.averageRating ?
           <div style={styles.starRatingDiv}>
             <StarRating
@@ -44,6 +35,17 @@ class BookCardRatings extends React.Component {
               starColor="#1565c0"/>
           </div> : null
         }
+        
+        {ratings.goodreads && ratings.goodreads.averageRating ?
+        <div style={styles.starRatingDiv}>
+          <StarRating
+            source="Goodreads"
+            rating={ratings.goodreads.averageRating}
+            ratingsCount={ratings.goodreads.ratingsCount}/>
+        </div>: null
+        }
+
+
       </div>
     )
   }

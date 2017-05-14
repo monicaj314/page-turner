@@ -4,6 +4,7 @@ import CategoryMenu from './CategoryMenu'
 const styles = {
   leftNav:{
     //border:'1px solid red',
+    width:'180px',
     minWidth:'180px',
     padding:'10px 16px 16px 20px'
   },

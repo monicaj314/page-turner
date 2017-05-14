@@ -34,7 +34,7 @@ app.get('/api/best-sellers', (req,res) => {
   getCategory(categoryId)
     .then(category => {
       if (!category) throw new Error('Category not found!')
-      return fetchBestSellers(category)
+      return getBestSellers(category)
     }).then(results => {
       res.json(results)
     }).catch(err => {
@@ -47,11 +47,11 @@ app.get('/api/raw', (req,res) => {
   const categoryId = req.query.categoryId
   if (!categoryId)
     throw new Error('Book Category is Required!')
-
+  
   getCategory(categoryId)
     .then(category => {
       if (!category) throw new Error('Category not found!')
-      return fetchBestSellers(category)
+      return getBestSellers(category)
     }).then(results => {
       res.json(results)
     }).catch(err => {
@@ -65,24 +65,53 @@ function fetchBestSellers(category){
     case 'AMZ':
       return fetchAmazonBooksAndReturnModels(category)
         .then(ptBooks => fetchGoodreadsReviewCountsAndMerge(ptBooks))
-        .then(ptBooks => fetchGoogleBookAndMerge(ptBooks))
+        //.then(ptBooks => fetchGoogleBookAndMerge(ptBooks))
 
       case 'NYT':
       return fetchNytBooksAndReturnModels(category)
         .then(ptBooks => fetchAmzBooksAndMerge(ptBooks))
         .then(ptBooks => fetchGoodreadsReviewCountsAndMerge(ptBooks))
-        .then(ptBooks => fetchGoogleBookAndMerge(ptBooks))
+        //.then(ptBooks => fetchGoogleBookAndMerge(ptBooks))
 
     default:
       throw new Error('Uh oh, listSource not found!')
   }
 }
 
+function getBestSellersFromCache(category){
+  return new Promise((resolve, reject) => {
+    redisClient.get(category.id, function (err, data) {
+      if (err) reject(err)
+      resolve(JSON.parse(data))
+    })
+  })
+}
+
+
+function getBestSellers(category){
+  return getBestSellersFromCache(category)
+    .then(data => {
+      if (data){
+        console.log(`Found best sellers in CACHE for key:${category.id}, name:${category.name}`)
+        return data
+      } else {
+        return fetchBestSellers(category)
+          .then(data => {
+            redisClient.set(category.id, JSON.stringify(data), 'EX', 3600);
+            console.log(`Fetching best sellers from APIs.  CACHE hydrated for key:${category.id}, name:${category.name}`)
+            return data
+          })
+      }
+    })
+}
+
+
+
 function fetchCategories(){
   return fetchCategoriesFromCache()
     .then(data => {
       if (data){
-        console.log('Fetching categories from CACHE')
+        console.log('Found categories in CACHE')
         return data
       } else {
         return fetchCategoriesFromApis()
@@ -127,40 +156,14 @@ function fetchCategoriesFromCache() {
   })
 }
 
-//DEV USE ONLY
-function fetchAmazonBooksIsbn(idType, itemIds){
-  return fetchAmazonBooksIsbnFromCache(itemIds)
-    .then(data => {
-      if (data){
-        console.log('Fetching Amazon ISBN books from CACHE')
-        return data
-      } else {
-        return amazonApi.fetchByIsbn(idType, itemIds)
-          .then(data => {
-            redisClient.set(itemIds.join(','), JSON.stringify(data));
-            console.log('Fetching Amazon ISBN books from API.  CACHE hydrated.')
-            return data
-          })
-      }
-    })
-}
-
-function fetchAmazonBooksIsbnFromCache(isbns){
-  return new Promise((resolve, reject) => {
-    redisClient.get(isbns.join(','), function (err, data) {
-      if (err) reject(err)
-      resolve(JSON.parse(data))
-    })
-  })
-}
-
 function fetchAmazonBooksAndReturnModels(category){
   return amazonApi.fetchBestSellers(category.externalId)
     .then(results => {
       const bestSellers = results[0]["TopSellers"][0].TopSeller
       let asins = []
       bestSellers.map(amazonBestSeller => asins.push(amazonBestSeller["ASIN"][0]))
-      return fetchAmazonBooksIsbn("ASIN", asins)
+      //return fetchAmazonBooksIsbn("ASIN", asins)
+      return amazonApi.fetchByIsbn("ASIN", asins)
     })
     .then(amzBooks => {
       let books = []
@@ -318,7 +321,8 @@ function fetchAmzBooksAndMerge(ptBooks){
     itemIds = amazonAsins
   }
 
-  return fetchAmazonBooksIsbn(idType, itemIds)
+  //return fetchAmazonBooksIsbn(idType, itemIds)
+  return amazonApi.fetchByIsbn(idType, itemIds)
     .then(amzBooks => mergeAmzBooks(amzBooks, ptBooks))
 }
 
