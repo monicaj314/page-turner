@@ -22,7 +22,22 @@ const goodreadsApi = {
     const url = `https://www.goodreads.com/book/review_counts.json?isbns=${isbns}&key=${keys.gr_key}`
     console.log('API: '+url)
     return fetch(url)
-      .then(response => response.json())
+      .then(response => {
+        if (response.ok){
+          return response.json()
+        } else if (response.status === 404){
+          return response.text()
+        } else {
+          throw new Error(`Error fetching GoodReads review counts: ${response.status} - ${response.statusText}`)
+        }
+      })
+      .then(result => {
+        if (result === 'No books match those ISBNs.'){
+          console.warn(`Goodreads: ${result}`)
+          return null
+        }
+        return result
+      })
   }
 
 }

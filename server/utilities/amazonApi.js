@@ -29,6 +29,10 @@ const amazonApi = {
         }
       })
       return cats
+    }).catch(err => {
+      let errorMessage = `Amazon Error: Error Fetching categories`
+      console.error(parseAmazonError(err))
+      throw new Error(errorMessage)
     })
   },
 
@@ -40,6 +44,10 @@ const amazonApi = {
       searchIndex: 'Books',
     }).then(function(results){
       return results
+    }).catch(err => {
+      let errorMessage = `Amazon Error: Error Fetching best sellers for ${externalId}`
+      console.error(parseAmazonError(err))
+      throw new Error(errorMessage)
     })
   },
 
@@ -57,8 +65,19 @@ const amazonApi = {
       responseGroup: 'Large,Reviews,Similarities'
     }).then(function(results){
       return results
+    }).catch(err => {
+      const errorMessage = `Amazon Error: Error Fetching by ISBN for: IdType :${idType}, ItemIds:${itemIdsToRequest}`
+      console.error(parseAmazonError(err))
+      throw new Error(errorMessage)
     })
+  },
+}
+
+let parseAmazonError = (err) => {
+  if (err.Error && err.Error[0].Code && err.Error[0].Message){
+    return `Amazon Error: ${err.Error[0].Code[0]} - ${err.Error[0].Message[0]}`
   }
 }
+
 
 module.exports = amazonApi

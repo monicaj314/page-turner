@@ -31,10 +31,6 @@ const styles={
 }
 
 class BookImageCell extends React.Component{
-  onBuyButtonClick = () => {
-    console.log(this)
-    alert('purchased')
-  }
   render(){
     return (
       <div style={styles.wrapper}>

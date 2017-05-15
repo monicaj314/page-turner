@@ -245,10 +245,20 @@ function fetchAmazonBooksAndReturnModels(category){
 }
 
 function fetchGoodreadsReviewCountsAndMerge(ptBooks){
-  let isbn13s = []
-  ptBooks.map(book => {isbn13s.push(book.isbn13)})
-  return goodreadsApi.fetchReviewCounts(isbn13s)
+  let isbns = []
+  ptBooks.map(book => {
+    if (book.isbn13){
+      isbns.push(book.isbn13)
+    } else if (book.isbn10){
+      isbns.push(book.isbn10)
+    }
+  })
+  return goodreadsApi.fetchReviewCounts(isbns)
     .then(reviewCounts => {
+      if (!reviewCounts){
+        return ptBooks
+      }
+
       ptBooks.map(book => {
         let matchedReview = reviewCounts.books.find(review => {
           return (review.isbn === book.isbn10) || (review.isbn13 === book.isbn13)
@@ -260,8 +270,8 @@ function fetchGoodreadsReviewCountsAndMerge(ptBooks){
             ratingsCount: matchedReview.work_ratings_count
           }
         }
-
       })
+      
       return ptBooks
     })
 }
@@ -302,7 +312,6 @@ function fetchAmzBooksAndMerge(ptBooks){
     itemIds = amazonAsins
   }
 
-  //return fetchAmazonBooksIsbn(idType, itemIds)
   return amazonApi.fetchByIsbn(idType, itemIds)
     .then(amzBooks => mergeAmzBooks(amzBooks, ptBooks))
 }
