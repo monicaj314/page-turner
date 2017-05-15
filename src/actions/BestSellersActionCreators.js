@@ -1,5 +1,4 @@
 import fetch from 'isomorphic-fetch'
-import keys from '../utilities/apiKeys.json'
 import { requestCategories, receiveCategories, updateCategory} from './CategoryActionCreators'
 
 export const REQUEST_NYT_BESTSELLERS = 'REQUEST_NYT_BESTSELLERS'
