@@ -7,8 +7,14 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
+            "name": "API Server",
             "program": "${workspaceRoot}/server/index.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Web Server",
+            "program": "${workspaceRoot}/index.js"
         },
         {
             "type": "node",

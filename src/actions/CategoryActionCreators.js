@@ -30,7 +30,7 @@ export function fetchCategories(){
   return function(dispatch) {
     dispatch(requestCategories())
     //const url = `http://localhost:3000/api/book-categories`
-    const url = `http://www.page-turners.cc:3001/api/book-categories`
+    const url = `http://www.page-turners.cc:3000/api/book-categories`
 
     return fetch(url)
       .then(response => response.json())
