@@ -1,7 +1,5 @@
 import React from 'react'
 import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
-import CategoryDropDownContainer from '../../containers/CategoryDropDownContainer'
-
 
 const styles = {
   toolBar:{

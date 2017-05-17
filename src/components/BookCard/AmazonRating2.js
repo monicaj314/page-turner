@@ -1,6 +1,4 @@
 import React from 'react'
-import amazonLogo from './amazon-logo-tiny.gif';
-import CircularProgress from 'material-ui/CircularProgress';
 
 const styles = {
   wrapper:{
@@ -63,7 +61,7 @@ class AmazonRating2 extends React.Component {
   }
 
   render(){
-    this.props.reviews.find(review=>review.source=='Amazon')
+    this.props.reviews.find(review => review.source === 'Amazon')
 
     return (
     <div style={styles.wrapper}>

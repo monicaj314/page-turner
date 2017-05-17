@@ -1,6 +1,6 @@
 import React from 'react'
-import amazonLogo from './amazon-logo-tiny.gif';
-import CircularProgress from 'material-ui/CircularProgress';
+//import amazonLogo from './amazon-logo-tiny.gif';
+//import CircularProgress from 'material-ui/CircularProgress';
 
 const styles = {
   wrapper:{

@@ -2,8 +2,6 @@ import React from 'react'
 import StarRating from './StarRating'
 import AmazonRating from './AmazonRating2'
 
-import StarRatingComponent from 'react-star-rating-component'
-
 const styles = {
   ratingsWrapper:{
     display:'flex',

@@ -25,11 +25,9 @@ const styles = {
 class EditorialReview extends React.Component{
   editorialReviewsAvailable(reviews){
       return reviews.some(review => review.type === 'editorial' && review.content)
-      //return reviews.some(review => review.content)
   }
   isEditorialReview(review){
     return review.type === 'editorial' && review.content
-    //return !!review.content
   }
   render(){
     let reviews=null
@@ -39,9 +37,12 @@ class EditorialReview extends React.Component{
       <div style={styles.reviewsWrapper}>
         <span style={styles.reviewLabel}>Editorial Reviews</span>
         <div style={styles.reviewsDiv}>
+
         {this.props.reviews.map((review, i) => {
           if (this.isEditorialReview(review)){
             return (<a key={i} style={styles.reviewLink} target="_blank" href={review.content}>{review.contentTitle}</a>)
+          } else {
+            return null
           }
         })}
         </div>
