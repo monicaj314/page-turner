@@ -47,7 +47,7 @@ app.get('/api/raw', (req,res) => {
   const categoryId = req.query.categoryId
   if (!categoryId)
     throw new Error('Book Category is Required!')
-  
+
   getCategory(categoryId)
     .then(category => {
       if (!category) throw new Error('Category not found!')
@@ -97,7 +97,7 @@ function getBestSellers(category){
       } else {
         return fetchBestSellers(category)
           .then(data => {
-            redisClient.set(category.id, JSON.stringify(data), 'EX', 3600);
+            redisClient.set(category.id, JSON.stringify(data), 'EX', 21600);
             console.log(`Fetching best sellers from APIs.  CACHE hydrated for key:${category.id}, name:${category.name}`)
             return data
           })
@@ -116,7 +116,7 @@ function fetchCategories(){
       } else {
         return fetchCategoriesFromApis()
           .then(data => {
-            redisClient.set('categories', JSON.stringify(data), 'EX', 3600);
+            redisClient.set('categories', JSON.stringify(data), 'EX', 604800);
             console.log('Fetching categories from API.  CACHE hydrated.')
             return data
           })
@@ -271,7 +271,7 @@ function fetchGoodreadsReviewCountsAndMerge(ptBooks){
           }
         }
       })
-      
+
       return ptBooks
     })
 }

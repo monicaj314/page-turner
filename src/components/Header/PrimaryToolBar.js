@@ -35,7 +35,7 @@ class MainToolBar extends Component {
             <img src={logo} className="header-logo" alt="logo" />
             <ToolbarTitle style={styles.mainToolBarTitle} text="Page Turners" />
           </ToolbarGroup>
-          <ToolbarGroup>
+          {/* <ToolbarGroup>
             <IconMenu iconButtonElement={
                 <IconButton touch={true} style={styles.medium} iconStyle={styles.mediumIcon}>
                   <ActionAccount />
@@ -45,7 +45,7 @@ class MainToolBar extends Component {
             >
               <MenuItem primaryText="Sign In" />
             </IconMenu>
-          </ToolbarGroup>
+          </ToolbarGroup> */}
         </Toolbar>
     )
   }

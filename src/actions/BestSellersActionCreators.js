@@ -22,8 +22,7 @@ export function fetchBestSellers(categoryId){
   return (dispatch) => {
     dispatch(requestBestSellers(categoryId))
 
-    //const url = `http://localhost/api/best-sellers?categoryId=${categoryId}`
-    const url = `http://www.page-turners.cc/api/best-sellers?categoryId=${categoryId}`
+    const url = `/api/best-sellers?categoryId=${categoryId}`
 
     return fetch(url)
       .then(response => response.json())
@@ -34,8 +33,8 @@ export function fetchBestSellers(categoryId){
 export function initLoad(initCategoryId){
   return function (dispatch){
     dispatch(requestCategories)
-    //const url = `http://localhost/api/book-categories`
-    const url = `http://www.page-turners.cc/api/book-categories`
+    
+    const url = `/api/book-categories`
 
     return fetch(url)
       .then(response => response.json())
