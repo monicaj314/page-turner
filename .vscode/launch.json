@@ -22,6 +22,12 @@
             "name": "Attach to Port",
             "address": "localhost",
             "port": 3001
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "npm start",
+            "program": "${workspaceRoot}/scripts/start.js"
         }
     ]
 }

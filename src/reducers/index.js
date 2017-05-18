@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import { REQUEST_NYT_BESTSELLERS,
-  RECEIVE_NYT_BESTSELLERS,
+import { REQUEST_BESTSELLERS,
+  RECEIVE_BESTSELLERS,
   UPDATE_CATEGORY,
   REQUEST_CATEGORIES,
   RECEIVE_CATEGORIES } from '../actions'
@@ -18,11 +18,11 @@ function bestSellersReducer(state = {
   bestSellers: init.bestSellers
 }, action) {
   switch (action.type) {
-    case REQUEST_NYT_BESTSELLERS:
+    case REQUEST_BESTSELLERS:
       return Object.assign({}, state, {
         isFetchingBestSellers: true,
       })
-    case RECEIVE_NYT_BESTSELLERS:
+    case RECEIVE_BESTSELLERS:
       return Object.assign({}, state, {
         isFetchingBestSellers: false,
         bestSellers: action.bestSellers,

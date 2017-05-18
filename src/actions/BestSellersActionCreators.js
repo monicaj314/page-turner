@@ -1,18 +1,18 @@
 import fetch from 'isomorphic-fetch'
 import { requestCategories, receiveCategories, updateCategory} from './CategoryActionCreators'
 
-export const REQUEST_NYT_BESTSELLERS = 'REQUEST_NYT_BESTSELLERS'
+export const REQUEST_BESTSELLERS = 'REQUEST_BESTSELLERS'
 export function requestBestSellers(category){
   return {
-    type: REQUEST_NYT_BESTSELLERS,
+    type: REQUEST_BESTSELLERS,
     category
   }
 }
 
-export const RECEIVE_NYT_BESTSELLERS = 'RECEIVE_NYT_BESTSELLERS'
+export const RECEIVE_BESTSELLERS = 'RECEIVE_BESTSELLERS'
 export function receiveBestSellers(category, result){
   return {
-    type: RECEIVE_NYT_BESTSELLERS,
+    type: RECEIVE_BESTSELLERS,
     category: category,
     bestSellers: result,
   }
@@ -33,7 +33,7 @@ export function fetchBestSellers(categoryId){
 export function initLoad(initCategoryId){
   return function (dispatch){
     dispatch(requestCategories)
-    
+
     const url = `/api/book-categories`
 
     return fetch(url)

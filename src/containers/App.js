@@ -12,14 +12,16 @@ import './App.css';
 import { initLoad } from '../actions'
 import CircularProgress from 'material-ui/CircularProgress';
 
+let middleware = [ thunkMiddleware ]
+if (process.env.NODE_ENV !== 'production') {
+  console.log(`Env:${process.env.NODE_ENV} - Enabling dev middleware`)
+  const loggerMiddleware = createLogger()
+  middleware = [ ...middleware, loggerMiddleware ]
+}
 
-const loggerMiddleware = createLogger()
 let store = createStore(
   rootReducer,
-  applyMiddleware(
-    thunkMiddleware,
-    loggerMiddleware
-  )
+  applyMiddleware(...middleware)
 );
 
 const styles = {

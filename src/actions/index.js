@@ -7,8 +7,8 @@ export {
 } from './CategoryActionCreators'
 
 export {
-  REQUEST_NYT_BESTSELLERS,
-  RECEIVE_NYT_BESTSELLERS,
+  REQUEST_BESTSELLERS,
+  RECEIVE_BESTSELLERS,
   requestBestSellers,
   receiveBestSellers,
   fetchBestSellers,
