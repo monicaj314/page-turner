@@ -33,7 +33,6 @@ function bestSellersReducer(state = {
 }
 
 function categoryReducer(state = {
-  //selectedCategoryId: init.selectedCategoryId,
   isFetchingCategories: init.isFetchingCategories,
   categoryName: init.categoryName,
   selectedCategory: init.selectedCategory
