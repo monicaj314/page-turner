@@ -30,7 +30,7 @@ export function updateCategory(categoryId){
 export function fetchCategories(){
   return function(dispatch) {
     dispatch(requestCategories())
-    const url = `/api/book-categories`
+    const url = `${process.env.REACT_APP_API_URL}/api/book-categories`
 
     return fetch(url)
       .then(response => response.json())

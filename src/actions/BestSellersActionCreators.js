@@ -22,7 +22,7 @@ export function fetchBestSellers(categoryId){
   return (dispatch) => {
     dispatch(requestBestSellers(categoryId))
 
-    const url = `/api/best-sellers?categoryId=${categoryId}`
+    const url = `${process.env.REACT_APP_API_URL}/api/best-sellers?categoryId=${categoryId}`
 
     return fetch(url)
       .then(response => response.json())
@@ -34,7 +34,7 @@ export function initLoad(initCategoryId){
   return function (dispatch){
     dispatch(requestCategories)
 
-    const url = `/api/book-categories`
+    const url = `${process.env.REACT_APP_API_URL}/api/book-categories`
 
     return fetch(url)
       .then(response => response.json())
