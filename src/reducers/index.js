@@ -35,7 +35,8 @@ function bestSellersReducer(state = {
 function categoryReducer(state = {
   isFetchingCategories: init.isFetchingCategories,
   categoryName: init.categoryName,
-  selectedCategory: init.selectedCategory
+  selectedCategory: init.selectedCategory,
+  categories: init.categories
 }, action){
   switch (action.type) {
     case UPDATE_CATEGORY:

@@ -5,6 +5,7 @@ import CloseIcon from 'material-ui/svg-icons/navigation/expand-less'
 import BookCardRatings from './BookCardRatings'
 import EditorialReview from './EditorialReview'
 import BookImageCell from './BookImageCell'
+import BookHeading from './BookHeading'
 import './BookCard.css'
 
 
@@ -18,7 +19,8 @@ const styles = {
   },
   rankDiv:{
     //border: '1px solid blue',
-    width:'35px'
+    width:'35px',
+    paddingLeft:'10px'
   },
   rankText:{
     color: '#444',
@@ -26,39 +28,9 @@ const styles = {
   },
 
   bookDetails:{
-    //border: '1px solid red',
+    border: '1px solid red',
     width: '450px',
     margin:'0px 20px'
-  },
-  title:{
-    //border: '1px solid blue',
-    display: 'block',
-    padding: '5px 0px',
-  },
-  titleLink:{
-    color:'#15c',
-    textDecoration: 'none',
-    fontSize:'20px',
-    fontWeight: 'bold',
-  },
-  author:{
-    fontSize:'14px',
-    color: 'gray',
-    //border: '1px solid blue',
-    padding: '2px 0px',
-    display:'block'
-  },
-  binding:{
-    fontSize:'12px',
-    color: 'gray',
-    padding: '2px 0px',
-    fontStyle:'italic'
-  },
-  isbn:{
-    fontSize:'14px',
-    color: 'gray',
-    border: '1px solid blue',
-    padding: '2px 0px',
   },
   description:{
     fontSize:'13px',
@@ -101,25 +73,22 @@ class BookCard extends React.Component {
     }
 
     return (
-      <div style={styles.card}>
 
+      <div style={styles.card}>
         <div style={styles.rankDiv}>
           <span style={styles.rankText}>{this.props.rank}</span>
         </div>
 
-        <BookImageCell mediumImage={this.props.mediumImage} bookTitle={this.props.amzTitle} buyLink={this.props.amazonLink} />
+        <BookImageCell mediumImage={this.props.mediumImage} smallImage={this.props.smallImage} bookTitle={this.props.amzTitle} buyLink={this.props.amazonLink} />
 
-        <div style={styles.bookDetails}>
-          <div style={styles.title}>
-            <a href={this.props.amazonLink} target="_blank" style={styles.titleLink}>{this.props.amzTitle}</a>
-          </div>
-          <span style={styles.author}>{this.props.authors ? 'by '+ this.props.authors.join(", ") : null}</span>
-          <span style={styles.binding}>{this.props.binding}</span>
+        <div className='col-md-4' style={styles.bookDetails}>
+          <BookHeading titleLink={this.props.amazonLink} title={this.props.amzTitle} authors={this.props.authors} binding={this.props.binding} />
 
           <div style={styles.description} onClick={this.handleExpanding}>
               {description}
           </div>
         </div>
+
         <div>
           <BookCardRatings {...this.props} />
           <EditorialReview reviews={this.props.reviews}/>
@@ -132,7 +101,14 @@ class BookCard extends React.Component {
               : <OpenIcon onClick={this.handleExpanding}/>}
           </IconButton>
         </div>
-      </div>)
+      </div>
+
+
+
+
+
+    )
+
     }
   }
 

@@ -10,7 +10,7 @@ const mapStateToProps = ({categoryState}) => {
   }
 }
 
-const mapDispatchToProps = (dispatch, getState) => {
+const mapDispatchToProps = (dispatch) => {
     return {
       handleCategoryChange: (categoryId) => {
         dispatch(updateCategory(categoryId))

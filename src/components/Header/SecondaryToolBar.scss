@@ -1,0 +1,31 @@
+.title-text {
+  font-size: large;
+  font-weight: bold;
+  color: #444;
+}
+
+.category-text {
+  font-size: large;
+  font-weight: bold;
+  color: #333
+}
+
+.menu-icon-div{
+  display:none
+}
+
+@media (max-width: 1023px) {
+  .category-text {
+    font-size: medium;
+  }
+
+  .menu-icon-div{
+    display:block
+  }
+}
+
+@media (max-width: 400px) {
+  .category-text {
+    font-size: small;
+  }
+}

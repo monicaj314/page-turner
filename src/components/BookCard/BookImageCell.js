@@ -1,45 +1,19 @@
 import React from 'react'
-
-const styles={
-  wrapper:{
-    width:'160px',
-    display:'flex',
-    flexDirection:'column',
-    alignItems:'center'
-  },
-  bookImageDiv: {
-    marginBottom:'10px',
-  },
-  bookImage:{
-    borderRadius:'2px',
-  },
-  buyButton:{
-    width:'100px',
-    height:'30px',
-    backgroundColor:'#4d90fe',
-    //backgroundColor:'#f1ad57', //amazon color
-    //border:'1px solid #a56616', //amazon
-    //backgroundColor:'linear-gradient(to bottom,#f6c88f,#ed9220)', //amazon gradient
-    border:'1px solid #dcdcdc',
-    fontWeight: 'bold',
-    fontSize:'11px',
-    color:'#FFF',
-    borderRadius:'2px',
-    cursor: 'pointer',
-  },
-
-}
+import './BookImageCell.css'
 
 class BookImageCell extends React.Component{
   render(){
     return (
-      <div style={styles.wrapper}>
-        <div style={styles.bookImageDiv}>
-          <img src={this.props.mediumImage} style={styles.bookImage} alt={this.props.bookTitle} />
+      <div className='book-image-cell-wrapper'>
+        <div className='book-image-div-medium'>
+          <img className='book-image' src={this.props.mediumImage} alt={this.props.bookTitle} />
+        </div>
+        <div className='book-image-div-small'>
+          <img className='book-image' src={this.props.smallImage} alt={this.props.bookTitle} />
         </div>
 
         <a href={this.props.buyLink} target="_blank">
-          <button style={styles.buyButton}>
+          <button className='buy-button'>
             Buy on Amazon
           </button>
         </a>

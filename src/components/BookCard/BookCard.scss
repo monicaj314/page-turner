@@ -1,4 +1,4 @@
-.short-description { 
+.short-description {
   max-height:110px;
   overflow: hidden;
   position: relative;
@@ -19,6 +19,68 @@
 
 .long-description {
   max-height:1000px;
-  overflow:hidden; 
+  overflow:hidden;
   transition: max-height 1s linear;
+}
+
+
+
+.rank-div {
+  min-width: 35px;
+  padding-left: 10px;
+}
+
+.rank-text {
+  color: #444;
+  font-size: x-large;
+}
+
+.col-md-1-5 {
+  flex-basis: 4%;
+}
+
+
+//////////////////////////////////
+
+
+.book-card {
+  display: flex;
+  flex-direction: column;
+  margin: .5rem;
+  background-color: #FFF;
+  border-radius: 2px;
+}
+
+.book-card-mobile-header {
+  display: flex;
+  padding: .5rem;
+  border: 1px solid blue;
+}
+
+.book-card-image {
+
+}
+
+.book-card-header {
+  margin-left: 1rem;
+}
+
+.book-card-description {
+  padding: .5rem;
+  //border:1px solid green;
+}
+
+.book-card-mobile-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (min-width: 901px) {
+  .book-card {
+    box-shadow: none;
+    border-bottom: 1px solid gray;
+  }
+  .book-card-mobile-footer {
+    display: none
+  }
 }

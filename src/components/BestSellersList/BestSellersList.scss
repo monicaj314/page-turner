@@ -1,11 +1,15 @@
-.example-appear {
+.Example-appear {
   margin-left: 20px;
   opacity: 0;
 }
 
-.example-appear.example-appear-active {
+.Example-appear.example-appear-active {
   margin-left: 0px;
   opacity: 1;
   transition: margin-left 400ms ease-out, opacity 400ms ease-in;
   //transition: opacity 1s ease-in;
+}
+
+.best-seller-list-wrapper {
+  //border:2px solid red;
 }

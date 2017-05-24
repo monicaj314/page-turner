@@ -1,46 +1,74 @@
 import React from 'react'
 import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
+import AppBar from 'material-ui/AppBar'
+import './SecondaryToolBar.css'
+import CategoryDropDown from './CategoryDropDown'
+import MenuIcon from 'material-ui/svg-icons/navigation/menu';
+import IconButton from 'material-ui/IconButton';
+
+import ToolBarNav from './ToolBarNav'
+
 
 const styles = {
-  toolBar:{
+  appBar:{
     backgroundColor: '#FFF',
     borderBottom:'1px solid rgb(224,224,224)',
-    justifyContent: 'flex-start',
-    //height: 40
+    boxShadow:'none',
+    height: '40px'
   },
-  toolBarTitle:{
-    //border:'1px solid black',
-    width:'233px',
+  icon:{
+    opacity:'0'
   },
-  titleText:{
-    //border:'1px solid red',
-    paddingLeft:'20px',
-    fontSize:'large',
-    fontWeight:'bold',
-    color:'#444',
-  },
-  categoryText:{
-    //border:'1px solid red',
-    fontSize:'large',
-    fontWeight:'bold',
-    color:'#333',
-  }
 };
 
-class SecondaryToolBar extends React.Component{
+class SecondaryToolBar extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      drawerOpen: false
+    }
+  }
+
+  handleDrawerToggle = () => this.setState({drawerOpen: !this.state.drawerOpen});
+
+  handleDrawerlClose = () => this.setState({drawerOpen: false});
+
+  handleDrawerRequestChange = (drawerOpen) => {
+    this.setState({drawerOpen})
+  }
+
+  handleDrawerSelection = (categoryId) => {
+    this.props.handleCategoryChange(categoryId)
+    this.setState({drawerOpen: false})
+  }
 
   render(){
-    var test = (<span style={styles.titleText}>Best Sellers</span>)
     return (
-    <Toolbar style={styles.toolBar}>
-      <ToolbarGroup firstChild={true}>
-        <ToolbarTitle style={styles.toolBarTitle} text={test} />
-      </ToolbarGroup>
-      <ToolbarGroup>
-        <p style={styles.categoryText}>{this.props.selectedCategory ? this.props.selectedCategory.listSource+' - ' : ''}
-        {this.props.selectedCategory ? this.props.selectedCategory.name: ''}</p>
-      </ToolbarGroup>
-    </Toolbar>
+      <div>
+        <AppBar
+          title={<span className='title-text'>Best Sellers</span>}
+          titleStyle={{lineHeight:'40px'}}
+          style={styles.appBar}
+          iconElementLeft={
+            <div className='menu-icon-div'>
+              <IconButton onTouchTap={this.handleDrawerToggle} style={{padding:0, width:40, height: 40, marginTop:-8}}>
+                <MenuIcon color={'#000'}/>
+              </IconButton>
+            </div>
+            }
+          className='secondary-app-bar' />
+
+        <ToolBarNav open={this.state.drawerOpen}
+          handleToggle={this.handleDrawerToggle}
+          handleClose={this.handleDrawerSelection}
+          handleDrawerSelection={this.handleDrawerSelection}
+          handleRequestChange={this.handleDrawerRequestChange}
+          categories={this.props.categories}
+          selectedCategory={this.props.selectedCategory}
+        />
+
+      </div>
+
     )
   }
 }

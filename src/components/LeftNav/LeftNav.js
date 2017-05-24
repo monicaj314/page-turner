@@ -1,18 +1,6 @@
 import React from 'react'
 import CategoryMenu from './CategoryMenu'
-
-const styles = {
-  leftNav:{
-    //border:'1px solid red',
-    width:'180px',
-    minWidth:'180px',
-    padding:'10px 16px 16px 20px'
-  },
-  navBody:{
-    //border:'1px solid blue',
-    overflow:'hidden'
-  },
-}
+import './LeftNav.css'
 
 class LeftNav extends React.Component {
   constructor(props){
@@ -37,8 +25,8 @@ class LeftNav extends React.Component {
       return <p>Loading...</p>
     } else {
       return (
-        <div style={styles.leftNav}>
-          <div style={styles.navBody}>
+        <div className='left-nav'>
+          <div className='nav-body'>
             <CategoryMenu menuName='New York Times'
               menuCode='NYT'
               handleExpanding={this.handleExpanding }

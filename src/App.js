@@ -11,9 +11,11 @@ import LeftNavContainer from './components/LeftNav'
 import './App.css';
 import { initLoad } from './actions'
 import CircularProgress from 'material-ui/CircularProgress';
+// eslint-disable-next-line
+import FlexBoxGrid from 'flexboxgrid'
 
 let middleware = [ thunkMiddleware ]
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== 'production' && false) {
   console.log(`Env:${process.env.NODE_ENV} - Enabling dev middleware`)
   const loggerMiddleware = createLogger()
   middleware = [ ...middleware, loggerMiddleware ]
@@ -38,7 +40,7 @@ class App extends Component {
     }
   }
   componentDidMount(){
-    store.dispatch(initLoad('nyt-0'))
+    store.dispatch(initLoad('nyt-50'))
     .then(() => this.setState({loading:false}))
   }
 
@@ -65,7 +67,11 @@ class App extends Component {
     return (
       <Provider store={store}>
         <MuiThemeProvider>
-          {body}
+          <div>
+            {body}
+
+
+          </div>
         </MuiThemeProvider>
       </Provider>
     );

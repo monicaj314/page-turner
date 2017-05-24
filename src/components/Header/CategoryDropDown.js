@@ -6,6 +6,9 @@ import Divider from 'material-ui/Divider';
 import IconButton from 'material-ui/IconButton';
 import MenuItem from 'material-ui/MenuItem';
 import IconMenu from 'material-ui/IconMenu';
+import './SecondaryToolBar.css'
+
+import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 
 const styles={
   button:{
@@ -25,8 +28,10 @@ const styles={
     color: '#444'
   },
   menuText:{
-    fontSize:'13px',
-    color: '#444'
+    fontSize:'12px',
+    color: '#444',
+    lineHeight:'20px',
+    minHeight:'20px',
   }
 }
 
@@ -55,41 +60,65 @@ class CategoryDropDown extends React.Component {
     });
   }
 
-  getCategoryByIndex = (index) => {
-    return this.props.categories.find((cat) => (cat.list_name_encoded === index))
+  getCategoriesBySource = (source) => {
+    return this.props.categories.filter(cat => cat.listSourceId === source && cat.visible)
   }
 
   render(){
-    const label = (<span style={styles.labelText}>{this.getCategoryByIndex(this.props.selectedCategoryIndex).display_name}</span>)
     return (
       <div>
         <IconMenu
           value={this.props.selectedCategoryIndex}
           desktop={true}
           onChange={this.handleChange}
-          iconButtonElement={<IconButton style={{border:'0px solid red', width:0, padding:0, height:2}}></IconButton>}
+          iconButtonElement={
+            <div className='menu-icon-div'>
+              <IconButton>
+                <MenuIcon color={'#000'}/>
+              </IconButton>
+            </div>
+          }
           open={this.state.openMenu}
           onRequestChange={this.handleOnRequestChange}
-          anchorOrigin={{horizontal: 'left', vertical: 'bottom'}} >
-          <Subheader>The New York Times</Subheader>
-          <MenuItem style={styles.menuText} value="combined-print-and-e-book-fiction" primaryText="Combined Print and E-Book Fiction" />
-          <MenuItem style={styles.menuText} value="combined-print-and-e-book-nonfiction" primaryText="Combined Print and E-Book Nonfiction" />
-          <MenuItem style={styles.menuText} value="business-books" primaryText="Business Books" />
-          <Divider />
-          <Subheader>Amazon</Subheader>
-          <MenuItem style={styles.menuText} value={5} primaryText="Amazon Nonfiction" />
-          <Subheader>Goodreads</Subheader>
-          <MenuItem style={styles.menuText} value={6} primaryText="Goodreads Nonfiction" />
+          anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+          menuStyle={{maxHeight:'600px'}}
+          style={{maxHeight:'300px'}}
+          listStyle={{maxHeight:'300px'}} >
+
+          <Subheader style={{lineHeight:'32px'}}>The New York Times</Subheader>
+            {this.getCategoriesBySource('NYT').map(cat => {
+              return <MenuItem
+                key={cat.id}
+                style={styles.menuText}
+                value={cat.id}
+                primaryText={cat.name} />
+            })}
+
+          <Subheader style={{lineHeight:'32px'}}>Amazon</Subheader>
+            {this.getCategoriesBySource('AMZ').map(cat => {
+              return <MenuItem key={cat.id}
+                key={cat.id}
+                value={cat.id}
+                style={styles.menuText}
+                primaryText={cat.name} />
+            })}
+
+
+
+
+
         </IconMenu>
 
-          <FlatButton
+
+
+          {/* <FlatButton
             onTouchTap={this.handleOpenMenu}
             style={styles.button}
-            label={label}
+            label='Best Sellers'
             labelPosition="before"
             primary={false}
             icon={<DropDownIcon style={styles.icon}/>}
-          />
+          /> */}
 
       </div>
     )
