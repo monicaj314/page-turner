@@ -1,41 +1,3 @@
-.short-description {
-  max-height:110px;
-  overflow: hidden;
-  position: relative;
-  //transition: max-height 100ms ease-in;
-}
-
-.short-description:after {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  bottom: 0;
-  left: 0;
-  pointer-events: none;
-  background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255, 1) 90%);
-  width: 100%;
-  height: 2em;
-}
-
-.long-description {
-  max-height:1000px;
-  overflow:hidden;
-  transition: max-height 1s linear;
-}
-
-.rank-div {
-  min-width: 35px;
-  padding-left: 10px;
-}
-
-.rank-text {
-  color: #444;
-  font-size: x-large;
-}
-
-//////////////////////////////////
-
-
 .book-card {
   display: flex;
   flex-direction: column;
@@ -43,14 +5,16 @@
   background-color: #FFF;
   border-radius: 2px;
 }
-.book-card-image {
+.book-card-image, .book-t-r-d, .rank-div {
   display: none;
-  border: 1px solid green;
+  //border: 1px solid green;
 }
-.book-t-r-d { // this one
-  display: none;
-  border: 1px solid green;
+
+.rank-text {
+  color: #444;
+  font-size: x-large;
 }
+
 .book-title-and-ratings {
   display: flex;
   flex-direction: row;
@@ -64,30 +28,26 @@
 .book-card-header-mob {
   display: flex;
   padding: .5rem;
-  border: 1px solid red;
-}
-
-.book-card-image-mob {
-  border: 1px solid red;
+  //border: 1px solid red;
 }
 
 .book-card-title-mob {
-  border: 1px solid red;
   margin-left: 1rem;
+  margin-top: -8px;
 }
 
 .book-card-description-mob {
   padding: .5rem;
-  //border:1px solid green;
 }
 
-.book-card-footer-mob {
+.book-card-footer-mob, .book-card-footer {
   display: flex;
   justify-content: flex-end;
+  //border: 1px solid red;
 }
 
 
-@media (min-width: 901px) {
+@media (min-width: 769px) {
   .book-card {
     flex-direction: row;
     box-shadow: none;
@@ -98,11 +58,14 @@
   }
   .book-card-image {
     display: flex;
-    border: 1px solid green;
   }
   .book-t-r-d {
     display: flex;
     flex-direction: column;
     padding: 0 1rem;
+  }
+  .rank-div {
+    display: flex;
+    min-width: 30px;
   }
 }

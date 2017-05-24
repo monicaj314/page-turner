@@ -5,27 +5,21 @@
 }
 
 .category-text {
-  font-size: large;
+  font-size: medium;
   font-weight: bold;
   color: #333
 }
 
-.menu-icon-div{
-  display:none
+.menu-icon-div {
+  display:block
 }
 
-@media (max-width: 1023px) {
+@media (min-width: 1025px) {
   .category-text {
-    font-size: medium;
+    font-size: large;
   }
 
   .menu-icon-div{
-    display:block
-  }
-}
-
-@media (max-width: 400px) {
-  .category-text {
-    font-size: small;
+    display:none
   }
 }

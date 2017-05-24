@@ -40,13 +40,14 @@ class BookCard extends React.Component {
 
 
       <div className='book-card'>
-        <div className='rank-div'>
-          <span className='rank-text'>{this.props.rank}</span>
-        </div>
 
         {/* MOBILE */}
         <div className='book-card-header-mob'>
-          <div className='book-card-image-mob'>
+          <div>
+            <span className='rank-text'>{this.props.rank}</span>
+          </div>
+
+          <div>
             <BookImageCell mediumImage={this.props.mediumImage} smallImage={this.props.smallImage} bookTitle={this.props.amzTitle} buyLink={this.props.amazonLink} />
           </div>
 
@@ -74,6 +75,9 @@ class BookCard extends React.Component {
 
 
         {/* DESKTOP */}
+        <div className='rank-div'>
+          <span className='rank-text'>{this.props.rank}</span>
+        </div>
 
         <div className='book-card-image'>
           <BookImageCell mediumImage={this.props.mediumImage} smallImage={this.props.smallImage} bookTitle={this.props.amzTitle} buyLink={this.props.amazonLink} />
@@ -86,12 +90,24 @@ class BookCard extends React.Component {
             </div>
             <div>
               <BookCardRatings {...this.props} />
-              <EditorialReview reviews={this.props.reviews}/>
+              <EditorialReview reviews={this.props.reviews} />
             </div>
           </div>
 
           <div className='book-card-description' onClick={this.handleExpanding}>
             <BookCollapsibleDescription expanded={this.state.expanded} description={this.props.amzDescription}/>
+          </div>
+          <div className='book-card-footer'>
+            <span style={{fontSize:'13px', lineHeight:'36px', color:'#737373', cursor:'pointer'}} onClick={this.handleExpanding}>
+              {this.state.expanded ? 'Show less' : 'Show more'}
+            </span>
+            <IconButton style={{width: 36, height: 36, padding:0}} iconStyle={{height:'20px', width:'20px'}}>
+
+              {this.state.expanded
+                ? <CloseIcon onClick={this.handleExpanding} />
+                : <OpenIcon onClick={this.handleExpanding} />}
+
+            </IconButton>
           </div>
         </div>
 
