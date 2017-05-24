@@ -40,29 +40,26 @@ class BookCard extends React.Component {
 
 
       <div className='book-card'>
+        <div className='rank-div'>
+          <span className='rank-text'>{this.props.rank}</span>
+        </div>
 
-        <div className='book-card-mobile-header'>
-          <div className='book-card-image'>
+        {/* MOBILE */}
+        <div className='book-card-header-mob'>
+          <div className='book-card-image-mob'>
             <BookImageCell mediumImage={this.props.mediumImage} smallImage={this.props.smallImage} bookTitle={this.props.amzTitle} buyLink={this.props.amazonLink} />
           </div>
 
-          <div className='book-card-header'>
+          <div className='book-card-title-mob'>
             <BookHeading titleLink={this.props.amazonLink} title={this.props.amzTitle} authors={this.props.authors} binding={this.props.binding} />
           </div>
         </div>
 
-        {/* <div className='book-card-ratings'>
-          <div>
-            <BookCardRatings {...this.props} />
-            <EditorialReview reviews={this.props.reviews}/>
-          </div>
-        </div> */}
-
-        <div className='book-card-description' onClick={this.handleExpanding}>
+        <div className='book-card-description-mob' onClick={this.handleExpanding}>
           <BookCollapsibleDescription expanded={this.state.expanded} description={this.props.amzDescription}/>
         </div>
 
-        <div style={{display:'flex', justifyContent:'flex-end'}}>
+        <div className='book-card-footer-mob'>
           <span style={{fontSize:'13px', lineHeight:'36px', color:'#737373', cursor:'pointer'}} onClick={this.handleExpanding}>
             {this.state.expanded ? 'Show less' : 'Show more'}
           </span>
@@ -76,12 +73,30 @@ class BookCard extends React.Component {
         </div>
 
 
+        {/* DESKTOP */}
+
+        <div className='book-card-image'>
+          <BookImageCell mediumImage={this.props.mediumImage} smallImage={this.props.smallImage} bookTitle={this.props.amzTitle} buyLink={this.props.amazonLink} />
+        </div>
+
+        <div className='book-t-r-d'>
+          <div className='book-title-and-ratings'>
+            <div>
+              <BookHeading titleLink={this.props.amazonLink} title={this.props.amzTitle} authors={this.props.authors} binding={this.props.binding} />
+            </div>
+            <div>
+              <BookCardRatings {...this.props} />
+              <EditorialReview reviews={this.props.reviews}/>
+            </div>
+          </div>
+
+          <div className='book-card-description' onClick={this.handleExpanding}>
+            <BookCollapsibleDescription expanded={this.state.expanded} description={this.props.amzDescription}/>
+          </div>
+        </div>
+
 
       </div>
-
-
-
-
     )
 
     }
