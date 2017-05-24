@@ -1,5 +1,5 @@
 import React from 'react'
-import BookCard from '../BookCard/index2.js'
+import BookCard from '../BookCard/index.js'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
@@ -17,16 +17,16 @@ class BestSellerList extends React.Component {
     }
 
       return (
-        <div className='best-seller-list-wrapper'>
           <CSSTransitionGroup
-            transitionName="example"
+            transitionName='best-seller-list'
             transitionAppear={true}
-            transitionAppearTimeout={3000}
+            transitionAppearTimeout={1000}
             transitionEnter={false}
             transitionLeave={false}>
+            <div className='best-seller-list-wrapper'>
               {cards}
+            </div>
           </CSSTransitionGroup>
-        </div>
       )
   }
 }

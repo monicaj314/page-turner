@@ -7,44 +7,9 @@ import EditorialReview from './EditorialReview'
 import BookImageCell from './BookImageCell'
 import BookHeading from './BookHeading'
 import './BookCard.css'
+import Paper from 'material-ui/Paper';
+import BookCollapsibleDescription from './BookCollapsibleDescription'
 
-
-
-const styles = {
-  card: {
-    display: 'flex',
-    //border: '1px solid blue',
-    borderBottom: '1px solid rgb(224,224,224)',
-    padding: '10px 0px',
-  },
-  rankDiv:{
-    //border: '1px solid blue',
-    width:'35px',
-    paddingLeft:'10px'
-  },
-  rankText:{
-    color: '#444',
-    fontSize:'x-large'
-  },
-
-  bookDetails:{
-    border: '1px solid red',
-    width: '450px',
-    margin:'0px 20px'
-  },
-  description:{
-    fontSize:'13px',
-    color:'#333',
-    //border: '1px solid blue',
-    cursor: 'pointer',
-    padding: '0px 0px 0px 0px',
-    marginTop:'20px'
-  },
-  small: {
-    width: 15,
-  },
-
-}
 
 class BookCard extends React.Component {
   constructor(props){
@@ -67,46 +32,81 @@ class BookCard extends React.Component {
   }
 
   render(){
-    let description = (<div className='short-description' style={styles.newDescriptionClosed} dangerouslySetInnerHTML={this.createMarkup(this.props.amzDescription)}/>)
-    if (this.state.expanded){
-      description = (<div className='long-description' dangerouslySetInnerHTML={this.createMarkup(this.props.amzDescription)}/>)
-    }
-
     return (
+      <div className='book-card'>
 
-      <div style={styles.card}>
-        <div style={styles.rankDiv}>
-          <span style={styles.rankText}>{this.props.rank}</span>
-        </div>
+        {/* MOBILE */}
+        <div className='book-card-header-mob'>
+          <div>
+            <span className='rank-text'>{this.props.rank}</span>
+          </div>
 
-        <BookImageCell mediumImage={this.props.mediumImage} smallImage={this.props.smallImage} bookTitle={this.props.amzTitle} buyLink={this.props.amazonLink} />
+          <div>
+            <BookImageCell mediumImage={this.props.mediumImage} smallImage={this.props.smallImage} bookTitle={this.props.amzTitle} buyLink={this.props.amazonLink} />
+          </div>
 
-        <div className='col-md-4' style={styles.bookDetails}>
-          <BookHeading titleLink={this.props.amazonLink} title={this.props.amzTitle} authors={this.props.authors} binding={this.props.binding} />
-
-          <div style={styles.description} onClick={this.handleExpanding}>
-              {description}
+          <div className='book-card-title-mob'>
+            <BookHeading titleLink={this.props.amazonLink} title={this.props.amzTitle} authors={this.props.authors} binding={this.props.binding} />
           </div>
         </div>
 
-        <div>
-          <BookCardRatings {...this.props} />
-          <EditorialReview reviews={this.props.reviews}/>
+        <div className='book-card-description-mob' onClick={this.handleExpanding}>
+          <BookCollapsibleDescription expanded={this.state.expanded} description={this.props.amzDescription}/>
         </div>
 
-        <div>
-          <IconButton tooltip={this.state.expanded ? 'Read Less!' : 'Read More!'}>
+        <div className='book-card-footer-mob'>
+          <span style={{fontSize:'13px', lineHeight:'36px', color:'#737373', cursor:'pointer'}} onClick={this.handleExpanding}>
+            {this.state.expanded ? 'Show less' : 'Show more'}
+          </span>
+          <IconButton style={{width: 36, height: 36, padding:0}} iconStyle={{height:'20px', width:'20px'}}>
+
             {this.state.expanded
-              ? <CloseIcon onClick={this.handleExpanding}/>
-              : <OpenIcon onClick={this.handleExpanding}/>}
+              ? <CloseIcon onClick={this.handleExpanding} />
+              : <OpenIcon onClick={this.handleExpanding} />}
+
           </IconButton>
         </div>
+
+
+        {/* DESKTOP */}
+        <div className='rank-div'>
+          <span className='rank-text'>{this.props.rank}</span>
+        </div>
+
+        <div className='book-card-image'>
+          <BookImageCell mediumImage={this.props.mediumImage} smallImage={this.props.smallImage} bookTitle={this.props.amzTitle} buyLink={this.props.amazonLink} />
+        </div>
+
+        <div className='book-t-r-d'>
+          <div className='book-title-and-ratings'>
+            <div>
+              <BookHeading titleLink={this.props.amazonLink} title={this.props.amzTitle} authors={this.props.authors} binding={this.props.binding} />
+            </div>
+            <div>
+              <BookCardRatings {...this.props} />
+              <EditorialReview reviews={this.props.reviews} />
+            </div>
+          </div>
+
+          <div className='book-card-description' onClick={this.handleExpanding}>
+            <BookCollapsibleDescription expanded={this.state.expanded} description={this.props.amzDescription}/>
+          </div>
+          <div className='book-card-footer'>
+            <span style={{fontSize:'13px', lineHeight:'36px', color:'#737373', cursor:'pointer'}} onClick={this.handleExpanding}>
+              {this.state.expanded ? 'Show less' : 'Show more'}
+            </span>
+            <IconButton style={{width: 36, height: 36, padding:0}} iconStyle={{height:'20px', width:'20px'}}>
+
+              {this.state.expanded
+                ? <CloseIcon onClick={this.handleExpanding} />
+                : <OpenIcon onClick={this.handleExpanding} />}
+
+            </IconButton>
+          </div>
+        </div>
+
+
       </div>
-
-
-
-
-
     )
 
     }

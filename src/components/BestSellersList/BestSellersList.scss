@@ -1,9 +1,9 @@
-.Example-appear {
+.best-seller-list-appear {
   margin-left: 20px;
   opacity: 0;
 }
 
-.Example-appear.example-appear-active {
+.best-seller-list-appear.best-seller-list-appear-active {
   margin-left: 0px;
   opacity: 1;
   transition: margin-left 400ms ease-out, opacity 400ms ease-in;
@@ -11,6 +11,5 @@
 }
 
 .best-seller-list-wrapper {
-  //border:2px solid red;
-  width: 1150px;
+  max-width: 1150px;
 }
