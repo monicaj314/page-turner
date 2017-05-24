@@ -11,8 +11,7 @@ import LeftNavContainer from './components/LeftNav'
 import './App.css';
 import { initLoad } from './actions'
 import CircularProgress from 'material-ui/CircularProgress';
-// eslint-disable-next-line
-import FlexBoxGrid from 'flexboxgrid'
+
 
 let middleware = [ thunkMiddleware ]
 if (process.env.NODE_ENV !== 'production' && false) {
