@@ -1,19 +1,22 @@
-.left-nav {
+
+.left-nav-wrapper {
   overflow: hidden;
   padding: 0px;
   min-width: 0px;
   max-width: 0px;
-  white-space: nowrap;
 }
 
 @media (min-width: 1025px) {
-  .left-nav {
+  .left-nav-wrapper {
     min-width: 220px;
     padding: 10px 16px 16px 20px;
-    white-space: nowrap;
   }
-}
 
-.nav-body {
-  overflow: hidden;
+  .left-nav {
+
+    &.sticky {
+      position:fixed;
+      top:0;
+    }
+  }
 }
