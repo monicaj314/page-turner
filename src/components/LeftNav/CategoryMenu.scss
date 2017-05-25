@@ -1,0 +1,20 @@
+.category-menu {
+
+  .menu-div {
+    display: flex;
+    cursor: pointer;
+    //background-color: #f1f1f1
+  }
+  .menu-name {
+    font-size: 14px;
+  }
+  .menu-open{
+    height: auto;
+    overflow: hidden;
+  }
+  .menu-closed{
+    height: 0;
+    overflow: hidden;
+  }
+
+}
