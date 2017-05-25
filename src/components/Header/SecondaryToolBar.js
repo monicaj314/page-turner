@@ -45,7 +45,7 @@ class SecondaryToolBar extends React.Component {
       <div>
         <AppBar
           title={<span className='title-text'>Best Sellers</span>}
-          titleStyle={{lineHeight:'40px'}}
+          titleStyle={{lineHeight:'40px', height:'40px'}}
           style={styles.appBar}
           iconElementLeft={
             <div className='menu-icon-div'>

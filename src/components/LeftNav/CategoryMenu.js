@@ -3,20 +3,9 @@ import IconButton from 'material-ui/IconButton'
 import OpenIcon from 'material-ui/svg-icons/navigation/expand-more'
 import CloseIcon from 'material-ui/svg-icons/navigation/expand-less'
 import CategoryMenuItem from './CategoryMenuItem'
+import './CategoryMenu.css'
 
 const styles = {
-  menuDiv:{
-    display:'flex',
-    alignItems:'flex-end',
-    //justifyContent:'space-between',
-    cursor: 'pointer',
-    //backgroundColor:'#f1f1f1'
-  },
-  menuName:{
-    fontSize:'14px',
-    fontWeight:'bold',
-    padding: '4px 0px 4px 0px',
-  },
   iconDiv:{
     height:'auto',
     width:'auto',
@@ -25,16 +14,6 @@ const styles = {
   icon:{
     height:20,
     width:20
-  },
-  categoryMenuOpen:{
-    height: 'auto',
-    //transition: 'max-height 200ms linear',
-    overflow:'hidden',
-  },
-  categoryMenuClosed:{
-    height:0,
-    //transition: 'max-height 200ms linear',
-    overflow:'hidden',
   },
 }
 
@@ -52,16 +31,17 @@ class CategoryMenu extends React.Component{
 
   render(){
     return(
-      <div>
-        <div style={styles.menuDiv} onClick={this.handleCategoryGroupClick}>
-          <div style={styles.menuName}>
+      <div className='category-menu'>
+        <div className='menu-div' onClick={this.handleCategoryGroupClick}>
+          <div className='menu-name'>
             {this.props.menuName}
+            {/* &nbsp;&nbsp;{this.props.expanded ? <span>&#x2227;</span> : <span>&#x2228;</span>} */}
           </div>
           <IconButton style={styles.iconDiv} iconStyle={styles.icon}>
             {this.props.expanded ? <CloseIcon /> : <OpenIcon />}
           </IconButton>
         </div>
-        <div style={this.props.expanded ? styles.categoryMenuOpen : styles.categoryMenuClosed}>
+        <div className={this.props.expanded ? 'menu-openm' : 'menu-closed'}>
           {this.props.categories.map(function(cat){
               return (<CategoryMenuItem
               key={cat.id}
