@@ -7,7 +7,6 @@ import EditorialReview from './EditorialReview'
 import BookImageCell from './BookImageCell'
 import BookHeading from './BookHeading'
 import './BookCard.css'
-import Paper from 'material-ui/Paper';
 import BookCollapsibleDescription from './BookCollapsibleDescription'
 
 

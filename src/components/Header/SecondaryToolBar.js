@@ -1,8 +1,6 @@
 import React from 'react'
-import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
 import AppBar from 'material-ui/AppBar'
 import './SecondaryToolBar.css'
-import CategoryDropDown from './CategoryDropDown'
 import MenuIcon from 'material-ui/svg-icons/navigation/menu';
 import IconButton from 'material-ui/IconButton';
 
