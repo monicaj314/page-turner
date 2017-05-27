@@ -29,9 +29,9 @@ const amazonApi = {
         }
       })
       return cats
-    }).catch(err => {
+    }).catch(error => {
       let errorMessage = `Amazon Error: Error Fetching categories`
-      console.error(parseAmazonError(err))
+      console.error(parseAmazonError(error))
       throw new Error(errorMessage)
     })
   },
@@ -44,16 +44,16 @@ const amazonApi = {
       searchIndex: 'Books',
     }).then(function(results){
       return results
-    }).catch(err => {
+    }).catch(error => {
       let errorMessage = `Amazon Error: Error Fetching best sellers for ${externalId}`
-      console.error(parseAmazonError(err))
+      console.error(parseAmazonError(error))
       throw new Error(errorMessage)
     })
   },
 
   fetchByIsbn(idType, itemIds){
     const itemIdsToRequest = itemIds.slice(0,10).join(",")
-    console.log(`API: Amazon ItemLookup for: IdType :${idType}, ItemIds:${itemIdsToRequest}`)
+    console.log(`API: Amazon ItemLookup for IdType:${idType}, ItemIds:${itemIdsToRequest}`)
     return client.itemLookup({
       idType: idType,
       itemId: itemIdsToRequest,
@@ -65,17 +65,59 @@ const amazonApi = {
       responseGroup: 'Large,Reviews,Similarities'
     }).then(function(results){
       return results
-    }).catch(err => {
+    }).catch(error => {
       const errorMessage = `Amazon Error: Error Fetching by ISBN for: IdType :${idType}, ItemIds:${itemIdsToRequest}`
-      console.error(parseAmazonError(err))
+      const parsedErrorMessage = parseAmazonError(error)
+      if (parsedErrorMessage){
+        console.error(parsedErrorMessage)
+        throw new Error(parsedErrorMessage)
+      }
+      console.error(errorMessage)
       throw new Error(errorMessage)
     })
   },
+
+  fetchByTitle(author, title){
+    return client.itemSearch({
+      title: title,
+      author: author,
+      condition:'New',
+      merchantId: 'Amazon',
+      searchIndex: 'Books',
+      includeReviewsSummary: true,
+      truncateReviewsAt: 150,
+      responseGroup: 'Large,Reviews,Similarities'
+    }).then(function(results){
+      return results
+    }).catch(function(error){
+      const errorMessage = `Amazon Error: Error Fetching by book title:${title}`
+      const parsedErrorMessage = parseAmazonError(error)
+      if (parsedErrorMessage){
+        console.error(parsedErrorMessage)
+        throw new Error(parsedErrorMessage)
+      }
+      console.error(errorMessage)
+      throw new Error(errorMessage)
+    })
+  }
 }
 
-let parseAmazonError = (err) => {
-  if (err.Error && err.Error[0].Code && err.Error[0].Message){
-    return `Amazon Error: ${err.Error[0].Code[0]} - ${err.Error[0].Message[0]}`
+let parseAmazonError = (error) => {
+  if (Array.isArray(error) && error.length > 0){
+    var err = error[0].Error
+  } else if (error.Error) {
+    var err = error.Error
+  }
+
+  if (err.length > 0 && err[0].Code && err[0].Message){
+    let code = ''
+    let message = ''
+    err.forEach(function(error) {
+      code = `${code} ${error.Code[0]}`
+      message = `${message} ${error.Message[0]}`
+    }, this);
+    console.log(message)
+    return `Amazon Error: ${code} - ${message}`
   }
 }
 
