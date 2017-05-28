@@ -19,8 +19,8 @@ function fetchCategoriesFromCache() {
   })
 }
 
-function set(key, value, expMs){
-  redisClient.set(key, value, 'EX', expMs);
+function set(key, value, expS){
+  redisClient.set(key, value, 'EX', expS);
 }
 
 module.exports = {

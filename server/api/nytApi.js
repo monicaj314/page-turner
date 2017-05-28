@@ -18,7 +18,7 @@ const show = [
 const nytApi = {
   fetchNytCategories() {
     const url = `https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=${keys.nyt_key}`
-    console.log(`API: ${url}`)
+    console.log(`NYT API: ${url}`)
     return fetch(url)
       .then(response => {
         if (response.status >= 400) {
@@ -44,7 +44,7 @@ const nytApi = {
 
   fetchBestSellers(externalId){
     let url = `https://api.nytimes.com/svc/books/v3/lists.json?api-key=${keys.nyt_key}&list=${externalId}`
-    console.log(`API: ${url}`)
+    console.log(`NYT API: ${url}`)
     return fetch(url)
       .then(response => response.json())
   }

@@ -33,7 +33,7 @@ function getBestSellers(category){
       } else {
         return fetchBestSellers(category)
           .then(data => {
-            cache.set(category.id, JSON.stringify(data), 21600)
+            cache.set(category.id, JSON.stringify(data), 21600) //6 hrs
             console.log(`Fetching best sellers from APIs.  CACHE hydrated for key:${category.id}, name:${category.name}`)
             return data
           })
@@ -48,7 +48,7 @@ function getCategories(){
         console.log('Found categories in CACHE')
         return data
       } else {
-        return fetchCategoriesFromApis()
+        return fetchCategories()
           .then(data => {
             cache.set('categories', JSON.stringify(data), 604800)
             console.log('Fetching categories from API.  CACHE hydrated.')
@@ -63,23 +63,7 @@ function getCategory(categoryId){
     .then(categories => categories.find(cat => cat.id === categoryId))
 }
 
-function fetchCategoriesFromApis(){
-  return new Promise((resolve, reject) => {
-    let nytCategories, amzCategories
 
-    let nytFetch = nytApi.fetchNytCategories()
-      .then(results => nytCategories = results)
-
-    let amzFetch = amazonApi.fetchAmzCategories()
-      .then(results => amzCategories = results)
-
-    Promise.all([nytFetch, amzFetch])
-      .then(() => {
-        const results = nytCategories.concat(amzCategories)
-        resolve(results)
-      }).catch(err => reject(err))
-  })
-}
 
 
 
@@ -89,7 +73,6 @@ function fetchAmazonBooksAndReturnModels(category){
       const bestSellers = results[0]["TopSellers"][0].TopSeller
       let asins = []
       bestSellers.map(amazonBestSeller => asins.push(amazonBestSeller["ASIN"][0]))
-      //return fetchAmazonBooksIsbn("ASIN", asins)
       return amazonApi.fetchByIsbn("ASIN", asins)
     })
     .then(amzBooks => {
@@ -176,20 +159,18 @@ function fetchAmzBooksAndMerge(ptBooks){
           .then(amzBooks => mergeAmzBooks(amzBooks, ptBooks))
           .then(ptBooks => {
             const booksToFetchByTitle = ptBooks.filter(book => badItemIds.has(book.isbn13))
-            const amazonPromises = booksToFetchByTitle.map(book => {
-              return amazonApi.fetchByTitle(book.authors[0], book.nytTitle)
+            const amazonPromises = booksToFetchByTitle.map((book, i) => {
+                return amazonApi.fetchByTitle(book.authors[0], book.nytTitle)
                 .then(amzBook => {
                   book.parseAmazonBook(amzBook[0], book.rank)
                 })
             })
-            
-            return Promise.all(amazonPromises).then(() => ptBooks)
+            return Promise.all(amazonPromises).then(() => {
+              return ptBooks
+            })
           })
       }
-      
-      //Since these are NYT books, we can continue if Amazon API call fails.
-      console.error(`Amazon API call SKIPPED due to error:`, error)
-      return ptBooks
+      throw error
     })
 }
 
@@ -231,8 +212,32 @@ function fetchNytBooksAndReturnModels(category){
     })
 }
 
+//---------------------
+
+function fetchCategories(){
+  return new Promise((resolve, reject) => {
+    let nytCategories, amzCategories
+
+    let nytFetch = nytApi.fetchNytCategories()
+      .then(results => nytCategories = results)
+
+    let amzFetch = amazonApi.fetchAmzCategories()
+      .then(results => amzCategories = results)
+
+    Promise.all([nytFetch, amzFetch])
+      .then(() => {
+        const results = nytCategories.concat(amzCategories)
+        resolve(results)
+      }).catch(err => reject(err))
+  })
+}
+
+
 module.exports = {
   getCategories,
   getCategory,
   getBestSellers,
+  //---
+  fetchCategories,
+  fetchBestSellers
 }

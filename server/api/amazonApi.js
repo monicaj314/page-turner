@@ -11,7 +11,7 @@ let client = amazon.createClient({
 
 const amazonApi = {
   fetchAmzCategories(){
-    console.log('API: Amazon BrowseNodeLookup: BrowseNodeId: 1000 (Books)' )
+    console.log('AMAZON API: Amazon BrowseNodeLookup: BrowseNodeId: 1000 (Books)' )
     return client.browseNodeLookup({
       Operation: 'BrowseNodeLookup',
       BrowseNodeId: 1000, //Books -> Subjects
@@ -37,7 +37,7 @@ const amazonApi = {
   },
 
   fetchBestSellers(externalId){
-    console.log(`API: Amazon TopSellers for BrowseNodeId: ${externalId}` )
+    console.log(`AMAZON API: Amazon TopSellers for BrowseNodeId: ${externalId}` )
     return client.browseNodeLookup({
       BrowseNodeId: externalId,
       responseGroup: 'TopSellers',
@@ -53,7 +53,7 @@ const amazonApi = {
 
   fetchByIsbn(idType, itemIds){
     const itemIdsToRequest = itemIds.slice(0,10).join(",")
-    console.log(`API: Amazon ItemLookup for IdType:${idType}, ItemIds:${itemIdsToRequest}`)
+    console.log(`AMAZON API: Amazon ItemLookup for IdType:${idType}, ItemIds:${itemIdsToRequest}`)
     return client.itemLookup({
       idType: idType,
       itemId: itemIdsToRequest,
@@ -78,6 +78,7 @@ const amazonApi = {
   },
 
   fetchByTitle(author, title){
+    console.log(`AMAZON API: Amazon ItemSearch for author:${author}, title:${title}`)
     return client.itemSearch({
       title: title,
       author: author,
