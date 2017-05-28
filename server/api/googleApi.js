@@ -7,6 +7,10 @@ const googleApi = {
     console.log('GOOGLE API: ' + url)
     return fetch(url)
       .then(response => response.json())
+      .catch(error => {
+        console.error(`Google Error: ${error}`)
+        throw error
+      })
   },
 
   searchForBook(author, title){
@@ -22,11 +26,10 @@ const googleApi = {
       .then(json => {
         return json
       })
-      // .catch(error => {
-      //   console.error('ERROR!: '+error)
-      //   console.error('Url that broke: '+url)
-      // })
-
+      .catch(error => {
+        console.error(`Google Error: ${error}`)
+        throw error
+      })
   }
 
 }
