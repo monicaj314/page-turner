@@ -33,8 +33,7 @@ function getBestSellers(category){
       } else {
         return fetchBestSellers(category)
           .then(data => {
-            cache.set(category.id, JSON.stringify(data), 21600) //6 hrs
-            console.log(`Fetching best sellers from APIs.  CACHE hydrated for key:${category.id}, name:${category.name}`)
+            cache.setBestSellers(category.id, JSON.stringify(data))
             return data
           })
       }
@@ -50,8 +49,7 @@ function getCategories(){
       } else {
         return fetchCategories()
           .then(data => {
-            cache.set('categories', JSON.stringify(data), 604800)
-            console.log('Fetching categories from API.  CACHE hydrated.')
+            cache.setCategories('categories', JSON.stringify(data))
             return data
           })
       }
