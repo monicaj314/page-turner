@@ -6,12 +6,12 @@ const fourHours = 4*60*60*1000
 
 setInterval(() => {
   console.log(`Hydrating Categories (Time: ${new Date()})`)
-  console.log(`--------------------------------------------`)
   PageTurners.fetchCategories()
     .then(data => {
       const key = 'categories'
       cache.set(key, JSON.stringify(data), 24*60*60) //24 hours
-      console.log(`CACHE for key '${key}' hydrated.`)
+      console.log(`Time: ${new Date()} - CACHE for key '${key}' hydrated.`)
+      console.log(`------------------------------------------------------------------------------`)
     })
     .catch(err => {
       console.error(err)
@@ -21,7 +21,8 @@ setInterval(() => {
 setInterval(() => {
   console.log(`Hydrating Best Sellers (Time: ${new Date()})`)
   PageTurners.getCategories()
-    .then(categories => {
+    .then(data => {
+      const categories = data.filter(cat => cat.visible)
       for (let i = 0; i < categories.length; i++){
         setTimeout(() => {
           const category = categories[i]
@@ -35,7 +36,7 @@ setInterval(() => {
             })
             .catch(err => {
               console.error(err)
-            })
+            })``
         }, i * 30000)
       }
     })
