@@ -1,11 +1,11 @@
 import React from 'react'
 import BookCard from '../BookCard/index.js'
 import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
 import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
 import './BestSellersList.css'
 import BlockLoader from '../Shared/BlockLoader'
 
+injectTapEventPlugin();
 class BestSellerList extends React.Component {
   render(){
     if (this.props.isFetching){

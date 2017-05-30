@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch'
-import { requestCategories, receiveCategories, updateCategory} from './CategoryActionCreators'
+
 
 export const REQUEST_BESTSELLERS = 'REQUEST_BESTSELLERS'
 export function requestBestSellers(category){
@@ -27,19 +27,5 @@ export function fetchBestSellers(categoryId){
     return fetch(url)
       .then(response => response.json())
       .then(results => dispatch(receiveBestSellers(categoryId, results)))
-  }
-}
-
-export function initLoad(initCategoryId){
-  return function (dispatch){
-    dispatch(requestCategories)
-
-    const url = `${process.env.REACT_APP_API_URL}/api/book-categories`
-
-    return fetch(url)
-      .then(response => response.json())
-      .then(json => dispatch(receiveCategories(json)))
-      .then(() => dispatch(updateCategory(initCategoryId)))
-      .then(() => dispatch(fetchBestSellers(initCategoryId)))
   }
 }

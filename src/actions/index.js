@@ -2,8 +2,12 @@ export {
   REQUEST_CATEGORIES,
   RECEIVE_CATEGORIES,
   UPDATE_CATEGORY,
+  INITIAL_CATEGORY_LOAD_START,
+  INITIAL_CATEGORY_LOAD_COMPLETE,
   fetchCategories,
   updateCategory,
+  updateCategoryWithUrlParam,
+  initCategoryLoad
 } from './CategoryActionCreators'
 
 export {
@@ -12,5 +16,4 @@ export {
   requestBestSellers,
   receiveBestSellers,
   fetchBestSellers,
-  initLoad
 } from './BestSellersActionCreators'

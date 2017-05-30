@@ -1,8 +1,9 @@
 import { connect } from 'react-redux'
 import LeftNav from './LeftNav'
-import { updateCategory, fetchBestSellers } from '../../actions'
+import { updateCategory } from '../../actions'
 
-const mapStateToProps = ({categoryState}) => {
+
+const mapStateToProps = ({ categoryState }, ownProps) => {
   return {
     selectedCategoryId: categoryState.selectedCategory.id,
     categories: categoryState.categories,
@@ -14,14 +15,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
       handleCategoryChange: (categoryId) => {
         dispatch(updateCategory(categoryId))
-        dispatch(fetchBestSellers(categoryId))
       }
     }
 }
 
-const LeftNavContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LeftNav)
-
-export default LeftNavContainer
+export default connect(mapStateToProps, mapDispatchToProps)(LeftNav)

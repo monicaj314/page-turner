@@ -25,7 +25,8 @@ const amazonApi = {
           listSource: 'Amazon',
           externalId: result.BrowseNodeId[0],
           name: result.Name[0],
-          visible: true
+          visible: true,
+          urlParam: `amz-${result.Name[0]}`
         }
       })
       return cats

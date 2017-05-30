@@ -1,5 +1,7 @@
 
 .left-nav-wrapper {
+  margin: 0;
+  background-color: #FFF;
   overflow: hidden;
   padding: 0px;
   min-width: 0px;
@@ -8,8 +10,10 @@
 
 @media (min-width: 1025px) {
   .left-nav-wrapper {
+    margin: .5rem 0;
     min-width: 220px;
     padding: 10px 16px 16px 20px;
+    min-height: 100vh
   }
 
   .left-nav {

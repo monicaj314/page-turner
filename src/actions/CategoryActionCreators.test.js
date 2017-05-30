@@ -17,7 +17,8 @@ describe('Book Category Actions', () => {
       "listSource": "New York Times",
       "listSourceId": "NYT",
       "name": "Combined Print & E-Book Fiction",
-      "visible": true
+      "visible": true,
+      "urlParam" : "nyt-combined-print-and-e-book-fiction"
     }]
 
   const mockState = {
@@ -53,6 +54,13 @@ describe('Book Category Actions', () => {
     expect(store.getActions()[0]).toEqual(expectedAction)
   })
 
+  it('should dispatch an action to update the selected category using the URL parameter', () => {
+    const expectedAction = { type: actions.UPDATE_CATEGORY, category: categories[0] }
+
+    const store = mockStore(mockState)
+    store.dispatch(actions.updateCategoryWithUrlParam('nyt-combined-print-and-e-book-fiction'))
+    expect(store.getActions()[0]).toEqual(expectedAction)
+  })
 
   it('should dispatch request/receive actions when fetching categories', () => {
     const expectedActions = [
@@ -71,6 +79,24 @@ describe('Book Category Actions', () => {
        expect(store.getActions()).toEqual(expectedActions)
      })
   })
+
+  it('should dispatch an action to start initial category load', () => {
+    const expectedAction = {
+      type: actions.INITIAL_CATEGORY_LOAD_START,
+    };
+
+    expect(actions.initialCategoryLoadStart()).toEqual(expectedAction);
+  });
+
+
+  it('should dispatch an action to mark the completion of initial category load', () => {
+    const expectedAction = {
+      type: actions.INITIAL_CATEGORY_LOAD_COMPLETE,
+    };
+
+    expect(actions.initialCategoryLoadComplete()).toEqual(expectedAction);
+  });
+
 
 
 })

@@ -3,18 +3,39 @@ import { REQUEST_BESTSELLERS,
   RECEIVE_BESTSELLERS,
   UPDATE_CATEGORY,
   REQUEST_CATEGORIES,
-  RECEIVE_CATEGORIES } from '../actions'
+  RECEIVE_CATEGORIES,
+  INITIAL_CATEGORY_LOAD_START,
+  INITIAL_CATEGORY_LOAD_COMPLETE,
+} from '../actions'
 
 const init = {
-  isFetchingBestSellers: false,
+  isAppLoading: true,
+  isFetchingBestSellers: true,
   selectedCategory: null,
   bestSellers: [],
   isFetchingCategories: false,
   categories:[]
 }
 
+function mainApp(state = {
+  isAppLoading: init.isAppLoading
+}, action) {
+  switch (action.type) {
+    case INITIAL_CATEGORY_LOAD_START:
+      return Object.assign({}, state, {
+        isAppLoading: true,
+      })
+    case INITIAL_CATEGORY_LOAD_COMPLETE:
+      return Object.assign({}, state, {
+        isAppLoading: false,
+      })
+    default:
+      return state
+  }
+}
+
 function bestSellersReducer(state = {
-  isFetching: init.isFetchingBestSellers,
+  isFetchingBestSellers: init.isFetchingBestSellers,
   bestSellers: init.bestSellers
 }, action) {
   switch (action.type) {
@@ -34,7 +55,6 @@ function bestSellersReducer(state = {
 
 function categoryReducer(state = {
   isFetchingCategories: init.isFetchingCategories,
-  categoryName: init.categoryName,
   selectedCategory: init.selectedCategory,
   categories: init.categories
 }, action){
@@ -60,7 +80,8 @@ function categoryReducer(state = {
 
 const rootReducer = combineReducers({
   bestSellersState: bestSellersReducer,
-  categoryState: categoryReducer
+  categoryState: categoryReducer,
+  app: mainApp
 })
 
 export default rootReducer

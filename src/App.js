@@ -6,15 +6,12 @@ import { createLogger } from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Header from './components/Header'
-import BestSellersList from './components/BestSellersList'
-import LeftNavContainer from './components/LeftNav'
 import './App.css';
-import { initLoad } from './actions'
-import CircularProgress from 'material-ui/CircularProgress';
-
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import AppBody from './AppBody'
 
 let middleware = [ thunkMiddleware ]
-if (process.env.NODE_ENV !== 'production' && false) {
+if (process.env.NODE_ENV !== 'production') {
   console.log(`Env:${process.env.NODE_ENV} - Enabling dev middleware`)
   const loggerMiddleware = createLogger()
   middleware = [ ...middleware, loggerMiddleware ]
@@ -25,54 +22,25 @@ let store = createStore(
   applyMiddleware(...middleware)
 );
 
-const styles = {
-  bodyWrapper:{
-    display: 'flex',
-  },
-}
 
 class App extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      loading: true,
-    }
-  }
-  componentDidMount(){
-    store.dispatch(initLoad('nyt-50'))
-    .then(() => this.setState({loading:false}))
-  }
-
   render() {
-    let body = (
-      <div style={{display:'flex', height:'100vh'}}>
-        <div style={{margin:'auto'}}>
-        <CircularProgress />
-        </div>
-      </div>
-    )
-
-    if (!this.state.loading) {
-      body = (
-        <div className="App">
-          <Header />
-          <div style={styles.bodyWrapper}>
-            <LeftNavContainer />
-            <BestSellersList />
-          </div>
-        </div>
-        )
-    }
     return (
-      <Provider store={store}>
-        <MuiThemeProvider>
-          <div>
-            {body}
+      <Router>
+        <Provider store={store}>
+          <MuiThemeProvider>
+            <div className="App">
+              <Header />
+              <Switch>
+                <Route path='/best-sellers/:id' component={AppBody} />
+                <Route exact path='/' component={AppBody} />
+                <Route component={AppBody}/>
 
-
-          </div>
-        </MuiThemeProvider>
-      </Provider>
+              </Switch>
+            </div>
+          </MuiThemeProvider>
+        </Provider>
+      </Router>
     );
   }
 }

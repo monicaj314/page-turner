@@ -35,7 +35,8 @@ const nytApi = {
             listSource: 'New York Times',
             externalId: result.list_name_encoded,
             name: result.display_name,
-            visible: show.includes(result.list_name_encoded)
+            visible: show.includes(result.list_name_encoded),
+            urlParam: `nyt-${result.list_name_encoded}`
           }
         })
         return cats

@@ -18,7 +18,14 @@ class LeftNav extends React.Component {
   }
 
   componentDidMount() {
+    const { categories, selectedCategoryId } = this.props
     window.addEventListener("scroll", this.onScroll, false);
+    const selectedCategory = categories.find(cat => cat.id === selectedCategoryId)
+    if (this.state.expandedMenu !== selectedCategory.listSourceId){
+      this.setState({
+        expandedMenu: selectedCategory.listSourceId
+      })
+    }
   }
 
   componentWillUnmount() {

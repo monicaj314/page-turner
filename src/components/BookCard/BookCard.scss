@@ -26,7 +26,6 @@
 .book-card-header-mob {
   display: flex;
   padding: .5rem;
-  //border: 1px solid red;
 }
 
 .book-card-title-mob {
@@ -50,6 +49,7 @@
     flex-direction: row;
     box-shadow: none;
     border-bottom: 1px solid rgb(224, 224, 224);
+    padding: .5rem;
   }
   .book-card-header-mob, .book-card-description-mob,  .book-card-footer-mob {
     display: none;
