@@ -53,7 +53,7 @@ Though I originally started writing all my styles as inline styles, I am now tra
 
 Looking back, I'm convinced that I either made the wrong decision, or at the very least approached my decision incorrectly.  Why? Here are my reasons:
 - As outlined by this [great article](https://medium.com/yplan-eng/inline-styles-are-so-2016-f100b79dafe1), inline styles introduce some pretty significant limitations. Without the help of an external CSS in JS package, you can't use things like pseudo classes, pseudo elements, or media queries. Since I did not use an external package to help me with this problem, I was hampered by these limitations.  
-- Picking the right package from the [plethora of available CSS in JS packages](https://github.com/MicheleBertoli/css-in-js) exposes me to the risk that I'm going to pick and learn the wrong thing. Looking back, perhaps I should have picked one anyway.  I think I'll go back and try out [JSS](https://github.com/cssinjs/jss).  It looks promising.
+- Picking the right package out of the [plethora of available CSS in JS packages](https://github.com/MicheleBertoli/css-in-js) exposes me to the risk that I'm going to pick and learn the wrong thing. Looking back, perhaps I should have picked one anyway.  I think I'll go back and try out [JSS](https://github.com/cssinjs/jss).  It looks promising.
 - Inline styles just looked... ugly. I know this is a questionable reason. (remember how we felt about JSX?)
 - [Component-localized CSS Modules](https://medium.com/seek-blog/the-end-of-global-css-90d2a4a06284) look so much more attractive!
 
@@ -61,7 +61,7 @@ My caveat here is that some of the CSS in JS packages look pretty awesome too.  
 
 ## Node API
 
-Currently, the book data seen on Page Turners is API data that is fetched from The New York Times, Amazon, GoodReads, and Google Books.  Page Turners aggregates this data and creates its own model of a book. I initially attempted to have the frontend carry the burden of performing this aggregation. After experiencing some of the pain points outlined below, I eventually chose to extract this to a Node process and expose the resulting data through a Node REST API. These were my pain points:
+Currently, the book data seen on Page Turners is API data that is fetched from The New York Times, Amazon, Goodreads, and Google Books.  Page Turners aggregates this data and creates its own model of a book. I initially attempted to have the frontend carry the burden of performing this aggregation. After experiencing some of the pain points outlined below, I eventually chose to extract this to a Node process and expose the resulting data through a Node REST API. These were my pain points:
 
 1. The complexity inside my action creators started getting out of hand.
 2. It did not seem like I was properly separating my concerns.  The front-end knew an awful lot about non-frontend things.
