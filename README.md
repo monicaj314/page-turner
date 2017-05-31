@@ -52,7 +52,7 @@ For me, styling has long been one of the more challenging aspects of front-end d
 Though I originally started writing all my styles as inline styles, I am now transitioning to CSS Modules.  Because of this, you are likely to find a mixture of inline styles and SASS files scattered throughout my codebase. Gross, I know. My original inline style approach was inspired by many of the articles I'd been reading about CSS in JS.  It's an idea that, though it had been discussed now and then throughout the years, it really regained momentum after Facebook's [Christopher Chedeau's talk](https://speakerdeck.com/vjeux/react-css-in-js) at the NationJS conference back in November of 2014.  Additionally, Call-Em-All's [Material UI library](http://www.material-ui.com/#/), which is the library I was considering using, also used inline styles as their primary strategy in styling their components.  Both of these facts persuaded me to go with the inline style approach.
 
 Looking back, I'm convinced that I either made the wrong decision, or at the very least approached my decision incorrectly.  Why? Here are my reasons:
-- Inline styles introduce some pretty significant limitations. Without the help of an external CSS in JS package, you can't use things like pseudo classes, pseudo elements, or media queries. Here's a [great article](https://medium.com/yplan-eng/inline-styles-are-so-2016-f100b79dafe1) that outlines some of these issues.  Since I did not use an external package to help me with this problem, I was hampered by these limitations.  
+- As outlined by this [great article](https://medium.com/yplan-eng/inline-styles-are-so-2016-f100b79dafe1), inline styles introduce some pretty significant limitations. Without the help of an external CSS in JS package, you can't use things like pseudo classes, pseudo elements, or media queries. Since I did not use an external package to help me with this problem, I was hampered by these limitations.  
 - Picking the right package from the [plethora of available CSS in JS packages](https://github.com/MicheleBertoli/css-in-js) exposes me to the risk that I'm going to pick and learn the wrong thing. Looking back, perhaps I should have picked one anyway.  I think I'll go back and try out [JSS](https://github.com/cssinjs/jss).  It looks promising.
 - Inline styles just looked... ugly. I know this is a questionable reason. (remember how we felt about JSX?)
 - [Component-localized CSS Modules](https://medium.com/seek-blog/the-end-of-global-css-90d2a4a06284) look so much more attractive!
@@ -61,13 +61,13 @@ My caveat here is that some of the CSS in JS packages look pretty awesome too.  
 
 ## Node API
 
-Currently, the book data seen on Page Turners is API data that is fetched from The New York Times, Amazon, GoodReads, and Google Books.  Page Turners aggregates this data and creates its own model of a book. I initially attempted to have the frontend carry the burden of performing this aggregation. I eventually chose to extract this to a Node process and expose the resulting data through a Node REST API. I did this for a few reasons:
+Currently, the book data seen on Page Turners is API data that is fetched from The New York Times, Amazon, GoodReads, and Google Books.  Page Turners aggregates this data and creates its own model of a book. I initially attempted to have the frontend carry the burden of performing this aggregation. After experiencing some of the pain points outlined below, I eventually chose to extract this to a Node process and expose the resulting data through a Node REST API. These were my pain points:
 
 1. The complexity inside my action creators started getting out of hand.
 2. It did not seem like I was properly separating my concerns.  The front-end knew an awful lot about non-frontend things.
-3. CORS issues with some of the APIs required proxying solutions
+3. CORS issues with some of the APIs required proxying solutions.
 4. I eventually want to build a React Native app for this project.  Having a backend I can reuse will save me time!
 
 ## Tests
 
-As mentioned previously, I am using [Jest](https://facebook.github.io/jest/) to test my code.  I'm still in the process of adding tests and have so far been able to write tests for every action creator.  Missing is an expansive test suite covering my components.  These will be coming soon.  My experience with Jest so far has been delightful.  I'm looking forward to using Jest's snapshot feature.  
+As mentioned previously, I am using [Jest](https://facebook.github.io/jest/) to test my code.  I'm still in the process of adding tests and have so far been able to write tests for every action creator in the app.  Missing is an expansive test suite covering my components.  These will be coming soon.  My experience with Jest so far has been delightful.  I'm looking forward to using Jest's snapshot feature.  
