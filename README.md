@@ -37,7 +37,7 @@ I used the BrowserRouter module in [react-router-dom](https://reacttraining.com/
 
 ## Redux Approach
 #### Action Creators
-I separated my action creators into two modules.  The separation was domain-specific.  In my case, I had one file for book categories and another file for the books themselves.  Within each module, I used a combination of simple action-returning action creators for synchronous operations and thunk-returning action creators for asynchronous operations.  I used the package [redux-thunk](https://github.com/gaearon/redux-thunk) to enable thunk usage with redux.  
+I separated my action creators into two modules.  The separation was domain-specific.  In my case, I had one file for book categories and another file for the books themselves.  Within each module, I used a combination of thunk-returning action creators for asynchronous operations and simple action-returning action creators for synchronous operations. I used the package [redux-thunk](https://github.com/gaearon/redux-thunk) to enable thunk usage with redux.  
 
 #### Reducers
 So far, I have only needed to use three reducers.  One to handle the slice of the state having to do with books, one to handle the slice to do with categories, and one used by a root component to determine if the app is still initializing. I combined these reducers via redux's `combineReducers()` function to create a single root reducer.  This root reducer gets passed in to Redux's `createStore()` function (along with various middleware).
