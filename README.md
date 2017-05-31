@@ -68,6 +68,10 @@ Currently, the book data seen on Page Turners is API data that is fetched from T
 3. CORS issues with some of the APIs required proxying solutions.
 4. I eventually want to build a React Native app for this project.  Having a backend I can reuse will save me time!
 
+#### Redis
+
+I use [Redis](https://redis.io/) to cache my Node process's resulting aggregated data.  Each call to Page Turner's API first checks to see if the requested data is available in cache before attempting to fetch the data from a 3rd party API.  This significantly improves my API's response times.
+
 ## Tests
 
 As mentioned previously, I am using [Jest](https://facebook.github.io/jest/) to test my code.  I'm still in the process of adding tests and have so far been able to write tests for every action creator in the app.  Missing is an expansive test suite covering my components.  These will be coming soon.  My experience with Jest so far has been delightful.  I'm looking forward to using Jest's snapshot feature.  
