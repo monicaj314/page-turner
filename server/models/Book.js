@@ -7,13 +7,16 @@ class Book {
 
   parseNewYorkTimesBook(nytBook){
     const nytBookDetails = nytBook.book_details[0]
-    //match ASIN number after /dp/xxxxx?
-    const regex = /\/dp\/([a-zA-Z0-9]*)/i
     const url = nytBook.amazon_product_url
-    const regexMatches = url.match(regex)
-    if (regexMatches && regexMatches[1]){
-      var amazonAsin = regexMatches[1]
+    if (url){
+      //match ASIN number after /dp/xxxxx?
+      const regex = /\/dp\/([a-zA-Z0-9]*)/i
+      const regexMatches = url.match(regex)
+      if (regexMatches && regexMatches[1]){
+        var amazonAsin = regexMatches[1]
+      }
     }
+    
     
     this.authors.push(nytBookDetails.author)
     this.nytAmazonAsin = amazonAsin
