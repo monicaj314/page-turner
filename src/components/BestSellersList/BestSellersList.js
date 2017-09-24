@@ -1,34 +1,33 @@
-import React from 'react'
-import BookCard from '../BookCard/index.js'
-import injectTapEventPlugin from 'react-tap-event-plugin';
-import CSSTransitionGroup from 'react-transition-group/CSSTransitionGroup'
-import './BestSellersList.css'
-import BlockLoader from '../Shared/BlockLoader'
+import React from "react";
+import BookCard from "../BookCard/index.js";
+import injectTapEventPlugin from "react-tap-event-plugin";
+import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
+import "./BestSellersList.css";
+import BlockLoader from "../Shared/BlockLoader";
 
 injectTapEventPlugin();
 class BestSellerList extends React.Component {
-  render(){
-    if (this.props.isFetching){
-      return <BlockLoader />
+  render() {
+    if (this.props.isFetching) {
+      return <BlockLoader />;
     } else {
       var cards = this.props.bestSellers.map((book, i) => (
-          <BookCard key={i} {...book} />
-        ))
+        <BookCard key={i} {...book} />
+      ));
     }
 
-      return (
-          <CSSTransitionGroup
-            transitionName='best-seller-list'
-            transitionAppear={true}
-            transitionAppearTimeout={1000}
-            transitionEnter={false}
-            transitionLeave={false}>
-            <div className='best-seller-list-wrapper'>
-              {cards}
-            </div>
-          </CSSTransitionGroup>
-      )
+    return (
+      <CSSTransitionGroup
+        transitionName="best-seller-list"
+        transitionAppear={true}
+        transitionAppearTimeout={1000}
+        transitionEnter={false}
+        transitionLeave={false}
+      >
+        <div className="best-seller-list-wrapper">{cards}</div>
+      </CSSTransitionGroup>
+    );
   }
 }
 
-export default BestSellerList
+export default BestSellerList;

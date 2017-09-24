@@ -1,14 +1,14 @@
-import React from 'react';
-import PrimaryToolBar from './PrimaryToolBar'
-import SecondaryToolBar from './SecondaryToolBar'
+import React from "react";
+import PrimaryToolBar from "./PrimaryToolBar";
+import SecondaryToolBar from "./SecondaryToolBar";
 
-const Header = (props) => {
+const Header = props => {
   return (
     <div>
       <PrimaryToolBar {...props} />
       <SecondaryToolBar {...props} />
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

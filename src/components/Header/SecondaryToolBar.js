@@ -1,62 +1,67 @@
-import React from 'react'
-import AppBar from 'material-ui/AppBar'
-import './SecondaryToolBar.css'
-import MenuIcon from 'material-ui/svg-icons/navigation/menu';
-import IconButton from 'material-ui/IconButton';
+import React from "react";
+import AppBar from "material-ui/AppBar";
+import "./SecondaryToolBar.css";
+import MenuIcon from "material-ui/svg-icons/navigation/menu";
+import IconButton from "material-ui/IconButton";
 
-import ToolBarNav from './ToolBarNav'
-
+import ToolBarNav from "./ToolBarNav";
 
 const styles = {
-  appBar:{
-    backgroundColor: '#FFF',
-    borderBottom:'1px solid rgb(224,224,224)',
-    boxShadow:'none',
-    height: '40px'
+  appBar: {
+    backgroundColor: "#FFF",
+    borderBottom: "1px solid rgb(224,224,224)",
+    boxShadow: "none",
+    height: "40px"
   },
-  icon:{
-    opacity:'0'
-  },
+  icon: {
+    opacity: "0"
+  }
 };
 
 class SecondaryToolBar extends React.Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       drawerOpen: false
-    }
+    };
   }
 
-  handleDrawerToggle = () => this.setState({drawerOpen: !this.state.drawerOpen});
+  handleDrawerToggle = () =>
+    this.setState({ drawerOpen: !this.state.drawerOpen });
 
-  handleDrawerlClose = () => this.setState({drawerOpen: false});
+  handleDrawerlClose = () => this.setState({ drawerOpen: false });
 
-  handleDrawerRequestChange = (drawerOpen) => {
-    this.setState({drawerOpen})
-  }
+  handleDrawerRequestChange = drawerOpen => {
+    this.setState({ drawerOpen });
+  };
 
-  handleDrawerSelection = (categoryId) => {
-    this.props.handleCategoryChange(categoryId)
-    this.setState({drawerOpen: false})
-  }
+  handleDrawerSelection = categoryId => {
+    this.props.handleCategoryChange(categoryId);
+    this.setState({ drawerOpen: false });
+  };
 
-  render(){
+  render() {
     return (
       <div>
         <AppBar
-          title={<span className='title-text'>Best Sellers</span>}
-          titleStyle={{lineHeight:'40px', height:'40px'}}
+          title={<span className="title-text">Best Sellers</span>}
+          titleStyle={{ lineHeight: "40px", height: "40px" }}
           style={styles.appBar}
           iconElementLeft={
-            <div className='menu-icon-div'>
-              <IconButton onTouchTap={this.handleDrawerToggle} style={{padding:0, width:40, height: 40, marginTop:-8}}>
-                <MenuIcon color={'#000'}/>
+            <div className="menu-icon-div">
+              <IconButton
+                onTouchTap={this.handleDrawerToggle}
+                style={{ padding: 0, width: 40, height: 40, marginTop: -8 }}
+              >
+                <MenuIcon color={"#000"} />
               </IconButton>
             </div>
-            }
-          className='secondary-app-bar' />
+          }
+          className="secondary-app-bar"
+        />
 
-        <ToolBarNav open={this.state.drawerOpen}
+        <ToolBarNav
+          open={this.state.drawerOpen}
           handleToggle={this.handleDrawerToggle}
           handleClose={this.handleDrawerSelection}
           handleDrawerSelection={this.handleDrawerSelection}
@@ -64,11 +69,9 @@ class SecondaryToolBar extends React.Component {
           categories={this.props.categories}
           selectedCategory={this.props.selectedCategory}
         />
-
       </div>
-
-    )
+    );
   }
 }
 
-export default SecondaryToolBar
+export default SecondaryToolBar;

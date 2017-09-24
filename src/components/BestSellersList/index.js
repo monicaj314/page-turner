@@ -1,3 +1,3 @@
-import BestSellersListContainer from './BestSellersListContainer'
+import BestSellersListContainer from "./BestSellersListContainer";
 
-export default BestSellersListContainer
+export default BestSellersListContainer;

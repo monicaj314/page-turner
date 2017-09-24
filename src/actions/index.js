@@ -8,12 +8,12 @@ export {
   updateCategory,
   updateCategoryWithUrlParam,
   initCategoryLoad
-} from './CategoryActionCreators'
+} from "./CategoryActionCreators";
 
 export {
   REQUEST_BESTSELLERS,
   RECEIVE_BESTSELLERS,
   requestBestSellers,
   receiveBestSellers,
-  fetchBestSellers,
-} from './BestSellersActionCreators'
+  fetchBestSellers
+} from "./BestSellersActionCreators";
